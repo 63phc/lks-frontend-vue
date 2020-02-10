@@ -37,7 +37,7 @@ header {
 .patch {
   position: absolute;
   right: 15%;
-  top: -50px;
+  top: -70px;
 }
 .brand {
   text-align: center;
