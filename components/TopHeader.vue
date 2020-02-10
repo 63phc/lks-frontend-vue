@@ -7,7 +7,7 @@
       </select>  
     </div>
     <div class="patch">
-      <img src="/patch.svg" alt="">
+      <img src="/images/patch.svg" alt="">
     </div>
     <div class="brand">
       <p class="name">Блог и магазин по вязанию</p>
@@ -21,10 +21,10 @@ export default {}
 </script>
 
 <style lang="scss" scoped>
-$main: #e0c0c3;
+@import '../assets/globals.scss';
 
 #lang {
-  background: $main;
+  background: $color-main;
 }
 
 header {
@@ -69,6 +69,6 @@ header {
       font-family: 'Helvetica', -apple-system, 'Segoe UI', sans-serif;
     }
   }
-  background: $main;
+  background: $color-main;
 }
 </style>
