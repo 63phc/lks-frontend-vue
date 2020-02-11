@@ -29,6 +29,7 @@ export default {}
 
 header {
   margin-top: 40px;
+  margin-bottom: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
