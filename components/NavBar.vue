@@ -49,6 +49,7 @@ ul {
 nav {
   margin: 0 15%;
   display: flex;
+  margin-bottom: 10px;
   justify-content: space-between;
 }
 
@@ -79,6 +80,7 @@ nav > ul {
 @media screen and (max-width: 1192px) {
   nav {
     margin: 0;
+    margin-bottom: 10px;
   }
 }
 

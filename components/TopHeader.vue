@@ -39,6 +39,7 @@ header {
   position: absolute;
   right: 15%;
   top: -70px;
+  z-index: -1;
 }
 .brand {
   text-align: center;

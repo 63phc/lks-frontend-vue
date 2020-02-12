@@ -2,7 +2,7 @@
   <div>
     <TopHeader></TopHeader>
     <NavBar></NavBar>
-    <Slider :images="slider_images"></Slider>
+    <Slider :slides="slides"></Slider>
   </div>
 </template>
 
@@ -15,12 +15,12 @@ import NavBar from '../components/NavBar.vue'
 export default {
   data() {
     return {
-      slider_images: []
+      slides: []
     }
   },
   async mounted() {
-    this.slider_images = await API.getSliderImages()
-    alert(this.slider_images)
+    this.slides = await API.getSliderImages()
+    alert(JSON.stringify(this.slides))
   },
   components: {
     TopHeader: TopHeader,
