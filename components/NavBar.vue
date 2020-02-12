@@ -68,6 +68,7 @@ nav {
 .social {
   order: 0;
 }
+
 nav > ul {
   margin: 0 20px;
   flex: 1;

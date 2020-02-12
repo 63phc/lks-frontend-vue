@@ -16,6 +16,8 @@ module.exports = {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
 
+  buildModules: ['@nuxt/typescript-build'],
+
   /*
   ** Customize the progress-bar color
   */
