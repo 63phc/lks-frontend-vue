@@ -1,19 +1,14 @@
-<template>
-  <header>
-    <div class="lang-switch">
-      <select name="lang" id="lang">
-        <option value="ru-RU">Ru</option>  
-        <option value="en-US">En</option>  
-      </select>  
-    </div>
-    <div class="patch">
-      <img src="/images/patch.svg" alt="">
-    </div>
-    <div class="brand">
-      <p class="name">Блог и магазин по вязанию</p>
-      <h1 class="heading">LITTLE KNITS STORY</h1>
-    </div>
-  </header>
+<template lang="pug">
+header
+  .lang-switch
+    select#lang(name='lang')
+      option(value='ru-RU') Ru
+      option(value='en-US') En
+  .patch
+    img(src='/images/patch.svg', alt='')
+  .brand
+    p.name Блог и магазин по вязанию
+    h1.heading LITTLE KNITS STORY
 </template>
 
 <script>

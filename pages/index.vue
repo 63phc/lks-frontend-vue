@@ -1,11 +1,10 @@
-<template>
-  <div>
-    <TopHeader></TopHeader>
-    <NavBar></NavBar>
-    <Slider :slides="slides"></Slider>
-    blahblahblah
-    <Footer></Footer>
-  </div>
+<template lang="pug">
+  div
+    TopHeader
+    NavBar
+    Slider(:slides='slides')
+    LastPosts
+    Footer
 </template>
 
 <script lang="ts">
@@ -14,7 +13,7 @@ import TopHeader from '../components/TopHeader.vue'
 import Slider from '../components/Slider.vue'
 import NavBar from '../components/NavBar.vue'
 import Footer from '../components/Footer.vue'
-
+import LastPosts from '../components/LastPosts.vue'
 export default {
   data() {
     return {
@@ -28,7 +27,8 @@ export default {
     TopHeader,
     NavBar,
     Slider,
-    Footer
+    Footer,
+    LastPosts
   }
 }
 </script>

@@ -1,7 +1,6 @@
-<template>
-  <div class="btn">
-    <slot />
-  </div>
+<template lang="pug">
+  .btn
+    slot
 </template>
 
 <script lang="ts">

@@ -1,35 +1,19 @@
-<template>
-  <div class="slider">
-    <transition-group name="slides">
-      <div 
-        v-for="(slide, index) in slides" 
-        v-show="currentSlide == index"
-        :key="index" 
-        class="slide" 
-        :style="`background-image: url(${slide.image_src})`"
-      >
-        <div class="buttons">
-          <div class="btn-nav" @click="prevSlide">
-            <img src="/images/left-arrow.svg" alt="<">
-          </div>
-          <div class="btn-nav" @click="nextSlide">
-            <img src="/images/right-arrow.svg" alt=">">
-          </div>
-        </div>
-        <div class="side"> 
-          <div class="circle">
-            <div>
-              <h1>{{ slide.title }} asdfsdf</h1>
-              <p>{{ slide.subtitle }}</p>
-              <nuxt-link :to="{path: '/catalog'}">
-                <ButtonIcon icon="/images/shopping-cart.svg">Перейти в каталог</ButtonIcon>
-              </nuxt-link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </transition-group>
-  </div>
+<template lang="pug">
+  .slider
+    transition-group(name='slides')
+      .slide(v-for='(slide, index) in slides', v-show='currentSlide == index', :key='index', :style='`background-image: url(${slide.image_src})`')
+        .buttons
+          .btn-nav(@click='prevSlide')
+            img(src='/images/left-arrow.svg', alt='<')
+          .btn-nav(@click='nextSlide')
+            img(src='/images/right-arrow.svg', alt='>')
+        .side
+          .circle
+            div
+              h1 {{ slide.title }} asdfsdf
+              p {{ slide.subtitle }}
+              nuxt-link(:to="{path: '/catalog'}")
+                ButtonIcon(icon='/images/shopping-cart.svg') Перейти в каталог
 </template>
 
 <script lang="ts">

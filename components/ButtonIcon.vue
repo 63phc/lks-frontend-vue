@@ -1,12 +1,9 @@
-<template>
-  <Button>
-    <div class="inner-text">
-      <slot />
-    </div>
-    <div class="btn-icon">
-      <img :src="icon" alt="Icon not found">
-    </div>
-  </Button>
+<template lang="pug">
+  Button
+    .inner-text
+      slot
+    .btn-icon
+      img(:src='icon', alt='Icon not found')
 </template>
 
 <script lang="ts">

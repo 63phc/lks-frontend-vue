@@ -7,3 +7,10 @@ $color-main: #e0c0c3;
 a {
   text-decoration: none;
 }
+
+.container {
+  margin: 0 15%;
+  @media screen and (max-width: 1200px) {
+    margin: 0 10%;
+  }
+}

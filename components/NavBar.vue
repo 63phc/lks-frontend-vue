@@ -1,38 +1,25 @@
-<template>
-  <nav>
-    <ul class="social">
-      <li>
-        <img src="/images/logo-vk.svg" alt="">
-      </li>
-      <li>
-        <img src="/images/logo-facebook.svg" alt="">
-      </li>
-      <li>
-        <img src="/images/logo-instagram.svg" alt="">
-      </li>
-      <li>
-        <img src="/images/logo-pinterest.svg" alt="">
-      </li>
-    </ul>
-    <ul class="links">
-      <li v-for="link in links" :key="link.url">
-        <nuxt-link :to="{path: link.url}">
-          {{ link.name }}
-        </nuxt-link>
-      </li>
-    </ul>
-    <ul class="controls">
-      <li>
-        <img src="/images/log-out.svg" alt="">
-      </li>
-      <li>
-        <img src="/images/shopping-bag.svg" alt="">
-      </li>
-      <li>
-        <img src="/images/heart.svg" alt="">
-      </li>
-    </ul>
-  </nav>
+<template lang="pug">
+  nav
+    ul.social
+      li
+        img(src='/images/logo-vk.svg', alt='')
+      li
+        img(src='/images/logo-facebook.svg', alt='')
+      li
+        img(src='/images/logo-instagram.svg', alt='')
+      li
+        img(src='/images/logo-pinterest.svg', alt='')
+    ul.links
+      li(v-for='link in links', :key='link.url')
+        nuxt-link(:to='{path: link.url}')
+          | {{ link.name }}
+    ul.controls
+      li
+        img(src='/images/log-out.svg', alt='')
+      li
+        img(src='/images/shopping-bag.svg', alt='')
+      li
+        img(src='/images/heart.svg', alt='')
 </template>
 
 <script lang="ts">

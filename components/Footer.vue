@@ -1,54 +1,42 @@
-<template>
-  <footer>
-    <nav>
-      <div>
-        <h2>Навигация</h2>
-        <ul>
-          <li>Блог</li>
-          <li>Магазин</li>
-          <li>О нас</li>
-          <li>Портфолио</li>
-          <li>Контакты</li>
-        </ul>
-      </div>
-      <div>
-        <h2>Личный кабинет</h2>
-        <ul>
-          <li>Войти</li>
-          <li>Корзина</li>
-          <li>Сохраненные товары</li>
-        </ul>
-      </div>
-    </nav>
-    <div class="subscribe-input">
-      <input v-model="email" type="text" placeholder="Ваш E-mail">
-      <button>Подписатся</button>
-    </div>
-    <p class="subtitle">
-      Мы проводим специальные акции для наших клиентов. оформите подписку и мы 
-будем держать вас в курсе
-    </p>
-    <div class="buttons-social">
-      <div class="btn">
-        <img src="/images/logo-facebook.svg" alt="f">
-      </div>
-      <div class="btn">
-        <img src="/images/logo-instagram.svg" alt="i">
-      </div>
-      <div class="btn">
-        <img src="/images/logo-vk.svg" alt="vk">
-      </div>
-      <div class="btn">
-        <img src="/images/logo-pinterest.svg" alt="[">
-      </div>
-    </div>
-    <hr>
-    <div class="copyright">
-      <p>Little Knits Story 2017 | All Rights Reserved</p>
-      <img src="/images/cactus-logo.svg" alt="Cactus Vision">
-      <p>Политика конфеденциальности</p>
-    </div>
-  </footer>
+<template lang="pug">
+  footer
+    .container
+      nav
+        div
+          h2 Навигация
+          ul
+            li Блог
+            li Магазин
+            li О нас
+            li Портфолио
+            li Контакты
+        div
+          h2 Личный кабинет
+          ul
+            li Войти
+            li Корзина
+            li Сохраненные товары
+      .subscribe-input
+        input(v-model='email', type='text', placeholder='Ваш E-mail')
+        button Подписатся
+      p.subtitle
+        | Мы проводим специальные акции для наших клиентов. оформите подписку и мы
+        | будем держать вас в курсе
+      .buttons-social
+        .btn
+          img(src='/images/logo-facebook.svg', alt='f')
+        .btn
+          img(src='/images/logo-instagram.svg', alt='i')
+        .btn
+          img(src='/images/logo-vk.svg', alt='vk')
+        .btn
+          img(src='/images/logo-pinterest.svg', alt='[')
+    hr
+    .container
+      .copyright
+        p Little Knits Story 2017 | All Rights Reserved
+        img(src='/images/cactus-logo.svg', alt='Cactus Vision')
+        p Политика конфеденциальности
 </template>
 
 <script lang="ts">
@@ -66,8 +54,10 @@ export default {
 
 footer {
   border-top: 1px solid #e5e5e5;
-  display: flex;
-  flex-direction: column;
+  & > .container {
+    display: flex;
+    flex-direction: column;
+  }
   hr {
     border: 0.5px solid #e5e5e5;
   }
@@ -83,7 +73,7 @@ footer {
     color: #545353;
     margin-top: 30px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     @media screen and (max-width: 660px) {
       align-self: center;
       flex-direction: column;
@@ -103,7 +93,7 @@ footer {
     justify-content: space-between;
     width: 50%;
     @media screen and (max-width: 800px) {
-      width: 90%;
+      width: 100%;
     }
 
     input,
@@ -137,7 +127,7 @@ footer {
     text-align: center;
 
     @media screen and (max-width: 800px) {
-      width: 90%;
+      width: 100%;
     }
   }
   .buttons-social {
@@ -161,7 +151,7 @@ footer {
   }
   .copyright {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     color: #c4c4c4;
     margin: 30px 0;
