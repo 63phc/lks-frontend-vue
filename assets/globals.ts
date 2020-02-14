@@ -6,6 +6,14 @@ interface Slide
   subtitle: string
 }
 
+interface MenuEntry 
+{
+  name: string,
+  url: string,
+  is_active: boolean
+}
+
 export {
-  Slide
+  Slide,
+  MenuEntry
 }

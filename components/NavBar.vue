@@ -15,11 +15,11 @@
       </li>
     </ul>
     <ul class="links">
-      <li>Блог</li>
-      <li>Магазин</li>
-      <li>Авторы</li>
-      <li>Контакты</li>
-      <li>Схемы</li>
+      <li v-for="link in links" :key="link.url">
+        <nuxt-link :to="{path: link.url}">
+          {{ link.name }}
+        </nuxt-link>
+      </li>
     </ul>
     <ul class="controls">
       <li>
@@ -35,8 +35,20 @@
   </nav>
 </template>
 
-<script>
-export default {}
+<script lang="ts">
+import * as API from '../assets/api.ts'
+
+export default {
+  data() {
+    return {
+      links: []
+    }
+  },
+
+  async mounted() {
+    this.links = await API.getMenuEntries()
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -59,6 +71,9 @@ nav {
   text-transform: uppercase;
   flex: 2;
   justify-content: space-between;
+  a {
+    color: #545353 !important;
+  }
 }
 
 .controls {

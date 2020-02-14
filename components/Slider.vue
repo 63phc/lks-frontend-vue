@@ -3,27 +3,29 @@
     <transition-group name="slides">
       <div 
         v-for="(slide, index) in slides" 
+        v-show="currentSlide == index"
         :key="index" 
         class="slide" 
         :style="`background-image: url(${slide.image_src})`"
-        v-show="currentSlide == index"
       >
         <div class="buttons">
-          <div class="btn" @click="prevSlide">
+          <div class="btn-nav" @click="prevSlide">
             <img src="/images/left-arrow.svg" alt="<">
           </div>
-          <div class="btn" @click="nextSlide">
+          <div class="btn-nav" @click="nextSlide">
             <img src="/images/right-arrow.svg" alt=">">
           </div>
         </div>
         <div class="side"> 
           <div class="circle">
             <div>
-              <h1>{{ slide.title }}</h1>
+              <h1>{{ slide.title }} asdfsdf</h1>
               <p>{{ slide.subtitle }}</p>
+              <nuxt-link :to="{path: '/catalog'}">
+                <ButtonIcon icon="/images/shopping-cart.svg">Перейти в каталог</ButtonIcon>
+              </nuxt-link>
             </div>
           </div>
-          <div class="rect"></div>
         </div>
       </div>
     </transition-group>
@@ -31,7 +33,12 @@
 </template>
 
 <script lang="ts">
+import ButtonIcon from './ButtonIcon.vue'
+
 export default {
+  components: {
+    ButtonIcon
+  },
   props: {
     slides: {
       type: Array,
@@ -58,6 +65,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../assets/globals.scss';
+@import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
 
 .slides-enter-active,
 .slides-leave-active {
@@ -66,6 +74,10 @@ export default {
 
 .slides-enter, .slides-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+
+.slider {
+  height: 60vh;
 }
 
 .slide {
@@ -81,7 +93,7 @@ export default {
   justify-content: space-between;
 }
 
-.btn {
+.btn-nav {
   padding: 20px;
   background: #3e4148;
   color: white;
@@ -90,6 +102,7 @@ export default {
   font-size: 20px;
   margin-left: 10px;
   border-radius: 100%;
+  cursor: pointer;
 }
 .buttons {
   display: flex;
@@ -114,10 +127,28 @@ export default {
     height: 66.66666%;
     padding-top: 20%;
     padding-left: 20%;
+    h1 {
+      font-family: 'Pacifico', serif;
+    }
+    p {
+      margin: 20px 0px;
+    }
   }
 }
 .rect {
   background: $color-main;
   width: 100%;
+}
+
+@media screen and (max-width: 637px) {
+  .buttons {
+    display: none;
+  }
+  .side {
+    width: 100vw;
+  }
+  .circle {
+    width: 100vw;
+  }
 }
 </style>
