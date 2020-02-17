@@ -42,6 +42,7 @@ export default {
   }
   .thumbnail {
     background-size: cover;
+    min-height: 100px;
     flex: 1;
   }
   .post-date {

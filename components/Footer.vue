@@ -147,6 +147,10 @@ footer {
       img {
         filter: brightness(2);
       }
+      &:hover {
+        background: $color-main;
+        cursor: pointer;
+      }
     }
   }
   .copyright {
