@@ -1,5 +1,5 @@
 <template lang="pug">
-  .card
+  .lks-card
     slot
 </template>
 
@@ -8,7 +8,5 @@ export default {}
 </script>
 
 <style lang="scss" scoped>
-.card {
-  padding: 10px;
-}
+@import '../assets/lks-fw/lks-fw.scss';
 </style>

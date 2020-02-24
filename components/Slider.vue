@@ -12,7 +12,7 @@
             div
               h1 {{ slide.title }} asdfsdf
               p {{ slide.subtitle }}
-              nuxt-link(:to="{path: '/catalog'}")
+              nuxt-link(to="/shop")
                 ButtonIcon(icon='/images/shopping-cart.svg') Перейти в каталог
 </template>
 
@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/globals.scss';
+@import '../assets/lks-fw/lks-fw.scss';
 @import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
 
 .slides-enter-active,

@@ -1,5 +1,5 @@
 <template lang="pug">
-  Card.good-card
+  Card.review-card.lks-card-floating
     img(src="/images/circles.svg").circles
     div(style="background-image: url(https://upload.wikimedia.org/wikipedia/commons/6/61/Trappista_cheese_original.jpg);").good-img
     h2 
@@ -25,9 +25,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/globals.scss';
+@import '../assets/lks-fw/lks-fw.scss';
 
-.good-card {
+.review-card {
+  padding: 20px;
+  background: $color-main;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
   p {
     width: 60%;
     font-size: 20px;
@@ -36,14 +42,6 @@ export default {
   .stars {
     line-height: 2;
   }
-  padding: 20px;
-  border-radius: 10px;
-  background: $color-main;
-  box-shadow: 20px 10px 30px rgba(0, 0, 0, 0.15);
-  color: #fff;
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
   .circles {
     right: -50px;
     position: absolute;

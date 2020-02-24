@@ -1,36 +1,28 @@
 <template lang="pug">
   section
-    h2 ПОСЛЕДНИЕ ПОСТЫ
+    slot
     .patch-top
       img(src="/images/patch.svg")
     .patch-bottom
       img(src="/images/patch.svg")
     .ct
-      AuthorCard.author(
-        image="https://rosinevolution.com/wp-content/uploads/2017/09/rosin-collection-paper.jpg"
-        date="2019 Jan 12"
-        text="Hello world sjfdkjskdf jksdfj ksjdfk jskfj"
-        caption="Bepsu"
-      )
+      AuthorCard.author(:author="author")
       .posts
-        PostCard(
-          image="https://rosinevolution.com/wp-content/uploads/2017/09/rosin-collection-paper.jpg"
-          date="2019 Jan 12"
-          text="Hello world"
-          caption="Top text"
-        )
-        PostCard(
-          image="https://rosinevolution.com/wp-content/uploads/2017/09/rosin-collection-paper.jpg"
-          date="2019 Jan 12"
-          text="Hello world"
-          caption="Top text"
-        )
+        div(v-for="post in posts.slice(0, 2)")
+          PostCard(:post="post")
+
+        
 </template>
 
-<script lang="ts">
+<script lang="typescript">
 import PostCard from '../components/PostCard.vue'
 import AuthorCard from '../components/AuthorCard.vue'
+import { Author } from '../assets/models.ts'
 export default {
+  props: {
+    author: Author,
+    posts: Array // Of posts
+  },
   components: {
     PostCard,
     AuthorCard
@@ -39,7 +31,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/globals.scss';
+@import '../assets/lks-fw/lks-fw.scss';
 section {
   position: relative;
   .patch-top {
@@ -59,6 +51,11 @@ section {
     display: flex;
     @media screen and (max-width: 800px) {
       flex-direction: column;
+    }
+    @media screen and (max-width: 600px) {
+      .posts {
+        flex-direction: column;
+      }
     }
   }
   h2 {

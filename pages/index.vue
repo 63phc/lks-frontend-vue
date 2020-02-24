@@ -2,10 +2,14 @@
   div
     TopHeader
     NavBar
+    Notification(:visible="notifVisible")
+      | Добавлено
     Slider(:slides='slides')
-    .container
-      LastPosts
-      Goods
+    .lks-container
+      div(v-for="author in authors")
+        LastPosts(:author="author" :posts="posts")
+          h2 ПОСЛЕДНИЕ ПОСТЫ
+        Goods(:goods="products")
       Reviews
     Instagram.inst
     Footer
@@ -21,14 +25,28 @@ import LastPosts from '../components/LastPosts.vue'
 import Reviews from '../components/Reviews.vue'
 import Goods from '../components/Goods.vue'
 import Instagram from '../components/Instagram.vue'
+import Notification from '../components/Notification.vue'
 export default {
   data() {
     return {
-      slides: []
+      notifVisible: false,
+      slides: [],
+      authors: [],
+      posts: [],
+      products: []
     }
   },
   async mounted() {
+    this.$eventBus.$on('cartadd', e => {
+      this.notifVisible = true
+      this.$forceUpdate()
+    })
+
     this.slides = await API.getSliderImages()
+    this.authors = await API.getAuthors()
+    this.authors = this.authors.sort(e => Math.random() - 0.5).slice(0, 2)
+    this.posts = await API.getPosts(-1, -1)
+    this.products = await API.getProducts(-1, -1)
   },
   components: {
     TopHeader,
@@ -38,13 +56,14 @@ export default {
     LastPosts,
     Goods,
     Reviews,
-    Instagram
+    Instagram,
+    Notification
   }
 }
 </script>
 
-<style lang="scss">
-@import '../assets/globals.scss';
+<style lang="scss" scoped>
+@import '../assets/lks-fw/lks-fw.scss';
 .inst {
   margin: 40px 0;
 }

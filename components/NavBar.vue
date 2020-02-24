@@ -11,7 +11,9 @@
         img(src='/images/logo-pinterest.svg', alt='')
     ul.links
       li(v-for='link in links', :key='link.url')
-        nuxt-link(:to='{path: link.url}')
+        nuxt-link(:to='{path: link.url}' v-if="!isExternal(link.url)")
+          | {{ link.name }}
+        a(:href='link.url' v-if="isExternal(link.url)")
           | {{ link.name }}
     ul.controls
       li
@@ -34,12 +36,18 @@ export default {
 
   async mounted() {
     this.links = await API.getMenuEntries()
+  },
+
+  methods: {
+    isExternal(url: String) {
+      return url.search(/http(s?):\/\//) > -1
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/globals.scss';
+@import '../assets/lks-fw/lks-fw.scss';
 
 ul {
   list-style-type: none;
@@ -100,6 +108,9 @@ nav > ul {
     }
     & > .links {
       order: 2;
+      & > * {
+        font-size: 80%;
+      }
     }
   }
 }

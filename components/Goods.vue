@@ -1,36 +1,19 @@
 <template lang="pug">
   section
     .ct
-      GoodCard(
-        image="https://rosinevolution.com/wp-content/uploads/2017/09/rosin-collection-paper.jpg"
-        date="2019 Jan 12"
-        text="Hello world"
-        caption="Top text"
-      )
-      GoodCard(
-        image="https://rosinevolution.com/wp-content/uploads/2017/09/rosin-collection-paper.jpg"
-        date="2019 Jan 12"
-        text="Hello world"
-        caption="Top text"
-      )
-      GoodCard(
-        image="https://rosinevolution.com/wp-content/uploads/2017/09/rosin-collection-paper.jpg"
-        date="2019 Jan 12"
-        text="Hello world"
-        caption="Top text"
-      )
-      GoodCard(
-        image="https://rosinevolution.com/wp-content/uploads/2017/09/rosin-collection-paper.jpg"
-        date="2019 Jan 12"
-        text="Hello world"
-        caption="Top text"
-      )
+      div(v-for="good in goods")
+        GoodCard(
+          :good="good"
+        )
 </template>
 
 <script lang="ts">
 import GoodCard from '../components/GoodCard.vue'
 import AuthorCard from '../components/AuthorCard.vue'
 export default {
+  props: {
+    goods: Array
+  },
   components: {
     GoodCard,
     AuthorCard
@@ -39,7 +22,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/globals.scss';
+@import '../assets/lks-fw/lks-fw.scss';
 section {
   .ct {
     justify-content: center;

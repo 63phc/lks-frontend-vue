@@ -3,7 +3,7 @@
     div.left-side
     div.mid-side
       h2 @littleknitsstory
-      Button.button Follow
+      Button.lks-btn-main Follow
     div.right-side
 </template>
 
@@ -16,8 +16,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import '../assets/globals.scss';
+<style lang="scss" scoped>
+@import '../assets/lks-fw/lks-fw.scss';
 .instagram {
   .mid-side {
     display: flex;
@@ -27,13 +27,6 @@ export default {
     h2 {
       line-height: 2;
       font-weight: normal;
-    }
-    .button {
-      background: $color-main;
-      color: #fff;
-      &:hover {
-        background: darken($color-main, 1.5);
-      }
     }
   }
   min-height: 200px;

@@ -1,0 +1,53 @@
+<template lang="pug">
+  div.modal-shadow.lks-flex.lks-flex-jcc.lks-flex-aic(v-show="visible")
+    .modal-modal
+      .modal-title.lks-flex
+        h3.lks-font-normal.lks-heading {{ title }}
+        .lks-mod-pointer.modal-close(@click="visible = false") &times;
+      .modal-body
+        slot
+</template>
+
+<script lang="typescript">
+
+export default {
+  props: {
+    visible: {
+      type: Boolean,
+      default: true
+    },
+    title: {
+      type: String,
+      default: ""
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.modal-modal {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  background: #fff;
+}
+.modal-body {
+  padding: 10px;
+}
+.modal-shadow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 4;
+}
+.modal-title {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  line-height: 2;
+  text-align: center;
+  h3 {
+    flex: 1;
+  }
+}
+</style>

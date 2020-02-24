@@ -1,45 +1,86 @@
 <template lang="pug">
-  Card.good-card
-    .thumbnail(:style='`background-image: url(${image});`')
+  Card.good-card.lks-card-floating
+    .controls
+      .control(@click="addToCart")
+        img(src="/images/shopping-bag.svg")
+      .control
+        img(src="/images/heart.svg")
+    .thumbnail(:style='`background-image: url(${good.image_preview});`')
     .good-info
-      p.good-caption {{ caption }}
+      p.good-caption {{ good.caption }}
       .color
         span Цвет
-        .color-circle(style="background: rgba(255, 0, 0, 0.1);")
-          .color-circle-in(style="background: red;")
-      p.good-price 15 000р
+        .lks-color-circle
+          .lks-color-circle-color(:style="`background: ${good.colors[0]};`")
+        p.good-price {{ good.price }} 
+    nuxt-link.quick-purchase(:to="`/product/${good.slug}`")
+      ButtonIcon.lks-btn-icon-bordered.quick-purchase-btn(icon="/images/lightning.svg") Быстрый заказ
 </template>
 
 <script lang="ts">
+import { Good } from '../assets/models.ts'
+import ButtonIcon from './ButtonIcon.vue'
 export default {
   props: {
-    image: {
-      type: String,
-      default: ''
-    },
-    date: {
-      type: String,
-      default: ''
-    },
-    caption: {
-      type: String,
-      default: ''
-    },
-    text: {
-      type: String,
-      default: ''
+    good: Good
+  },
+  methods: {
+    addToCart() {
+      this.$eventBus.$emit('cartadd', this.good)
     }
+  },
+  components: {
+    ButtonIcon
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/lks-fw/lks-fw.scss';
 .good-card {
-  box-shadow: 10px 20px 30px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  border-radius: 10px;
-  height: 100%;
+  position: relative;
+  overflow: hidden;
+  .controls {
+    position: absolute;
+    transition: 0.4s right;
+    right: -100%;
+    .control {
+      margin: 10px;
+      border-radius: 100px;
+      width: 35px;
+      height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: $color-main;
+      img {
+        filter: brightness(10);
+      }
+    }
+  }
+  .quick-purchase {
+    left: 0;
+    right: 0;
+    display: flex;
+    transition: 0.5s bottom;
+    padding: 10px;
+    .quick-purchase-btn {
+      width: 100%;
+    }
+    background: linear-gradient(to top, #fff, transparent);
+    position: absolute;
+    bottom: -100%;
+  }
+  &:hover {
+    .controls {
+      right: 0;
+    }
+    .quick-purchase {
+      bottom: 0;
+    }
+  }
   .good-info {
     padding: 10px;
   }

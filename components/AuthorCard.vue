@@ -1,33 +1,41 @@
 <template lang="pug">
-  Card.author-card
+  Card.author-card.lks-card-floating
     img(src="/images/circles.svg").circles
-    div(style="background-image: url(https://upload.wikimedia.org/wikipedia/commons/6/61/Trappista_cheese_original.jpg);").author-img
+    div(:style="`background-image: url(${author.avatar})`").author-img
     h2 
       | Об
       br 
       | авторе
     .social
-      img(src="/images/logo-vk.svg")
-      img(src="/images/logo-facebook.svg")
-      img(src="/images/logo-instagram.svg")
-      img(src="/images/logo-vk.svg")
+      div(v-if="author.vk_profile")
+        img(src="/images/logo-vk.svg")
+      div(v-if="author.vk_profile")
+        img(src="/images/logo-facebook.svg")
+      div(v-if="author.vk_profile")
+        img(src="/images/logo-instagram.svg")
+      div(v-if="author.vk_profile")
+        img(src="/images/logo-telegram.svg")
     .bottom
-      b Authour hosdhfjshdfiajs
-      p klsflasjdf ;lajsdfklj aslkjdf lkasjd lsdj
+      b {{ `${author.first_name} ${author.last_name}` }}
+      p {{ author.about }}
 </template>
 
 <script lang="ts">
-export default {}
+import { Author } from '../assets/models.ts'
+
+export default {
+  props: {
+    author: Author
+  }
+}
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/globals.scss';
+@import '../assets/lks-fw/lks-fw.scss';
 
 .author-card {
   padding: 20px;
-  border-radius: 10px;
   background: $color-main;
-  box-shadow: 20px 10px 30px rgba(0, 0, 0, 0.15);
   color: #fff;
   position: relative;
   z-index: 1;
@@ -54,8 +62,13 @@ export default {}
     font-size: 16px;
     position: absolute;
     bottom: 0;
+    max-height: 30%;
+    overflow: auto;
     padding: 10px;
     right: 0;
+    &::-webkit-scrollbar {
+      display: none;
+    }
     @media screen and (max-width: 800px) {
       left: 70px;
     }

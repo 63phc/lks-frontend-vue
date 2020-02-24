@@ -8,7 +8,8 @@ header
     img(src='/images/patch.svg', alt='')
   .brand
     p.name Блог и магазин по вязанию
-    h1.heading LITTLE KNITS STORY
+    h1.heading 
+      nuxt-link(to="/" ) LITTLE KNITS STORY
 </template>
 
 <script>
@@ -16,7 +17,7 @@ export default {}
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/globals.scss';
+@import '../assets/lks-fw/lks-fw.scss';
 
 #lang {
   background: $color-main;
@@ -46,7 +47,9 @@ header {
   .heading {
     font-size: 36px;
     text-transform: uppercase;
-    color: #8a8e99;
+    a {
+      color: #8a8e99;
+    }
   }
 }
 .lang-switch {

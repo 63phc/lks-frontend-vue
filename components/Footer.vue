@@ -1,6 +1,6 @@
 <template lang="pug">
   footer
-    .container
+    .lks-container.lks-flex.lks-flex-col
       nav
         div
           h2 Навигация
@@ -22,18 +22,18 @@
       p.subtitle
         | Мы проводим специальные акции для наших клиентов. оформите подписку и мы
         | будем держать вас в курсе
-      .buttons-social
-        .btn
-          img(src='/images/logo-facebook.svg', alt='f')
-        .btn
-          img(src='/images/logo-instagram.svg', alt='i')
-        .btn
-          img(src='/images/logo-vk.svg', alt='vk')
-        .btn
-          img(src='/images/logo-pinterest.svg', alt='[')
+      .buttons-social.lks-flex
+        .lks-btn-social
+          img.lks-btn-social-icon(src='/images/logo-facebook.svg', alt='f')
+        .lks-btn-social
+          img.lks-btn-social-icon(src='/images/logo-instagram.svg', alt='i')
+        .lks-btn-social
+          img.lks-btn-social-icon(src='/images/logo-vk.svg', alt='vk')
+        .lks-btn-social
+          img.lks-btn-social-icon(src='/images/logo-pinterest.svg', alt='[')
     hr
-    .container
-      .copyright
+    .lks-container
+      .copyright.lks-flex
         p Little Knits Story 2017 | All Rights Reserved
         img(src='/images/cactus-logo.svg', alt='Cactus Vision')
         p Политика конфеденциальности
@@ -50,14 +50,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/globals.scss';
+@import '../assets/lks-fw/lks-fw.scss';
 
 footer {
   border-top: 1px solid #e5e5e5;
-  & > .container {
-    display: flex;
-    flex-direction: column;
-  }
   hr {
     border: 0.5px solid #e5e5e5;
   }
@@ -122,7 +118,7 @@ footer {
   }
   .subtitle {
     align-self: center;
-    color: #c4c4c4;
+    color: $color-shaded;
     width: 30%;
     text-align: center;
 
@@ -131,33 +127,15 @@ footer {
     }
   }
   .buttons-social {
-    display: flex;
     width: 300px;
     margin: 24px 0;
     justify-content: space-between;
     align-self: center;
-    .btn {
-      width: 50px;
-      height: 50px;
-      background: #3e4148;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 40px;
-      img {
-        filter: brightness(2);
-      }
-      &:hover {
-        background: $color-main;
-        cursor: pointer;
-      }
-    }
   }
   .copyright {
-    display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #c4c4c4;
+    color: $color-shaded;
     margin: 30px 0;
     @media screen and (max-width: 800px) {
       flex-direction: column;

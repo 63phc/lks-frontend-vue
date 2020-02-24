@@ -1,8 +1,8 @@
 <template lang="pug">
-  Button
-    .inner-text
+  Button.lks-btn-icon
+    .lks-btn-icon-text
       slot
-    .btn-icon
+    .lks-btn-icon-icon
       img(:src='icon', alt='Icon not found')
 </template>
 
@@ -23,23 +23,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/globals.scss';
-
-.btn {
-  padding: 4px;
-  display: inline-flex;
-  justify-content: space-between;
-  .btn-icon {
-    box-sizing: border-box;
-    background: $color-main;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 300px;
-    width: 40px;
-  }
-  .inner-text {
-    padding: 10px 20px;
-  }
-}
+@import '../assets/lks-fw/lks-fw.scss';
 </style>
