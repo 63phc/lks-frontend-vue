@@ -1,6 +1,6 @@
 <template lang="pug">
 header
-  .lang-switch
+  //- .lang-switch
     select#lang(name='lang')
       option(value='ru-RU') Ru
       option(value='en-US') En

@@ -31,9 +31,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-    './plugins/event-bus.ts'
-  ],
+  plugins: ['./plugins/event-bus.ts'],
 
   /*
   ** Nuxt.js modules

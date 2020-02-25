@@ -1,32 +1,40 @@
 <template lang="pug">
-  .item.lks-flex.lks-flex-jcsb
-    .picture(style="background-image: url(/images/patch.svg)")
+  .item.lks-flex.lks-flex-jcsb(v-if="product")
+    .picture(:style="`background-image: url(${product.image_preview})`")
     .description.lks-flex.lks-flex-jscb.lks-flex-col
-      .title {{ name }}
-      .article Артикул: {{ article }}
+      .title {{ product.title }}
+      //- .article Артикул:  product.around 
       .color.lks-flex.lks-flex-jcsb
-        span Цвет
+        span Цвет &nbsp;
         .lks-color-circle
-          .lks-color-circle-color(:style="`background-color: ${color};`")
+          .lks-color-circle-color(:style="`background-color: ${product.colors[0]};`")
     .control.lks-flex
-      .add +
-      .counter {{ count }}
-      .sub -
+      .add.lks-mod-pointer(@click="add") +
+      .counter {{ product.count }}
+      .sub.lks-mod-pointer(@click="subtract") -
     .price.lks-flex.lks-flex-jcsb.lks-flex-aic
       span Стоимость:
-      .lks-price-now {{ price }}
+      .lks-price-now {{ product.price }}
       img(src="/images/ruble.svg")
-      .remove x
+      .remove(@click="$emit('remove', product)") x
 </template>
 
 <script lang="typescript">
+import { Product } from '../assets/models.ts'
 export default {
   props: {
-    name: String,
-    article: String,
-    color: String,
-    count: Number,
-    price: Number
+    product: Product
+  },
+  methods: {
+    add() {
+      this.product.count += 1
+      this.$forceUpdate()
+    },
+    subtract() {
+      if (this.product.count > 1) {
+        this.product.count -= 1
+      }
+    }
   }
 }
 </script>
@@ -36,6 +44,9 @@ export default {
 .item {
   margin-bottom: 15px;
   @media screen and (max-width: 936px) {
+    .color {
+      justify-content: flex-start;
+    }
     padding-top: 20px;
     flex-direction: column;
     & > * {
@@ -50,6 +61,9 @@ export default {
   .picture {
     height: 120px;
     width: 120px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: top;
   }
   .description {
     justify-content: space-around;

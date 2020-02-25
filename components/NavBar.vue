@@ -1,6 +1,6 @@
 <template lang="pug">
   nav
-    ul.social
+    //- ul.social
       li
         img(src='/images/logo-vk.svg', alt='')
       li
@@ -16,12 +16,14 @@
         a(:href='link.url' v-if="isExternal(link.url)")
           | {{ link.name }}
     ul.controls
+      //- li
+      //-   img(src='/images/log-out.svg', alt='')
       li
-        img(src='/images/log-out.svg', alt='')
+        nuxt-link(to="/cart")
+          img(src='/images/shopping-bag.svg', alt='')
       li
-        img(src='/images/shopping-bag.svg', alt='')
-      li
-        img(src='/images/heart.svg', alt='')
+        nuxt-link(to="/saved")
+          img(src='/images/heart.svg', alt='')
 </template>
 
 <script lang="ts">

@@ -1,6 +1,6 @@
 <template lang="pug">
   Card.post-card
-    .thumbnail(:style='`background-image: url(${image});`')
+    .thumbnail(:style='`background-image: url(${post.image_preview});`')
     .post-info
       p.post-date
         small {{ post.created_at }}
@@ -8,7 +8,8 @@
         strong {{ post.title }}
       p.post-text {{ post.content.replace(/<\/?[^>]+(>|$)/g, "").split(" ").slice(0, 25).join(" ") }}...
       .lks-flex.lks-flex-jcc.read-more
-        Button.lks-btn-main.lks-mod-text-center Читать
+        nuxt-link(:to="'/blog/'+post.slug")
+          Button.lks-btn-main.lks-mod-text-center Читать
 </template>
 
 <script lang="ts">
@@ -16,13 +17,12 @@ import Button from '../components/Button.vue'
 import Card from '../components/Card.vue'
 import { Post } from '../assets/models.ts'
 export default {
-  props: {
-    post: Post
-  },
-
   components: {
     Button,
     Card
+  },
+  props: {
+    post: Post
   }
 }
 </script>

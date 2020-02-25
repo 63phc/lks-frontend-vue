@@ -9,15 +9,14 @@
 <script lang="ts">
 import Button from './Button.vue'
 export default {
+  components: {
+    Button
+  },
   props: {
     icon: {
       type: String,
       default: ''
     }
-  },
-
-  components: {
-    Button
   }
 }
 </script>

@@ -1,19 +1,22 @@
 <template lang="pug">
   Card.good-card.lks-card-floating
     .controls
-      .control(@click="addToCart")
+      .control.lks-mod-pointer(@click="addToCart")
         img(src="/images/shopping-bag.svg")
-      .control
+      .control.lks-mod-pointer(@click="saveProduct")
         img(src="/images/heart.svg")
-    .thumbnail(:style='`background-image: url(${good.image_preview});`')
+    nuxt-link(:to="`/product/${good.slug}`" style="text-decoration: underline")
+      .thumbnail(:style='`background-image: url(${good.image_preview});`')
     .good-info
-      p.good-caption {{ good.caption }}
-      .color
-        span Цвет
-        .lks-color-circle
-          .lks-color-circle-color(:style="`background: ${good.colors[0]};`")
-        p.good-price {{ good.price }} 
-    nuxt-link.quick-purchase(:to="`/product/${good.slug}`")
+      p.good-caption {{ good.title }}
+      .color.lks-flex.lks-flex-jcsb
+        div.lks-flex
+          span Цвет
+          .lks-color-circle
+            .lks-color-circle-color(:style="`background: ${good.colors[0]};`")
+        p.good-price.lks-flex.lks-flex-aic {{ parseInt(good.price) }} 
+          img(src="/images/ruble.svg" style="filter: brightness(0.5)")
+    .quick-purchase(@click="quickBuy")
       ButtonIcon.lks-btn-icon-bordered.quick-purchase-btn(icon="/images/lightning.svg") Быстрый заказ
 </template>
 
@@ -21,16 +24,22 @@
 import { Good } from '../assets/models.ts'
 import ButtonIcon from './ButtonIcon.vue'
 export default {
+  components: {
+    ButtonIcon
+  },
   props: {
     good: Good
   },
   methods: {
     addToCart() {
       this.$eventBus.$emit('cartadd', this.good)
+    },
+    saveProduct() {
+      this.$eventBus.$emit('saved', this.good)
+    },
+    quickBuy() {
+      this.$eventBus.$emit('quickbuy', this.good)
     }
-  },
-  components: {
-    ButtonIcon
   }
 }
 </script>
@@ -103,7 +112,6 @@ export default {
   }
   .color {
     display: flex;
-    float: right;
     & > span {
       margin-right: 10px;
     }

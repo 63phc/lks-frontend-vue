@@ -1,3 +1,4 @@
+
 <template lang="pug">
   Card.lks-card-floating.notif(v-show="visible")
     .lks-paragraph
@@ -9,6 +10,9 @@
 import Card from '../components/Card.vue'
 
 export default {
+  components: {
+    Card
+  },
   props: {
     visible: Boolean
   },
@@ -16,11 +20,9 @@ export default {
     visible: function() {
       setTimeout(() => {
         this.visible = false
+        this.$emit('hide')
       }, 5000)
     }
-  },
-  components: {
-    Card
   }
 }
 </script>

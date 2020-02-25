@@ -4,34 +4,14 @@
     NavBar
     .lks-container
       .featured
-        BlogSlider
+        BlogSlider(:posts="posts")
       .posts
-        PostCard.post(
-          image="https://rosinevolution.com/wp-content/uploads/2017/09/rosin-collection-paper.jpg"
-          date="2019 Jan 12"
-          text="Hello world"
-          caption="Top text"
-        )
-        PostCard.post(
-          image="https://rosinevolution.com/wp-content/uploads/2017/09/rosin-collection-paper.jpg"
-          date="2019 Jan 12"
-          text="Hello world"
-          caption="Top text"
-        )
-        PostCard.post(
-          image="https://rosinevolution.com/wp-content/uploads/2017/09/rosin-collection-paper.jpg"
-          date="2019 Jan 12"
-          text="Hello world"
-          caption="Top text"
-        )
-        PostCard.post(
-          image="https://rosinevolution.com/wp-content/uploads/2017/09/rosin-collection-paper.jpg"
-          date="2019 Jan 12"
-          text="Hello world"
-          caption="Top text"
-        )
+        div(v-for="post in posts").post
+          PostCard(
+            :post="post"
+          )
 
-        p.lks-see-more Смотреть еще
+        p(@click="seeMore").lks-see-more Смотреть еще
     Footer
 </template>
 
@@ -41,7 +21,7 @@ import Footer from '../../components/Footer.vue'
 import BlogSlider from '../../components/BlogSlider.vue'
 import PostCard from '../../components/PostCard.vue'
 import NavBar from '../../components/NavBar.vue'
-
+import * as API from '../../assets/api.ts'
 export default {
   components: {
     TopHeader,
@@ -49,6 +29,23 @@ export default {
     BlogSlider,
     NavBar,
     PostCard
+  },
+  async mounted() {
+    this.posts = await API.getPosts(10, this.offset)
+    this.offset = 10
+    this.$forceUpdate()
+  },
+  methods: {
+    async seeMore() {
+      this.posts = await API.getPosts(10 + this.offset, 0)
+      this.offset += 10
+    }
+  },
+  data() {
+    return {
+      posts: [],
+      offset: 0
+    }
   }
 }
 </script>
@@ -58,7 +55,7 @@ export default {
 .posts {
   margin-top: 30px;
   .post {
-    display: inline-flex;
+    display: inline-block;
     margin: 10px;
     width: 32%;
     width: calc(33% - 20px);

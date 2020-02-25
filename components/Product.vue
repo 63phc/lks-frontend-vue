@@ -1,41 +1,42 @@
 <template lang="pug">
   Card.product.lks-flex.lks-flex-jcsb
     .product-share
-      .lks-btn-social
+      a(:href="`https://www.facebook.com/sharer/sharer.php?u=${fullUrl}`").lks-btn-social
         img.lks-btn-social-icon(src="/images/logo-facebook.svg")
-      .lks-btn-social
+      a(:href="`https://www.instagram.com/?url=${fullUrl}`").lks-btn-social
         img.lks-btn-social-icon(src="/images/logo-instagram.svg")
-      .lks-btn-social
+      a(:href="`https://vk.com/share.php?url=${fullUrl}`").lks-btn-social
         img.lks-btn-social-icon(src="/images/logo-vk.svg")
-    .product-image(style="background-image: url(https://occ-0-586-590.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABceL_FxRrEg1Jm2LyiYugCJwBkJ2v4GmCBWQ_JNLBXCu1tpO1CMoOxGk9R74PCzrCR0FLIrjdgZlyIHnZEuiHArY6C9G.jpg?r=a82)")
+    .product-image(:style="`background-image: url(${product.image_preview})`")
     .product-info
       .lks-flex.lks-flex-aic.lks-flex-jcsb.product-name
         div
           strong.lks-product-name Cheburashka
-          strong.sale.lks-sale -15%
-        ButtonIcon.lks-btn-icon-main(icon='/images/instagram-purple.svg') Подписатся на инстаграм 
-      p.lks-product-text.product-text Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений в домашних условиях.
+          strong.sale.lks-sale -{{ Math.round(parseInt(product.sale)/(parseInt(product.price)+parseInt(product.sale))*100) }}%
+        a(href="https://www.instagram.com/katyaanaprienko/")
+          ButtonIcon.lks-btn-icon-main(icon='/images/instagram-purple.svg') Подписатся на инстаграм 
+      p.lks-product-text.product-text(v-html="product.description")
       .price.lks-flex.lks-flex-jcsb.lks-flex-aic
         .product-amount.lks-flex.lks-flex-aic
-          .subtract.lks-mod-pointer.lks-roundpad -
-          span.counter 1
-          .add.lks-mod-pointer.lks-roundpad +
+          .subtract.lks-mod-pointer.lks-roundpad(@click="subtract") -
+          span.counter {{ count }}
+          .add.lks-mod-pointer.lks-roundpad(@click="add") +
         .product-price-tag.lks-flex.lks-flex-aic.lks-flex-jcsb
           .price-label.lks-flex.lks-flex-jcsb
             img(src="/images/ruble.svg")
-            .lks-price-now 2555
-            strike.lks-price-old 2955
+            .lks-price-now {{ parseInt(product.price) }}
+            strike.lks-price-old {{ parseInt(product.price) + parseInt(product.sale)}}
           .product-color
             .lks-color-circle
-              .lks-color-circle-color(style="background: red")
+              .lks-color-circle-color(:style="`background: ${product.colors[0]}`")
           .product-size.lks-flex.lks-aic
             img(src="/images/height.svg")
-            .lks-product-size 40 см
-          Button.lks-btn-main.favorite.lks-flex.lks-flex-aic.lks-flex-jcc
+            .lks-product-size {{ product.properties.height }} см
+          Button(@click.native="$eventBus.$emit('saved', product)").lks-btn-main.favorite.lks-flex.lks-flex-aic.lks-flex-jcc
             img(src="/images/heart.svg")
       .controls.lks-mod-text-center.lks-flex
-        ButtonIcon.lks-btn-icon-main(icon="/images/bolt-pink.svg") Быстрый заказ
-        ButtonIcon.lks-btn-icon-main(icon="/images/cart-pink.svg") Добавить в корзину
+        ButtonIcon.lks-btn-icon-main(icon="/images/bolt-pink.svg" @click.native="$eventBus.$emit('quickbuy', product)") Быстрый заказ
+        ButtonIcon.lks-btn-icon-main(icon="/images/cart-pink.svg" @click.native="$eventBus.$emit('cartadd', product)") Добавить в корзину
 
 </template>
 
@@ -43,12 +44,36 @@
 import Card from '../components/Card.vue'
 import ButtonIcon from '../components/ButtonIcon'
 import Button from '../components/Button'
+import { Product } from '../assets/models.ts'
 
 export default {
   components: {
     Card,
     ButtonIcon,
     Button
+  },
+  data() {
+    return {
+      count: 1
+    }
+  },
+  methods: {
+    add() {
+      this.count += 1
+    },
+    subtract() {
+      if (this.count > 1) {
+        this.count -= 1
+      }
+    }
+  },
+  computed: {
+    fullUrl() {
+      return window.location
+    }
+  },
+  props: {
+    product: Product
   }
 }
 </script>
@@ -134,7 +159,7 @@ export default {
     }
   }
   .product-price-tag {
-    width: 400px;
+    width: 420px;
     padding: 24px 20px;
     background: $color-main;
     border-radius: 10px;

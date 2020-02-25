@@ -11,12 +11,12 @@
 import GoodCard from '../components/GoodCard.vue'
 import AuthorCard from '../components/AuthorCard.vue'
 export default {
-  props: {
-    goods: Array
-  },
   components: {
     GoodCard,
     AuthorCard
+  },
+  props: {
+    goods: Array
   }
 }
 </script>
@@ -30,7 +30,7 @@ section {
     @media screen and (max-width: 900px) {
       display: block;
       & > * {
-        display: inline-flex;
+        display: inline-block;
         width: 45%;
       }
     }

@@ -3,7 +3,7 @@
     .modal-modal
       .modal-title.lks-flex
         h3.lks-font-normal.lks-heading {{ title }}
-        .lks-mod-pointer.modal-close(@click="visible = false") &times;
+        .lks-mod-pointer.modal-close(@click="visible = false; $emit('close')") &times;
       .modal-body
         slot
 </template>
@@ -28,6 +28,16 @@ export default {
 .modal-modal {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   background: #fff;
+  @media screen and (max-width: 800px) {
+    height: 100%;
+    widows: 100%;
+    .pmodal-product-data {
+      flex-direction: column;
+    }
+    .pmodal-fields {
+      flex-direction: column;
+    }
+  }
 }
 .modal-body {
   padding: 10px;

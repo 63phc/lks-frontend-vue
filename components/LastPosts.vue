@@ -19,13 +19,13 @@ import PostCard from '../components/PostCard.vue'
 import AuthorCard from '../components/AuthorCard.vue'
 import { Author } from '../assets/models.ts'
 export default {
-  props: {
-    author: Author,
-    posts: Array // Of posts
-  },
   components: {
     PostCard,
     AuthorCard
+  },
+  props: {
+    author: Author,
+    posts: Array // Of posts
   }
 }
 </script>

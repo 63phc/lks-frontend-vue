@@ -5,24 +5,27 @@
         div
           h2 Навигация
           ul
-            li Блог
-            li Магазин
-            li О нас
-            li Портфолио
-            li Контакты
+            li(v-for='link in links', :key='link.url')
+              nuxt-link(:to='{path: link.url}' v-if="!isExternal(link.url)")
+                | {{ link.name }}
+              a(:href='link.url' v-if="isExternal(link.url)")
+                | {{ link.name }}
         div
           h2 Личный кабинет
           ul
-            li Войти
-            li Корзина
-            li Сохраненные товары
+            li
+              nuxt-link(to="/login") Войти
+            li 
+              nuxt-link(to="/cart") Корзина
+            li 
+              nuxt-link(to="/saved") Сохраненные товары
       .subscribe-input
         input(v-model='email', type='text', placeholder='Ваш E-mail')
-        button Подписатся
+        button(@click="subscribe") Подписатся
       p.subtitle
         | Мы проводим специальные акции для наших клиентов. оформите подписку и мы
         | будем держать вас в курсе
-      .buttons-social.lks-flex
+      //- .buttons-social.lks-flex
         .lks-btn-social
           img.lks-btn-social-icon(src='/images/logo-facebook.svg', alt='f')
         .lks-btn-social
@@ -40,10 +43,31 @@
 </template>
 
 <script lang="ts">
+import * as API from '../assets/api.ts'
+
 export default {
   data() {
     return {
-      email: ''
+      email: '',
+      links: []
+    }
+  },
+  async mounted() {
+    this.links = await API.getMenuEntries()
+  },
+  methods: {
+    async subscribe() {
+      const response = await API.subscribe(this.email)
+      if (response.success) {
+        this.$eventBus.$emit('notify', 'Успешно подписаны')
+      } else if (response.error === 'EMAIL_INVALID') {
+        this.$eventBus.$emit('notify', 'Неправильный Email')
+      } else if (response.error === 'EMAIL_TAKEN') {
+        this.$eventBus.$emit('notify', 'Уже подписаны')
+      }
+    },
+    isExternal(url: String) {
+      return url.search(/http(s?):\/\//) > -1
     }
   }
 }

@@ -47,7 +47,10 @@ interface Product {
   categories: Array<Category>,
   author: string,
   image_preview: string,
-  image_alt: string
+  image_alt: string,
+  properties: any,
+  count: number,
+  id: number
 }
 
 interface Category {
@@ -60,5 +63,6 @@ export {
   MenuEntry,
   Author,
   Post,
-  Product
+  Product,
+  Category 
 }

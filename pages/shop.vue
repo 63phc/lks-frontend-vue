@@ -7,17 +7,14 @@
         .lks-breadcrumb-path Главная / Магазин / Мягкие игрушки
       .lks-flex.shop-ui
         aside
-          CategorizedMenu
-          PriceRange.gap
-          ColorCard.gap
-          Button.lks-btn-bordered.lks-mod-fill.lks-mod-text-center.gap Отчистить фильтр
+          CategorizedMenu(:categories="categories" @select="setCategory")
+          // PriceRange.gap
+          // ColorCard.gap
+          Button.lks-btn-bordered.lks-mod-fill.lks-mod-text-center.gap(@click.native="clearFilter") Отчистить фильтр
         main
-          GoodCard.product
-          GoodCard.product
-          GoodCard.product
-          GoodCard.product
-          GoodCard.product
-          p.lks-see-more Смотреть еще
+          div(v-for="product in products").product
+            GoodCard(:good="product")
+          p(@click="loadMore").lks-see-more Смотреть еще
     Footer
 </template>
 
@@ -30,6 +27,7 @@ import GoodCard from '../components/GoodCard.vue'
 import PriceRange from '../components/PriceRange.vue'
 import ColorCard from '../components/ColorCard.vue'
 import Button from '../components/Button.vue'
+import * as API from '../assets/api.ts'
 
 export default {
   components: {
@@ -41,6 +39,45 @@ export default {
     PriceRange,
     ColorCard,
     Button
+  },
+  async mounted() {
+    this.productsRaw = await API.getProducts(10, this.offset)
+    this.categories = await API.getCategories()
+    this.offset = 10
+  },
+  methods: {
+    async loadMore() {
+      this.productsRaw = await API.getProducts(10 + this.offset, 0)
+      this.offset += 10
+    },
+    setCategory(e) {
+      this.categorySelected = e
+    },
+    clearFilter() {
+      this.categorySelected = ''
+      this.$forceUpdate()
+    }
+  },
+  computed: {
+    products() {
+      if (this.categorySelected === '') {
+        return this.productsRaw
+      }
+      return this.productsRaw.filter(
+        e => e.categories.findIndex(g => g.slug === this.categorySelected) > -1
+      )
+    },
+    priceMax() {
+      return Math.max(...this.productsRaw.map(e => parseInt(e.price)))
+    }
+  },
+  data() {
+    return {
+      categorySelected: '',
+      productsRaw: [],
+      offset: 0,
+      categories: []
+    }
   }
 }
 </script>
@@ -73,7 +110,7 @@ export default {
       width: calc(33% - 20px);
       margin: 10px;
       min-width: 200px;
-      display: inline-flex;
+      display: inline-block;
     }
   }
 }

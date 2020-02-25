@@ -7,13 +7,13 @@
       br 
       | авторе
     .social
-      div(v-if="author.vk_profile")
+      a(v-if="author.vk_profile" :href="author.vk_profile.link")
         img(src="/images/logo-vk.svg")
-      div(v-if="author.vk_profile")
+      a(v-if="author.fb_profile" :href="author.fb_profile.link")
         img(src="/images/logo-facebook.svg")
-      div(v-if="author.vk_profile")
+      a(v-if="author.ig_profile" :href="author.ig_profile.link")
         img(src="/images/logo-instagram.svg")
-      div(v-if="author.vk_profile")
+      a(v-if="author.tg_profile" :href="author.tg_profile.link")
         img(src="/images/logo-telegram.svg")
     .bottom
       b {{ `${author.first_name} ${author.last_name}` }}

@@ -1,25 +1,30 @@
 <template lang="pug">
   Card.categorized-menu.lks-card-floating
     ul.categories
-      li.category
-        span Sample text
-        ul.subcategories
-          li.subcategory Doug
-          li.subcategory Dimmadome
-          li.subcategory The owner of
-          li.subcategory Dimmsdale
-      li.category.selected
-        span Menu entry 2
-        ul.subcategories
-          li.subcategory Doug
-          li.subcategory Dimmadome
-          li.subcategory The owner of
-          li.subcategory Dimmsdale
+      li(v-for="(category, index) in categories" @click="select(index)" :class="selected == index ? 'selected' : ''").category.lks-mod-pointer
+        span {{category.title}}
 </template>
 
 <script lang="ts">
 import Card from '../components/Card.vue'
 export default {
+  props: {
+    categories: {
+      type: Array,
+      default: () => []
+    }
+  },
+  methods: {
+    select(id) {
+      this.selected = id
+      this.$emit('select', this.categories[id].slug)
+    }
+  },
+  data() {
+    return {
+      selected: -1
+    }
+  },
   components: {
     Card
   }

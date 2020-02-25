@@ -17,12 +17,12 @@ import TopHeader from '../components/TopHeader.vue'
 import NavBar from '../components/NavBar.vue'
 import Footer from '../components/Footer.vue'
 export default {
-  props: ['error'],
   components: {
     TopHeader,
     NavBar,
     Footer
-  }
+  },
+  props: ['error']
 }
 </script>
 

@@ -7,37 +7,38 @@
         small.lks-breadcrumb-path Главная / Сохраненные товары
         h2.lks-heading.lks-font-normal Сохраненные товары
       .products
-        ProductModal.modal
-        GoodCard.product
-        GoodCard.product
-        GoodCard.product
-        GoodCard.product
-        GoodCard.product
+        .product(v-for="product in products").product
+          GoodCard(:good="product" @click.native="update")
     Footer
 </template>
 
 <script lang="ts">
-import * as API from '../assets/api.ts'
+import * as Storage from '../assets/storage.ts'
 import TopHeader from '../components/TopHeader.vue'
 import NavBar from '../components/NavBar.vue'
 import Footer from '../components/Footer.vue'
 import GoodCard from '../components/GoodCard.vue'
 import ProductModal from '../components/ProductModal.vue'
 export default {
-  data() {
-    return {
-      slides: []
-    }
-  },
-  async mounted() {
-    this.slides = await API.getSliderImages()
-  },
   components: {
     TopHeader,
     NavBar,
     Footer,
     GoodCard,
     ProductModal
+  },
+  data() {
+    return {
+      products: []
+    }
+  },
+  methods: {
+    update() {
+      this.products = Storage.get('saved')
+    }
+  },
+  mounted() {
+    this.products = Storage.get('saved')
   }
 }
 </script>
@@ -46,11 +47,19 @@ export default {
 @import '../assets/lks-fw/lks-fw.scss';
 .products {
   .product {
-    box-sizing: border-box;
-    width: calc(25% - 20px);
+    display: inline-block;
     margin: 10px;
+    width: 32%;
+    width: calc(33% - 20px);
     min-width: 200px;
-    display: inline-flex;
+    @media screen and (max-width: 825px) {
+      width: calc(50% - 20px);
+    }
+    @media screen and (max-width: 550px) {
+      width: 100%;
+      margin: 0;
+      margin-top: 20px;
+    }
   }
 }
 </style>
