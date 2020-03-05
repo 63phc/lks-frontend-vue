@@ -12,15 +12,20 @@
 import TopHeader from '../components/TopHeader.vue'
 import NavBar from '../components/NavBar.vue'
 import Footer from '../components/Footer.vue'
+import Instagram from '../components/Instagram.vue'
 import LastPosts from '../components/LastPosts.vue'
-export default {
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component({
   components: {
+    LastPosts,
     TopHeader,
     NavBar,
-    Footer,
-    LastPosts
+    Instagram,
+    Footer
   }
-}
+})
+export default class Authors extends Vue {}
 </script>
 
 <style lang="scss" scoped>

@@ -8,20 +8,18 @@
         slot
 </template>
 
-<script lang="typescript">
+<script lang="ts">
+import { Prop, Component, Vue } from 'nuxt-property-decorator'
 
-export default {
-  props: {
-    visible: {
-      type: Boolean,
-      default: true
-    },
-    title: {
-      type: String,
-      default: ""
-    }
-  }
+@Component
+export default class Modal extends Vue {
+  @Prop()
+  visible: Boolean = true
+  @Prop()
+  title: String = ''
 }
+
+Vue.component("Modal", Modal)
 </script>
 
 <style lang="scss" scoped>

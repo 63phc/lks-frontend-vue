@@ -9,11 +9,15 @@
 
 <script lang="ts">
 import Button from './Button.vue'
-export default {
+import { Component, Vue } from 'nuxt-property-decorator';
+@Component({
   components: {
     Button
   }
-}
+})
+export default class Instagram extends Vue {}
+
+Vue.component("Instagram", Instagram)
 </script>
 
 <style lang="scss" scoped>

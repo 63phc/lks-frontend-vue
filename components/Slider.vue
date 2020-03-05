@@ -10,41 +10,40 @@
         .side
           .circle
             div
-              h1 {{ slide.title }} asdfsdf
+              h1 {{ slide.title }}
               p {{ slide.subtitle }}
-              nuxt-link(to="/shop")
-                ButtonIcon(icon='/images/shopping-cart.svg') Перейти в каталог
+              nuxt-link(:to="localePath('/shop')")
+                ButtonIcon(icon='/images/shopping-cart.svg') {{ $t('main.slider_catalog')}}
 </template>
 
 <script lang="ts">
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import ButtonIcon from './ButtonIcon.vue'
+import * as models from '../assets/models'
 
-export default {
+@Component({
   components: {
     ButtonIcon
-  },
-  props: {
-    slides: {
-      type: Array,
-      required: true
-    }
-  },
-  data() {
-    return {
-      currentSlide: 0
-    }
-  },
-  methods: {
-    prevSlide() {
-      this.currentSlide -= 1
-      if (this.currentSlide < 0) this.currentSlide = this.slides.length - 1
-    },
-    nextSlide() {
-      this.currentSlide += 1
-      if (this.currentSlide >= this.slides.length) this.currentSlide = 0
-    }
+  }
+})
+export default class Slider extends Vue {
+  @Prop({ required: true })
+  slides!: Array<models.Slide>
+
+  currentSlide: number = 0
+  
+  prevSlide() {
+    this.currentSlide -= 1
+    if (this.currentSlide < 0) this.currentSlide = this.slides.length - 1
+  }
+
+  nextSlide() {
+    this.currentSlide += 1
+    if (this.currentSlide >= this.slides.length) this.currentSlide = 0
   }
 }
+
+Vue.component('Slider', Slider)
 </script>
 
 <style lang="scss" scoped>

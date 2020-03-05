@@ -1,30 +1,29 @@
 <template lang="pug">
   footer
-    .lks-container.lks-flex.lks-flex-col
+    form.lks-container.lks-flex.lks-flex-col(action="javascript:void(0)")
       nav
         div
-          h2 Навигация
+          h2 {{ $t('footer.navigation') }}
           ul
             li(v-for='link in links', :key='link.url')
-              nuxt-link(:to='{path: link.url}' v-if="!isExternal(link.url)")
+              nuxt-link(:to='localePath(link.url)' v-if="!isExternal(link.url)")
                 | {{ link.name }}
               a(:href='link.url' v-if="isExternal(link.url)")
                 | {{ link.name }}
         div
-          h2 Личный кабинет
+          h2 {{ $t('footer.personal_panel') }}
           ul
             li
-              nuxt-link(to="/login") Войти
+              nuxt-link(:to="localePath('/login')") {{ $t('footer.login') }}
             li 
-              nuxt-link(to="/cart") Корзина
+              nuxt-link(:to="localePath('/cart')") {{ $t('footer.cart') }}
             li 
-              nuxt-link(to="/saved") Сохраненные товары
+              nuxt-link(:to="localePath('/saved')") {{ $t('footer.saved') }}
       .subscribe-input
-        input(v-model='email', type='text', placeholder='Ваш E-mail')
-        button(@click="subscribe") Подписатся
+        input(v-model='email', type='text', :placeholder='$t("footer.email")')
+        button(@click="subscribe") {{ $t('footer.subscribe') }}
       p.subtitle
-        | Мы проводим специальные акции для наших клиентов. оформите подписку и мы
-        | будем держать вас в курсе
+        | {{ $t('footer.notice') }}
       //- .buttons-social.lks-flex
         .lks-btn-social
           img.lks-btn-social-icon(src='/images/logo-facebook.svg', alt='f')
@@ -39,38 +38,38 @@
       .copyright.lks-flex
         p Little Knits Story 2017 | All Rights Reserved
         img(src='/images/cactus-logo.svg', alt='Cactus Vision')
-        p Политика конфеденциальности
+        p {{ $t('footer.privacy_policy') }}
 </template>
 
 <script lang="ts">
-import * as API from '../assets/api.ts'
+import * as API from '../assets/api'
+import { Component, Vue } from 'nuxt-property-decorator'
+@Component
+export default class Footer extends Vue {
+  email: string = ''
+  links: Array<any> = []
 
-export default {
-  data() {
-    return {
-      email: '',
-      links: []
-    }
-  },
   async mounted() {
     this.links = await API.getMenuEntries()
-  },
-  methods: {
-    async subscribe() {
-      const response = await API.subscribe(this.email)
-      if (response.success) {
-        this.$eventBus.$emit('notify', 'Успешно подписаны')
-      } else if (response.error === 'EMAIL_INVALID') {
-        this.$eventBus.$emit('notify', 'Неправильный Email')
-      } else if (response.error === 'EMAIL_TAKEN') {
-        this.$eventBus.$emit('notify', 'Уже подписаны')
-      }
-    },
-    isExternal(url: String) {
-      return url.search(/http(s?):\/\//) > -1
+  }
+
+  async subscribe() {
+    const response = await API.subscribe(this.email)
+    if (response.success) {
+      (this as any).$eventBus.$emit('notify', (this as any).$t('notifications.email_success'))
+    } else if (response.error === 'EMAIL_INVALID') {
+      (this as any).$eventBus.$emit('notify', (this as any).$t('notifications.email_fail_invalid_email'))
+    } else if (response.error === 'EMAIL_TAKEN') {
+      (this as any).$eventBus.$emit('notify', (this as any).$t('notifications.email_fail_already_subscribed'))
     }
   }
+  
+  isExternal(url: String) {
+    return url.search(/http(s?):\/\//) > -1
+  }
 }
+
+Vue.component("Footer", Footer)
 </script>
 
 <style lang="scss" scoped>

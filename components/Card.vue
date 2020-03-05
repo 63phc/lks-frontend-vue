@@ -4,7 +4,14 @@
 </template>
 
 <script lang="ts">
-export default {}
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component
+export default class Card extends Vue {
+  
+}
+
+Vue.component('Card', Card)
 </script>
 
 <style lang="scss" scoped>

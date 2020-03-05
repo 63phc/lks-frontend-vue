@@ -7,7 +7,7 @@ export function get(key: string) {
 }
 
 export function push(arr_key: string, value: any) {
-  let a = get(arr_key)
+  const a = get(arr_key)
   a.push(value)
   set(arr_key, a)
 }

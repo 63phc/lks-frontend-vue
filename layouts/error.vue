@@ -5,10 +5,10 @@
     .lks-container
       h1.err {{error.statusCode}}
       p.error-subtitle(v-if="error.statusCode === 404")
-        | Not Found
+        | {{ $t('error.e404.error_type' )}}
       p.error-text(v-if="error.statusCode === 404")
-        | Страница на которую вы пытаетесь попасть, не существует или была удалена. Перейдите 
-        nuxt-link(to="/") на главную
+        | {{ $t('error.e404.subtitle' )}}
+        nuxt-link(:to="localePath('/')") {{ $t('error.e404.subtitle_link' )}}
     Footer
 </template>
 
@@ -16,14 +16,18 @@
 import TopHeader from '../components/TopHeader.vue'
 import NavBar from '../components/NavBar.vue'
 import Footer from '../components/Footer.vue'
-export default {
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component({
+  props: ['error'],
   components: {
     TopHeader,
     NavBar,
     Footer
-  },
-  props: ['error']
-}
+  }
+})
+export default class ErrorLayout extends Vue{}
+
 </script>
 
 <style lang="scss" scoped>

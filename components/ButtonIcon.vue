@@ -7,18 +7,19 @@
 </template>
 
 <script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import Button from './Button.vue'
-export default {
+@Component({
   components: {
     Button
-  },
-  props: {
-    icon: {
-      type: String,
-      default: ''
-    }
   }
+})
+export default class ButtonIcon extends Vue {
+  @Prop()
+  icon!: string
 }
+
+Vue.component('ButtonIcon', ButtonIcon)
 </script>
 
 <style lang="scss" scoped>

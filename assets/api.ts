@@ -1,23 +1,27 @@
 import axios from 'axios';
 import { Category, Product, Slide, MenuEntry, Author, Post } from './models';
+import * as Storage from './storage'
 
 const API_URL = "http://dev.backend.littleknitsstory.com/api/v1";
 const PLACEHOLDER_IMG_URL = "http://via.placeholder.com/600x200/";
 
 async function _simpleFetch(subdir: string, method: string = "GET", body: any = null, headers: any = {}) : Promise<any>
 {
-  let result = await fetch(`${API_URL}${subdir}`, {method: method, body: body, headers: headers}).then(e => {
+  let lang = Storage.get('lang');
+  if (lang === null) lang = 'ru'
+  headers["Accept-Language"] = lang;
+  const result = await fetch(`${API_URL}${subdir}`, {method: method, body: body, headers: headers}).then((e: any) => {
     return e.json()
-  }).then(e => {
-    return e; }).catch(e => {})
+  }).then((e: any) => {
+    return e; }).catch((e: any) => {})
   return result;
 }
 
 export async function getSliderImages() : Promise<Array<Slide>> 
 {
-  let result = await _simpleFetch("/sliders");
+  const result = await _simpleFetch("/sliders");
     
-  return result.results.map(e => Object({
+  return result.map((e: any) => Object({
     image_src: e.image_preview !== null ? e.image_preview : PLACEHOLDER_IMG_URL+(~~(Math.random()*500)), 
     image_alt: e.image_alt,
     title: e.title,
@@ -25,9 +29,10 @@ export async function getSliderImages() : Promise<Array<Slide>>
   }))
 }
 
-export async function getMenuEntries() : Promise<Array<MenuEntry>> { let result = await _simpleFetch("/menu");
+export async function getMenuEntries() : Promise<Array<MenuEntry>> { 
+  const result = await _simpleFetch("/menu");
 
-  return result.results.map(e => Object({
+  return result.results.map((e: any) => Object({
     name: e.name,
     url: e.url,
     is_active: e.is_active
@@ -36,9 +41,9 @@ export async function getMenuEntries() : Promise<Array<MenuEntry>> { let result 
 
 export async function getAuthors() : Promise<Array<Author>>
 {
-  let result = await _simpleFetch("/users")
+  const result = await _simpleFetch("/users")
 
-  return result.map(e => Object({
+  return result.map((e: any) => Object({
     first_name: e.first_name,
     last_name: e.last_name,
     avatar: e.avatar,
@@ -52,8 +57,8 @@ export async function getAuthors() : Promise<Array<Author>>
 
 export async function getPosts(limit: number = 0, offset: number = 0) : Promise<Array<Post>>
 {
-  let result = await _simpleFetch(`/posts/?limit=${limit}&offset=${offset}`)
-  return result.results.map(e => Object({
+  const result = await _simpleFetch(`/posts/?limit=${limit}&offset=${offset}`)
+  return result.results.map((e: any) => Object({
     title: e.title,
     slug: e.slug,
     content: e.content,
@@ -67,7 +72,7 @@ export async function getPosts(limit: number = 0, offset: number = 0) : Promise<
 
 export async function getPost(slug: string) : Promise<Post>
 {
-  let e = await _simpleFetch(`/posts/${slug}`)
+  const e = await _simpleFetch(`/posts/${slug}`)
   return Object({
     title: e.title,
     slug: e.slug,
@@ -82,14 +87,14 @@ export async function getPost(slug: string) : Promise<Post>
 
 export async function getProducts(limit: number = 0, offset: number = 0) : Promise<Array<Product>>
 {
-  let result = await _simpleFetch(`/products/?limit=${limit}&offset=${offset}`)
-  return result.results.map(e => Object({
+  const result = await _simpleFetch(`/products/?limit=${limit}&offset=${offset}`)
+  return result.results.map((e: any) => Object({
     title: e.title,
     slug: e.slug,
     description: e.description,
     price: e.price,
     sale: e.sale,
-    colors: e.colors.map(g => g.color),
+    colors: e.colors.map((g: any) => g.color),
     categories: e.categories,
     author: e.author,
     image_preview: e.image_preview,
@@ -107,14 +112,14 @@ export async function getProducts(limit: number = 0, offset: number = 0) : Promi
 
 export async function getProduct(slug: string) : Promise<Product>
 {
-  let e = await _simpleFetch(`/products/${slug}`)
+  const e = await _simpleFetch(`/products/${slug}`)
   return Object({
     title: e.title,
     slug: e.slug,
     description: e.description,
     price: e.price,
     sale: e.sale,
-    colors: e.colors.map(g => g.color),
+    colors: e.colors.map((g: any) => g.color),
     categories: e.categories,
     author: e.author,
     image_preview: e.image_preview,
@@ -132,7 +137,7 @@ export async function getProduct(slug: string) : Promise<Product>
 
 export async function subscribe(email: string)
 {
-  let result = await _simpleFetch(`/subscribe/`, 'POST', JSON.stringify({email: email}), {'Content-Type': 'application/json'})
+  const result = await _simpleFetch(`/subscribe/`, 'POST', JSON.stringify({email: email}), {'Content-Type': 'application/json'})
   if (typeof(result.email) === "string") 
   {
     return {success: true}
@@ -145,18 +150,19 @@ export async function subscribe(email: string)
   {
     return {success: false, error: "EMAIL_TAKEN"}  
   }
+  return {success: false, error: "UNHANDLED_ERROR"}
 }
 
 export async function getCategories() : Promise<Array<Category>> {
-  let result = await _simpleFetch('/categories/');
-  return result.map(e => Object({
+  const result = await _simpleFetch('/categories/');
+  return result.map((e: any) => Object({
     title: e.title,
     slug: e.slug
   }));
 }
 
 export async function quickOrder(product : Product, name: string, phone: string) {
-  let res = await _simpleFetch(
+  const res = await _simpleFetch(
     `/quick_orders/`,
     'POST', 
     JSON.stringify({
@@ -173,11 +179,11 @@ export async function quickOrder(product : Product, name: string, phone: string)
 }
 
 export async function order(products : Array<Product>, name: string, phone: string, email: string, comment: string, address: string) {
-  let res = await _simpleFetch(
+  const res = await _simpleFetch(
     `/orders/`,
     'POST', 
     JSON.stringify({
-      products: products.map(e => Object({product: e.id, amount: e.count})),
+      products: products.map((e: any) => Object({product: e.id, amount: e.count})),
       phone: phone,
       address: address,
       comments: comment,

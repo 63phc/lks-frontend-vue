@@ -4,7 +4,11 @@
 </template>
 
 <script lang="ts">
-export default {}
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component
+export default class Button extends Vue {}
+Vue.component('Button', Button)
 </script>
 
 <style lang="scss" scoped>

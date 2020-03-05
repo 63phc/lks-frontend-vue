@@ -1,4 +1,9 @@
+const fs = require('fs')
+const toml = require('toml')
 const pkg = require('./package')
+const tomlLangConfig = fs.readFileSync('./assets/translations.toml')
+console.log(tomlLangConfig)
+const lang = toml.parse(tomlLangConfig)
 
 module.exports = {
   mode: 'spa',
@@ -36,7 +41,9 @@ module.exports = {
   /*
   ** Nuxt.js modules
   */
-  modules: [],
+  modules: [['nuxt-i18n']],
+
+  i18n: lang,
 
   /*
   ** Build configuration
@@ -50,7 +57,7 @@ module.exports = {
       if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',
-          test: /\.(js|vue)$/,
+          test: /\.(js)$/,
           loader: 'eslint-loader',
           exclude: /(node_modules)/
         })

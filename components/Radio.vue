@@ -3,12 +3,16 @@
     .lks-radio-circle
 </template>
 
-<script lang="typescript">
-export default {
-  props: {
-    selected: Boolean
-  }
+<script lang="ts">
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
+
+@Component
+export default class Radio extends Vue {
+  @Prop()
+  selected: Boolean = false
 }
+
+Vue.component('Radio', Radio)
 </script>
 
 <style lang="scss" scoped>

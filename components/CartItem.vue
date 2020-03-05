@@ -5,7 +5,7 @@
       .title {{ product.title }}
       //- .article Артикул:  product.around 
       .color.lks-flex.lks-flex-jcsb
-        span Цвет &nbsp;
+        span {{ $t('product.color') }} &nbsp;
         .lks-color-circle
           .lks-color-circle-color(:style="`background-color: ${product.colors[0]};`")
     .control.lks-flex
@@ -13,30 +13,33 @@
       .counter {{ product.count }}
       .sub.lks-mod-pointer(@click="subtract") -
     .price.lks-flex.lks-flex-jcsb.lks-flex-aic
-      span Стоимость:
+      span {{ $t('product.price') }}:
       .lks-price-now {{ product.price }}
       img(src="/images/ruble.svg")
       .remove(@click="$emit('remove', product)") x
 </template>
 
-<script lang="typescript">
-import { Product } from '../assets/models.ts'
-export default {
-  props: {
-    product: Product
-  },
-  methods: {
-    add() {
-      this.product.count += 1
-      this.$forceUpdate()
-    },
-    subtract() {
-      if (this.product.count > 1) {
-        this.product.count -= 1
-      }
+<script lang="ts">
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import * as models from '../assets/models'
+@Component
+export default class CartItem extends Vue {
+  @Prop({ required: true })
+  product!: models.Product
+
+  add() {
+    this.product.count += 1
+    this.$forceUpdate()
+  }
+
+  subtract() {
+    if (this.product.count > 1) {
+      this.product.count -= 1
     }
   }
 }
+
+Vue.component('CartItem', CartItem)
 </script>
 
 <style lang="scss" scoped>

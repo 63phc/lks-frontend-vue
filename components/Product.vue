@@ -11,10 +11,10 @@
     .product-info
       .lks-flex.lks-flex-aic.lks-flex-jcsb.product-name
         div
-          strong.lks-product-name Cheburashka
+          strong.lks-product-name {{ product.name }}
           strong.sale.lks-sale -{{ Math.round(parseInt(product.sale)/(parseInt(product.price)+parseInt(product.sale))*100) }}%
         a(href="https://www.instagram.com/katyaanaprienko/")
-          ButtonIcon.lks-btn-icon-main(icon='/images/instagram-purple.svg') Подписатся на инстаграм 
+          ButtonIcon.lks-btn-icon-main(icon='/images/instagram-purple.svg') {{ $t('product.subscribe')}}
       p.lks-product-text.product-text(v-html="product.description")
       .price.lks-flex.lks-flex-jcsb.lks-flex-aic
         .product-amount.lks-flex.lks-flex-aic
@@ -35,47 +35,47 @@
           Button(@click.native="$eventBus.$emit('saved', product)").lks-btn-main.favorite.lks-flex.lks-flex-aic.lks-flex-jcc
             img(src="/images/heart.svg")
       .controls.lks-mod-text-center.lks-flex
-        ButtonIcon.lks-btn-icon-main(icon="/images/bolt-pink.svg" @click.native="$eventBus.$emit('quickbuy', product)") Быстрый заказ
-        ButtonIcon.lks-btn-icon-main(icon="/images/cart-pink.svg" @click.native="$eventBus.$emit('cartadd', product)") Добавить в корзину
+        ButtonIcon.lks-btn-icon-main(icon="/images/bolt-pink.svg" @click.native="$eventBus.$emit('quickbuy', product)") {{ $t('product.quick_purchase')}}
+        ButtonIcon.lks-btn-icon-main(icon="/images/cart-pink.svg" @click.native="$eventBus.$emit('cartadd', product)") {{ $t('product.add')}}
 
 </template>
 
 <script lang="ts">
 import Card from '../components/Card.vue'
-import ButtonIcon from '../components/ButtonIcon'
-import Button from '../components/Button'
-import { Product } from '../assets/models.ts'
+import ButtonIcon from '../components/ButtonIcon.vue'
+import Button from '../components/Button.vue'
+import * as models from '../assets/models'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 
-export default {
+@Component({
   components: {
     Card,
-    ButtonIcon,
-    Button
-  },
-  data() {
-    return {
-      count: 1
+    Button,
+    ButtonIcon
+  }
+})
+export default class Product extends Vue {
+  @Prop()
+  product!: models.Product
+
+  count: number = 1
+
+  add() {
+    this.count += 1
+  }
+
+  subtract() {
+    if (this.count > 1) {
+      this.count -= 1
     }
-  },
-  methods: {
-    add() {
-      this.count += 1
-    },
-    subtract() {
-      if (this.count > 1) {
-        this.count -= 1
-      }
-    }
-  },
-  computed: {
-    fullUrl() {
-      return window.location
-    }
-  },
-  props: {
-    product: Product
+  }
+
+  get fullUrl() {
+    return window.location
   }
 }
+
+Vue.component('Product', Product)
 </script>
 
 <style lang="scss" scoped>

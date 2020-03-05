@@ -4,22 +4,22 @@
     NavBar
     .lks-container
       .breadcrumb
-        small Главная / Контакты
-        h1.heading Контакты
+        small {{ $t('contacts.breadcrumbs') }}
+        h1.heading {{ $t('contacts.title') }}
       form.contact-form
         .fields
-          p.heading Оставте нам сообщение
+          p.heading {{ $t('contacts.leave_a_message') }}
           .split
-            input(type="text" placeholder="Ваше имя")
-            input(type="text" placeholder="Номер телефона")
+            input(type="text" :placeholder="$t('contacts.form.name')")
+            input(type="text" :placeholder="$t('contacts.form.phone')")
           .split
-            input(type="text" placeholder="E-mail")
-            input(type="text" placeholder="Компания/ автор")
-          textarea(placeholder="Сообщение")
-          Button.submit.lks-btn-main Отправить
-          small.shaded Нажимая «Отправить», вы даете согласие на обработку персональных данных
+            input(type="text" :placeholder="$t('contacts.form.email')")
+            input(type="text" :placeholder="$t('contacts.form.company')")
+          textarea(:placeholder="$t('contacts.form.message')")
+          Button.submit.lks-btn-main {{ $t('contacts.send') }}
+          small.shaded {{ $t('contacts.form.agreement') }}
         .info
-          p.heading Контактная информация
+          p.heading {{ $t('contacts.contact_info') }}
           ul
             li
               img(src="/images/map-point.svg")
@@ -39,19 +39,22 @@
 import TopHeader from '../components/TopHeader.vue'
 import Footer from '../components/Footer.vue'
 import LastPosts from '../components/LastPosts.vue'
-import Button from '../components/Button'
+import Button from '../components/Button.vue'
 import Instagram from '../components/Instagram.vue'
 import NavBar from '../components/NavBar.vue'
-export default {
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component({
   components: {
     TopHeader,
     Footer,
     LastPosts,
+    Button,
     Instagram,
     NavBar,
-    Button
   }
-}
+})
+export default class Contacts extends Vue {}
 </script>
 
 <style lang="scss" scoped>

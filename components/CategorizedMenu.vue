@@ -6,29 +6,25 @@
 </template>
 
 <script lang="ts">
-import Card from '../components/Card.vue'
-export default {
-  props: {
-    categories: {
-      type: Array,
-      default: () => []
-    }
-  },
-  methods: {
-    select(id) {
-      this.selected = id
-      this.$emit('select', this.categories[id].slug)
-    }
-  },
-  data() {
-    return {
-      selected: -1
-    }
-  },
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import Card from './Card.vue'
+import * as models from '../assets/models'
+@Component({
   components: {
     Card
   }
+})
+export default class CateogorizedMenu extends Vue {
+  @Prop()
+  categories!: Array<models.Category>
+
+  selected: number = -1 
+  select(id: number) : void {
+    this.selected = id
+    this.$emit('select', this.categories[id].slug)
+  }
 }
+Vue.component("CategorizedMenu", CateogorizedMenu)
 </script>
 
 <style lang="scss" scoped>

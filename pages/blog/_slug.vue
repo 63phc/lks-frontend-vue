@@ -8,10 +8,10 @@
         small.lks-date
           | {{ post.created_at }}
         address.author.lks-author
-          b Автор:
+          b {{ $t('blog.author') }}:
           |  {{ post.author_name }}
         article.lks-paragraph(v-html='post.content')
-      h1.lks-heading &nbsp; Предложенные посты
+      h1.lks-heading &nbsp; {{ $t('blog.suggested') }}
       .suggested-articles
         .post(v-for="suggestedPost in suggestedPosts")
           PostCard(:post="suggestedPost")
@@ -20,31 +20,34 @@
 </template>
 
 <script lang="ts">
+import * as API from '../../assets/api'
+import { Component, Vue } from 'nuxt-property-decorator'
+import * as models from '../../assets/models'
 import TopHeader from '../../components/TopHeader.vue'
 import NavBar from '../../components/NavBar.vue'
 import Footer from '../../components/Footer.vue'
 import PostCard from '../../components/PostCard.vue'
-import * as API from '../../assets/api.ts'
 
-export default {
+@Component({
   components: {
     TopHeader,
     NavBar,
-    Footer,
-    PostCard
-  },
-  async mounted() {
-    this.post = await API.getPost(this.$route.params.slug)
-    this.suggestedPosts = await API.getPosts(4, 0)
-  },
-  data() {
-    return {
-      post: null,
-      suggestedPosts: []
-    }
-  },
+    PostCard,
+    Footer
+  }
+})
+export default class BlogSlug extends Vue {
+  post!: models.Post
+  suggestedPosts: Array<models.Post> = []
 
-  validate({ params }) {
+  async asyncData({ params }: any) {
+    return {
+      suggestedPosts: await API.getPosts(4, 0),
+      post: await API.getPost(params.slug)
+    }
+  }
+
+  validate({ params }: any) {
     return true
   }
 }

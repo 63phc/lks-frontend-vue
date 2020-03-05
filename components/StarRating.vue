@@ -15,14 +15,15 @@
 </template>
 
 <script lang="ts">
-export default {
-  props: {
-    amount: {
-      type: Number,
-      default: 1
-    }
-  }
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+
+@Component
+export default class StarRating extends Vue {
+  @Prop()
+  amount: number = 1
 }
+
+Vue.component('StarRating', StarRating)
 </script>
 
 <style lang="scss" scoped>

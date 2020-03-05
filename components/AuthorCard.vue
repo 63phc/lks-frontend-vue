@@ -3,9 +3,7 @@
     img(src="/images/circles.svg").circles
     div(:style="`background-image: url(${author.avatar})`").author-img
     h2 
-      | Об
-      br 
-      | авторе
+      | {{ $t('blog.about') }}
     .social
       a(v-if="author.vk_profile" :href="author.vk_profile.link")
         img(src="/images/logo-vk.svg")
@@ -21,13 +19,21 @@
 </template>
 
 <script lang="ts">
-import { Author } from '../assets/models.ts'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import Card from './Card.vue'
+import * as models from '../assets/models'
 
-export default {
-  props: {
-    author: Author
+@Component({
+  components: {
+    Card
   }
+})
+export default class AuthorCard extends Vue {
+  @Prop({ required: true })
+  author!: models.Author
 }
+
+Vue.component('AuthorCard', AuthorCard)
 </script>
 
 <style lang="scss" scoped>

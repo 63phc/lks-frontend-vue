@@ -5,7 +5,7 @@
       form
         nuxt
       .quick
-        p Быстрый доступ с
+        p {{ $t('account.quick_access') }}
         .buttons-social.lks-flex
           .lks-btn-social
             img.lks-btn-social-icon(src='/images/logo-facebook.svg', alt='f')
@@ -22,14 +22,14 @@
 import TopHeader from '../components/TopHeader.vue'
 import Footer from '../components/Footer.vue'
 import LastPosts from '../components/LastPosts.vue'
+import { Component, Vue } from 'nuxt-property-decorator'
 
-export default {
+@Component({
   components: {
-    TopHeader,
-    Footer,
-    LastPosts
+    TopHeader
   }
-}
+})
+export default class AccountLayout extends Vue {}
 </script>
 
 <style lang="scss">

@@ -5,43 +5,51 @@
         img(src="/images/shopping-bag.svg")
       .control.lks-mod-pointer(@click="saveProduct")
         img(src="/images/heart.svg")
-    nuxt-link(:to="`/product/${good.slug}`" style="text-decoration: underline")
+    nuxt-link(:to="localePath(`/product/${good.slug}`)" style="text-decoration: underline")
       .thumbnail(:style='`background-image: url(${good.image_preview});`')
     .good-info
       p.good-caption {{ good.title }}
       .color.lks-flex.lks-flex-jcsb
         div.lks-flex
-          span Цвет
+          span {{ $t('product.color') }}
           .lks-color-circle
             .lks-color-circle-color(:style="`background: ${good.colors[0]};`")
         p.good-price.lks-flex.lks-flex-aic {{ parseInt(good.price) }} 
           img(src="/images/ruble.svg" style="filter: brightness(0.5)")
     .quick-purchase(@click="quickBuy")
-      ButtonIcon.lks-btn-icon-bordered.quick-purchase-btn(icon="/images/lightning.svg") Быстрый заказ
+      ButtonIcon.lks-btn-icon-bordered.quick-purchase-btn(icon="/images/lightning.svg") {{ $t('product.quick_purchase') }}
 </template>
 
 <script lang="ts">
-import { Good } from '../assets/models.ts'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import * as models from '../assets/models'
+import Card from './Card.vue'
 import ButtonIcon from './ButtonIcon.vue'
-export default {
+
+@Component({
   components: {
+    Card,
     ButtonIcon
-  },
-  props: {
-    good: Good
-  },
-  methods: {
-    addToCart() {
-      this.$eventBus.$emit('cartadd', this.good)
-    },
-    saveProduct() {
-      this.$eventBus.$emit('saved', this.good)
-    },
-    quickBuy() {
-      this.$eventBus.$emit('quickbuy', this.good)
-    }
+  }
+})
+export default class GoodCard extends Vue {
+  @Prop({ required: true })
+  good!: models.Product
+
+  addToCart() {
+    (this as any).$eventBus.$emit('cartadd', this.good)
+  }
+
+  saveProduct() {
+    (this as any).$eventBus.$emit('saved', this.good)
+  }
+
+  quickBuy() {
+    (this as any).$eventBus.$emit('quickbuy', this.good)
   }
 }
+
+Vue.component('GoodCard', GoodCard)
 </script>
 
 <style lang="scss" scoped>

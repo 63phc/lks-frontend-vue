@@ -1,6 +1,6 @@
 <template lang="pug">
   nav
-    //- ul.social
+    ul.social
       li
         img(src='/images/logo-vk.svg', alt='')
       li
@@ -11,7 +11,7 @@
         img(src='/images/logo-pinterest.svg', alt='')
     ul.links
       li(v-for='link in links', :key='link.url')
-        nuxt-link(:to='{path: link.url}' v-if="!isExternal(link.url)")
+        nuxt-link(:to='localePath(link.url)' v-if="!isExternal(link.url)")
           | {{ link.name }}
         a(:href='link.url' v-if="isExternal(link.url)")
           | {{ link.name }}
@@ -19,33 +19,31 @@
       //- li
       //-   img(src='/images/log-out.svg', alt='')
       li
-        nuxt-link(to="/cart")
+        nuxt-link(:to="localePath('/cart')")
           img(src='/images/shopping-bag.svg', alt='')
       li
-        nuxt-link(to="/saved")
+        nuxt-link(:to="localePath('/saved')")
           img(src='/images/heart.svg', alt='')
 </template>
 
 <script lang="ts">
-import * as API from '../assets/api.ts'
+import { Component, Vue } from 'nuxt-property-decorator'
+import * as API from '../assets/api'
+import * as models from '../assets/models'
 
-export default {
-  data() {
-    return {
-      links: []
-    }
-  },
+@Component
+export default class NavBar extends Vue {
+  links: Array<models.MenuEntry> = []
 
   async mounted() {
     this.links = await API.getMenuEntries()
-  },
+  }
 
-  methods: {
-    isExternal(url: String) {
-      return url.search(/http(s?):\/\//) > -1
-    }
+  isExternal(url: String) {
+    return url.search(/http(s?):\/\//) > -1
   }
 }
+Vue.component('NavBar', NavBar)
 </script>
 
 <style lang="scss" scoped>

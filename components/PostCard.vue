@@ -8,23 +8,28 @@
         strong {{ post.title }}
       p.post-text {{ post.content.replace(/<\/?[^>]+(>|$)/g, "").split(" ").slice(0, 25).join(" ") }}...
       .lks-flex.lks-flex-jcc.read-more
-        nuxt-link(:to="'/blog/'+post.slug")
-          Button.lks-btn-main.lks-mod-text-center Читать
+        nuxt-link(:to="localePath('/blog/'+post.slug)")
+          Button.lks-btn-main.lks-mod-text-center {{ $t('blog.read') }}
 </template>
 
 <script lang="ts">
 import Button from '../components/Button.vue'
 import Card from '../components/Card.vue'
-import { Post } from '../assets/models.ts'
-export default {
+import * as models from '../assets/models'
+import { Prop, Vue, Component } from 'nuxt-property-decorator'
+
+@Component({
   components: {
     Button,
     Card
-  },
-  props: {
-    post: Post
   }
+})
+export default class PostCard extends Vue {
+  @Prop({ required: true })
+  post!: models.Post
 }
+
+Vue.component("PostCard", PostCard)
 </script>
 
 <style lang="scss" scoped>

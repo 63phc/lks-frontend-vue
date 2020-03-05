@@ -9,7 +9,7 @@
             | {{ post.created_at }}
           p.text.lks-paragraph {{ post.content.replace(/<\/?[^>]+(>|$)/g, "").split(" ").slice(0, 100).join(" ") }}...
           address.author.lks-author
-            b Автор:
+            b {{ $t('blog.author') }}:
             |  {{ post.author_name }}
           .controls.lks-flex.lks-flex-jcsb.lks-flex-aic
             .indicator.lks-flex
@@ -21,39 +21,38 @@
                   img(src="/images/blog-slider-arrow-left.svg")
                 .arrow.lks-mod-pointer.lks-roundpad.shade-right(@click="nextSlide")
                   img(src="/images/blog-slider-arrow-right.svg")
-              nuxt-link(:to="'/blog/'+post.slug")
-                Button.lks-btn-main.lks-mod-center Читать
+              nuxt-link(:to="localePath('/blog/'+post.slug)")
+                Button.lks-btn-main.lks-mod-center {{ $t('blog.read') }}
 </template>
 
 <script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import Button from './Button.vue'
+import * as models from '../assets/models'
 
-export default {
+@Component({
   components: {
     Button
-  },
-  props: {
-    posts: {
-      type: Array,
-      required: true
-    }
-  },
-  data() {
-    return {
-      currentPost: 1
-    }
-  },
-  methods: {
-    prevSlide() {
-      this.currentPost -= 1
-      if (this.currentPost < 0) this.currentPost = this.posts.length - 1
-    },
-    nextSlide() {
-      this.currentPost += 1
-      if (this.currentPost >= this.posts.length) this.currentPost = 0
-    }
+  }
+})
+export default class BlogSlider extends Vue {
+  @Prop({ required: true })
+  posts!: Array<models.Post>
+
+  currentPost: number = 0
+
+  prevSlide(): void {
+    this.currentPost -= 1
+    if (this.currentPost < 0) this.currentPost = this.posts.length - 1
+  }
+
+  nextSlide(): void {
+    this.currentPost += 1
+    if (this.currentPost >= this.posts.length) this.currentPost = 0
   }
 }
+
+Vue.component('BlogSlider', BlogSlider)
 </script>
 
 <style lang="scss" scoped>
@@ -74,9 +73,12 @@ export default {
   .text {
     overflow: auto;
   }
+  position: relative;
   .slide {
     position: absolute;
     height: 40vh;
+    right: 0;
+    left: 0;
     .image {
       flex: 1;
       background-size: cover;

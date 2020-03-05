@@ -8,23 +8,27 @@
 
 <script lang="ts">
 import Card from '../components/Card.vue'
+import { Component, Vue, Prop, Watch } from 'nuxt-property-decorator'
 
-export default {
+@Component({
   components: {
     Card
-  },
-  props: {
-    visible: Boolean
-  },
-  watch: {
-    visible: function() {
-      setTimeout(() => {
-        this.visible = false
-        this.$emit('hide')
-      }, 5000)
-    }
+  }
+})
+export default class Notification extends Vue {
+  @Prop()
+  visible: Boolean = false
+
+  @Watch('visible')
+  onVisibleChanged() {
+    setTimeout(() => {
+      this.visible = false
+      this.$emit('hide')
+    }, 5000)
   }
 }
+
+Vue.component("Notification", Notification)
 </script>
 
 <style lang="scss" scoped>

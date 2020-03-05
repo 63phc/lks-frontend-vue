@@ -11,41 +11,43 @@
             :post="post"
           )
 
-        p(@click="seeMore").lks-see-more Смотреть еще
+        p(@click="seeMore").lks-see-more {{ $t('misc.see_more') }}
     Footer
 </template>
 
 <script lang="ts">
-import TopHeader from '../../components/TopHeader.vue'
-import Footer from '../../components/Footer.vue'
+import * as API from '../../assets/api'
+import { Component, Vue } from 'nuxt-property-decorator'
+import * as models from '../../assets/models'
 import BlogSlider from '../../components/BlogSlider.vue'
 import PostCard from '../../components/PostCard.vue'
+import TopHeader from '../../components/TopHeader.vue'
 import NavBar from '../../components/NavBar.vue'
-import * as API from '../../assets/api.ts'
-export default {
+import Footer from '../../components/Footer.vue'
+
+
+@Component({
   components: {
-    TopHeader,
-    Footer,
     BlogSlider,
+    PostCard,
+    TopHeader,
     NavBar,
-    PostCard
-  },
+    Footer
+  }
+})
+export default class BlogIndex extends Vue {
+  posts: Array<models.Post> = []
+  offset: number = 0
+
   async mounted() {
     this.posts = await API.getPosts(10, this.offset)
     this.offset = 10
     this.$forceUpdate()
-  },
-  methods: {
-    async seeMore() {
-      this.posts = await API.getPosts(10 + this.offset, 0)
-      this.offset += 10
-    }
-  },
-  data() {
-    return {
-      posts: [],
-      offset: 0
-    }
+  }
+
+  async seeMore() {
+    this.posts = await API.getPosts(10 + this.offset, 0)
+    this.offset += 10
   }
 }
 </script>

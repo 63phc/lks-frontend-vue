@@ -14,20 +14,26 @@
         
 </template>
 
-<script lang="typescript">
-import PostCard from '../components/PostCard.vue'
-import AuthorCard from '../components/AuthorCard.vue'
-import { Author } from '../assets/models.ts'
-export default {
+<script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import * as models from '../assets/models'
+import AuthorCard from './AuthorCard.vue'
+import PostCard from './PostCard.vue'
+
+@Component({
   components: {
-    PostCard,
-    AuthorCard
-  },
-  props: {
-    author: Author,
-    posts: Array // Of posts
+    AuthorCard,
+    PostCard
   }
+})
+export default class LastPosts extends Vue {
+  @Prop({ required: true })
+  author!: models.Author
+  @Prop({ required: true })
+  posts!: Array<models.Post>
 }
+
+Vue.component("LastPosts", LastPosts)
 </script>
 
 <style lang="scss" scoped>

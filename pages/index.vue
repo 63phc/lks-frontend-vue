@@ -6,7 +6,7 @@
     .lks-container
       div(v-for="author in authors")
         LastPosts(:author="author" :posts="posts")
-          h2 ПОСЛЕДНИЕ ПОСТЫ
+          h2 {{ $t('main.last_posts') }}
         Goods(:goods="products")
     //-  Reviews
     Instagram.inst
@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import * as API from '../assets/api.ts'
+import * as API from '../assets/api'
 import TopHeader from '../components/TopHeader.vue'
 import Slider from '../components/Slider.vue'
 import NavBar from '../components/NavBar.vue'
@@ -24,33 +24,40 @@ import Reviews from '../components/Reviews.vue'
 import Goods from '../components/Goods.vue'
 import Instagram from '../components/Instagram.vue'
 import Notification from '../components/Notification.vue'
-export default {
+import { Component, Vue } from 'nuxt-property-decorator'
+import * as models from '../assets/models'
+
+@Component({
   components: {
     TopHeader,
-    NavBar,
     Slider,
+    NavBar,
     Footer,
     LastPosts,
-    Goods,
     Reviews,
+    Goods,
     Instagram,
     Notification
-  },
-  data() {
-    return {
-      notifVisible: false,
-      slides: [],
-      authors: [],
-      posts: [],
-      products: []
-    }
-  },
-  async mounted() {
-    this.slides = await API.getSliderImages()
-    this.authors = await API.getAuthors()
+  }
+})
+export default class Index extends Vue {
+  notifVisible: Boolean = false
+  slides: Array<models.Slide> =  []
+  authors: Array<models.Author> = []
+  posts: Array<models.Post> = []
+  products: Array<models.Product> = []
+
+  mounted() {
     this.authors = this.authors.sort(e => Math.random() - 0.5).slice(0, 2)
-    this.posts = await API.getPosts(-1, -1)
-    this.products = await API.getProducts(-1, -1)
+  }
+
+  async asyncData() {
+    return {
+      slides: await API.getSliderImages(),
+      authors: await API.getAuthors(),
+      posts: await API.getPosts(-1, -1),
+      products: await API.getProducts(-1, -1)
+    }
   }
 }
 </script>

@@ -6,12 +6,17 @@
 </template>
 
 <script lang="ts">
-import Card from '../components/Card.vue'
-export default {
+import { Component, Vue } from "nuxt-property-decorator";
+import Card from './Card.vue'
+
+// TODO: FINISH THIS COMPONENT
+@Component({
   components: {
     Card
   }
-}
+})
+export default class ColorCard extends Vue {}
+
 </script>
 
 <style lang="scss" scoped>

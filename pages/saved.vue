@@ -4,8 +4,8 @@
     NavBar
     .lks-container
       .lks-breadcrumb
-        small.lks-breadcrumb-path Главная / Сохраненные товары
-        h2.lks-heading.lks-font-normal Сохраненные товары
+        small.lks-breadcrumb-path {{ $t('saved.breadcrumbs') }}
+        h2.lks-heading.lks-font-normal {{ $t('saved.title') }}
       .products
         .product(v-for="product in products").product
           GoodCard(:good="product" @click.native="update")
@@ -13,30 +13,29 @@
 </template>
 
 <script lang="ts">
-import * as Storage from '../assets/storage.ts'
+import * as Storage from '../assets/storage'
+import { Component, Vue } from 'nuxt-property-decorator'
+import * as models from '../assets/models'
 import TopHeader from '../components/TopHeader.vue'
 import NavBar from '../components/NavBar.vue'
 import Footer from '../components/Footer.vue'
 import GoodCard from '../components/GoodCard.vue'
-import ProductModal from '../components/ProductModal.vue'
-export default {
+
+@Component({
   components: {
     TopHeader,
     NavBar,
     Footer,
-    GoodCard,
-    ProductModal
-  },
-  data() {
-    return {
-      products: []
-    }
-  },
-  methods: {
-    update() {
-      this.products = Storage.get('saved')
-    }
-  },
+    GoodCard
+  }
+})
+export default class SavedPage extends Vue {
+  products: Array<models.Product> = []
+
+  update() : void {
+    this.products = Storage.get('saved')
+  }
+
   mounted() {
     this.products = Storage.get('saved')
   }

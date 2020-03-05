@@ -5,20 +5,20 @@
     .lks-container
       Product(:product="product")
       .specs
-        .lks-big-text Характеристики
-        p.spec-subtitle Общие характеристики
+        .lks-big-text {{ $t('product.specs.title') }}
+        p.spec-subtitle {{ $t('product.specs.subtitle' )}}
         table
           tr
-            td Вес
-            td {{ product.properties.weight }}г
+            td {{ $t('product.specs.which.weight') }}
+            td {{ product.properties.weight }}{{ $t('misc.measurement_g') }}
           tr
-            td Высота
-            td {{ product.properties.height }}см
+            td {{ $t('product.specs.which.height') }}
+            td {{ product.properties.height }}{{ $t('misc.measurement_cm') }}
           tr
-            td Тип
+            td {{ $t('product.specs.which.type') }}
             td {{ product.properties.type_product }}
           tr
-            td Материал
+            td {{ $t('product.specs.which.material') }}
             td {{ product.properties.material }}
       .last-posts
         //- .lks-big-text ПОСЛЕДНИЕ ПОСТЫ
@@ -31,32 +31,39 @@ import TopHeader from '../../components/TopHeader.vue'
 import Footer from '../../components/Footer.vue'
 import NavBar from '../../components/NavBar.vue'
 import Instagram from '../../components/Instagram.vue'
-import Product from '../../components/Product.vue'
 import LastPosts from '../../components/LastPosts.vue'
-import * as API from '../../assets/api.ts'
+import Product from '../../components/Product.vue'
+import * as API from '../../assets/api'
+import { Component, Vue } from 'nuxt-property-decorator'
+import * as models from '../../assets/models'
 
-export default {
+@Component({
   components: {
     TopHeader,
     Footer,
     NavBar,
     Instagram,
-    Product,
-    LastPosts
-  },
-  async mounted() {
+    LastPosts,
+    Product
+  }
+})
+export default class ProductSlug extends Vue {
+  product!: models.Product
+  author!: models.Author
+  posts: Array<models.Post> = []
+  slug: string = ''
+
+  mounted() {
     this.slug = this.$route.params.slug
-    this.product = await API.getProduct(this.slug)
-  },
-  data() {
+  }
+
+  async asyncData({ app, params }: any) {
     return {
-      product: { colors: [], properties: [] },
-      author: null,
-      posts: [],
-      slug: ''
+      product: await API.getProduct(params.slug)
     }
-  },
-  validate({ params }) {
+  }
+
+  validate({ params }: any) {
     return true
   }
 }

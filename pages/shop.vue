@@ -4,80 +4,86 @@
     NavBar
     .lks-container
       .lks-breadcrumb
-        .lks-breadcrumb-path Главная / Магазин / Мягкие игрушки
+        .lks-breadcrumb-path {{ $t('shop.breadcrumbs') }}
       .lks-flex.shop-ui
         aside
           CategorizedMenu(:categories="categories" @select="setCategory")
           // PriceRange.gap
           // ColorCard.gap
-          Button.lks-btn-bordered.lks-mod-fill.lks-mod-text-center.gap(@click.native="clearFilter") Отчистить фильтр
+          Button.lks-btn-bordered.lks-mod-fill.lks-mod-text-center.gap(@click.native="clearFilter") {{ $t('shop.clear_filter') }}
         main
           div(v-for="product in products").product
             GoodCard(:good="product")
-          p(@click="loadMore").lks-see-more Смотреть еще
+          p(@click="loadMore").lks-see-more {{ $t('misc.see_more') }}
     Footer
 </template>
 
 <script lang="ts">
+import { Vue, Component } from 'nuxt-property-decorator'
 import TopHeader from '../components/TopHeader.vue'
 import NavBar from '../components/NavBar.vue'
 import Footer from '../components/Footer.vue'
-import CategorizedMenu from '../components/CategorizedMenu.vue'
-import GoodCard from '../components/GoodCard.vue'
-import PriceRange from '../components/PriceRange.vue'
-import ColorCard from '../components/ColorCard.vue'
 import Button from '../components/Button.vue'
-import * as API from '../assets/api.ts'
+import GoodCard from '../components/GoodCard.vue'
+import CategorizedMenu from '../components/CategorizedMenu.vue'
+import * as models from '../assets/models'
+import * as API from '../assets/api'
 
-export default {
+@Component({
   components: {
+    Button,
+    GoodCard,
+    CategorizedMenu,
     TopHeader,
     NavBar,
-    Footer,
-    CategorizedMenu,
-    GoodCard,
-    PriceRange,
-    ColorCard,
-    Button
-  },
-  async mounted() {
-    this.productsRaw = await API.getProducts(10, this.offset)
-    this.categories = await API.getCategories()
-    this.offset = 10
-  },
-  methods: {
-    async loadMore() {
-      this.productsRaw = await API.getProducts(10 + this.offset, 0)
-      this.offset += 10
-    },
-    setCategory(e) {
-      this.categorySelected = e
-    },
-    clearFilter() {
-      this.categorySelected = ''
-      this.$forceUpdate()
+    Footer
+  }
+})
+export default class ShopPage extends Vue {
+  productsRaw: Array<models.Product> = []
+  categorySelected: string = ''
+  offset: number = 0
+  categories: Array<models.Category> = []
+
+  get products(): Array<models.Product> {
+    if (this.categorySelected === '') {
+      return this.productsRaw
     }
-  },
-  computed: {
-    products() {
-      if (this.categorySelected === '') {
-        return this.productsRaw
-      }
-      return this.productsRaw.filter(
-        e => e.categories.findIndex(g => g.slug === this.categorySelected) > -1
-      )
-    },
-    priceMax() {
-      return Math.max(...this.productsRaw.map(e => parseInt(e.price)))
-    }
-  },
-  data() {
+    return this.productsRaw.filter(
+      (e: models.Product) =>
+        e.categories.findIndex((g: any) => g.slug === this.categorySelected) >
+        -1
+    )
+  }
+
+  get priceMax(): number {
+    return Math.max(...this.productsRaw.map((e: any) => parseInt(e.price)))
+  }
+
+  async asyncData() {
     return {
-      categorySelected: '',
-      productsRaw: [],
-      offset: 0,
-      categories: []
+      productsRaw: await API.getProducts(10, 0),
+      categories: await API.getCategories()
     }
+  }
+
+  mounted(): void {
+    this.offset = 10
+    this.$forceUpdate()
+  }
+
+  async loadMore() {
+    this.productsRaw = await API.getProducts(10 + this.offset, 0)
+    this.offset += 10
+  }
+
+  setCategory(e: string): void {
+    this.categorySelected = e
+  }
+
+  clearFilter(): void {
+    this.categorySelected = ''
+    this.$forceUpdate()
   }
 }
 </script>

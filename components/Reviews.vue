@@ -1,18 +1,23 @@
 <template lang="pug">  
   div.reviews
-    h2 Последние отзывы
+    h2 {{ $t('main.last_reviews')}}
     .r
       ReviewCard
       ReviewCard
 </template>
 
 <script lang="ts">
-import ReviewCard from '../components/ReviewCard.vue'
-export default {
+import { Component, Vue } from 'nuxt-property-decorator'
+import ReviewCard from './ReviewCard.vue'
+
+@Component({
   components: {
     ReviewCard
   }
-}
+})
+export default class Reviews extends Vue {}
+
+Vue.component('Reviews', Reviews)
 </script>
 
 <style lang="scss">

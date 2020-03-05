@@ -1,19 +1,33 @@
 <template lang="pug">
 header
-  //- .lang-switch
-    select#lang(name='lang')
-      option(value='ru-RU') Ru
-      option(value='en-US') En
+  .lang-switch
+    select#lang(name='lang' @change='changeLocale' :value='currentLang')
+      option(value='ru') Ru
+      option(value='en') En
   .patch
     img(src='/images/patch.svg', alt='')
   .brand
-    p.name Блог и магазин по вязанию
+    p.name {{ $t("top_header.slogan") }}
     h1.heading 
-      nuxt-link(to="/" ) LITTLE KNITS STORY
+      nuxt-link(:to="localePath('/')" ) LITTLE KNITS STORY
 </template>
 
 <script>
-export default {}
+import { Component, Vue } from 'nuxt-property-decorator'
+import * as Storage from '../assets/storage'
+
+@Component
+export default class TopHeader extends Vue {
+  get currentLang() {
+    return Storage.get('lang');
+  }
+  changeLocale(e) {
+    Storage.set('lang', e.target.value);
+    location.href = this.switchLocalePath(e.target.value)
+  }
+}
+
+Vue.component('TopHeader', TopHeader)
 </script>
 
 <style lang="scss" scoped>

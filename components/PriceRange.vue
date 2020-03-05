@@ -11,12 +11,17 @@
 </template>
 
 <script lang="ts">
-import Card from '../components/Card.vue'
-export default {
+import { Component, Vue } from 'nuxt-property-decorator'
+import Card from './Card.vue'
+
+@Component({
   components: {
     Card
   }
-}
+})
+export default class PriceRange extends Vue {}
+
+Vue.component("PriceRange", PriceRange)
 </script>
 
 <style lang="scss" scoped>
