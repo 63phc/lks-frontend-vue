@@ -19,14 +19,14 @@ jobs:
         workdir: .
         dockerfile: Dockerfile
 
-#    - name: Down Pull Up docker remote host
-#      uses: appleboy/ssh-action@master
-#      with:
-#        host: ${{ secrets.HOST }}
-#        username: ${{ secrets.HOST_USERNAME }}
-#        password: ${{ secrets.HOST_PASSWORD }}
-#        script: |
-#          cd ${{ secrets.PATH_BACKEND }}
-#          docker-compose down
-#          docker-compose pull
-#          docker-compose up -d
+    - name: Down Pull Up docker remote host
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.HOST_USERNAME }}
+        password: ${{ secrets.HOST_PASSWORD }}
+        script: |
+          cd ${{ secrets.PATH_FRONTEND_DEV }}
+          docker-compose down
+          docker-compose pull
+          docker-compose up -d
