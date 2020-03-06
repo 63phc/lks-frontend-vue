@@ -2,10 +2,10 @@ version: '3'
 services:
   react:
     container_name: phc_lks_front_dev
-    image: 63phc/lks:front
+    image: 63phc/lks:dev
     volumes:
       - '.:/app'
       - '/app/node_modules'
-    command: npm run dev
+    command: npm run start
     ports:
       - '3000:3000'
