@@ -1,34 +1,45 @@
-<template>
-  <header>
-    <div class="lang-switch">
-      <select name="lang" id="lang">
-        <option value="ru-RU">Ru</option>  
-        <option value="en-US">En</option>  
-      </select>  
-    </div>
-    <div class="patch">
-      <img src="/patch.svg" alt="">
-    </div>
-    <div class="brand">
-      <p class="name">Блог и магазин по вязанию</p>
-      <h1 class="heading">LITTLE KNITS STORY</h1>
-    </div>
-  </header>
+<template lang="pug">
+header
+  .lang-switch
+    select#lang(name='lang' @change='changeLocale' :value='currentLang')
+      option(value='ru') Ru
+      option(value='en') En
+  .patch
+    img(src='/images/patch.svg', alt='')
+  .brand
+    p.name {{ $t("top_header.slogan") }}
+    h1.heading 
+      nuxt-link(:to="localePath('/')" ) LITTLE KNITS STORY
 </template>
 
 <script>
-export default {}
+import { Component, Vue } from 'nuxt-property-decorator'
+import * as Storage from '../assets/storage'
+
+@Component
+export default class TopHeader extends Vue {
+  get currentLang() {
+    return Storage.get('lang');
+  }
+  changeLocale(e) {
+    Storage.set('lang', e.target.value);
+    location.href = this.switchLocalePath(e.target.value)
+  }
+}
+
+Vue.component('TopHeader', TopHeader)
 </script>
 
 <style lang="scss" scoped>
-$main: #e0c0c3;
+@import '../assets/lks-fw/lks-fw.scss';
 
 #lang {
-  background: $main;
+  background: $color-main;
 }
 
 header {
   margin-top: 40px;
+  margin-bottom: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,7 +48,8 @@ header {
 .patch {
   position: absolute;
   right: 15%;
-  top: -50px;
+  top: -70px;
+  z-index: -1;
 }
 .brand {
   text-align: center;
@@ -49,7 +61,9 @@ header {
   .heading {
     font-size: 36px;
     text-transform: uppercase;
-    color: #8a8e99;
+    a {
+      color: #8a8e99;
+    }
   }
 }
 .lang-switch {
@@ -69,6 +83,6 @@ header {
       font-family: 'Helvetica', -apple-system, 'Segoe UI', sans-serif;
     }
   }
-  background: $main;
+  background: $color-main;
 }
 </style>

@@ -1,0 +1,328 @@
+locales = ["en", "ru"]
+defaultLocale = "ru"
+
+[vueI18n]
+fallbackLocale = "en"
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+# ENGLISH
+#
+
+
+
+# Main
+[vueI18n.messages.en.main]
+slider_catalog = "Open Catalog"
+last_reviews = "Last Reviews"
+last_posts = "Last Posts"
+
+# Product
+[vueI18n.messages.en.product]
+quick_purchase = "Quick Purchase"
+color = "Color"
+sale = "Sale"
+rub = "rub"
+add = "Add to cart"
+price = "Price"
+subscribe = "Subscribe to instagram"
+  [vueI18n.messages.en.product.modal]
+  thanks = "Thanks"
+  phone_number = "Phone Number"
+  name = "Your name"
+  send = "Send"
+  agreement = "By pressing «Send», you give your agreement on processing data according to privacy policy"
+  accepted = "Your request was accepted. A manager should contact you soon"
+  [vueI18n.messages.en.product.specs]
+  title = "Specifics"
+  subtitle = "General Characteristics"
+    [vueI18n.messages.en.product.specs.which]
+    weight = "Weight"
+    height = "Height"
+    type = "Type"
+    material = "Material"
+
+
+# TopHeader
+[vueI18n.messages.en.top_header]
+slogan = "Knits Store and Blog"
+
+# Footer
+[vueI18n.messages.en.footer]
+navigation = "Navigation"
+personal_panel = "Personal Panel"
+email = "Your E-Mail"
+notice = "We provide special sales for our clients. Issue a subscription so we can get hold with you"
+privacy_policy = "Privacy policy"
+subscribe = "Subscribe"
+login = "Login"
+cart = "Cart"
+saved = "Saved Items"
+
+# Blog
+[vueI18n.messages.en.blog]
+author = "Author"
+read = "Read"
+about = "About Author"
+suggested = "Suggested Posts"
+
+# Contacts
+[vueI18n.messages.en.contacts]
+breadcrumbs = "Main / Contacts"
+title = "Contacts"
+send = "Send"
+contact_info = "Contact Info"
+leave_a_message = "Leave us a Message"
+  [vueI18n.messages.en.contacts.form]
+  name = "Your Name"
+  email = "E-Mail"
+  phone = "Phone Number"
+  agreement = "By clicking «Send», you give your agreement on processing your data according to privacy policy"
+  company = "Company / Author"
+  message = "Message"
+
+[vueI18n.messages.en.shop]
+breadcrumbs = "Main / Store"
+clear_filter = "Clear Filter"
+
+[vueI18n.messages.en.cart]
+breadcrumbs = "Main / Cart"
+title = "Cart"
+  [vueI18n.messages.en.cart.delivery]
+  title = "Delivery"
+  carrier = "Carrier"
+  takeout = "Self Takeout"
+  notice = "Price of delivery in bounds of Moscow is 300 rub. If price of your purchase exceeds 3 000 rub; the delivery is free. Also including regions: Mitino, Novokosino, Butovo, Kommunarka, City Zelenograd, Lubertsy."
+  notice_bottom = "Price of delivery outside of MKAD: on total of purchase 3 000 rub - 300 rub + for each kilometer (before 20 km from MKAD - 50 rub/km, after 20 km from MKAD - 60 rub/km); on total purchase of 3 000 руб - for each kilometer (before 20 km from MKAD - 50 rub/km, after 20 km from MKAD - 60 rub/km)."
+
+  [vueI18n.messages.en.cart.receiver_info]
+  title = "Receiver Info"
+  promo = "Promo Code"
+  email = "E-Mail"
+  full_name = "Full Name"
+  phone = "Phone Number"
+  comment = "Comment"
+  notice = "Important! Consider that the sale is not calculated in Cart. After purchase approval, manager of e-commerce will calculate it themselves and contact with you."
+
+  [vueI18n.messages.en.cart.address]
+  title = "Delivery Address"
+  address =  "Enter your address"
+
+  [vueI18n.messages.en.cart.total]
+  total = "Total of"
+  items = "items"
+  rub = "rubles"
+  perform = "Perform Purchase"
+  
+[vueI18n.messages.en.saved]
+breadcrumbs = "Main / Saved"
+title = "Saved Products"
+
+[vueI18n.messages.en.account]
+email = "Your E-Mail"
+pass = "Your Password"
+quick_access = "Quick access with"
+  [vueI18n.messages.en.account.register]
+  repeat = "Repeat Password"
+  title = "Register"
+  register = "Register"
+  agreement = "When you create your account, you automatically agree with Terms of Service"
+  [vueI18n.messages.en.account.login]
+  title = "Login"
+  login = "Login"
+
+# Misc
+[vueI18n.messages.en.misc]
+measurement_cm = "cm"
+measurement_g = "g"
+see_more = "See More"
+
+[vueI18n.messages.en.errors]
+  [vueI18n.messages.en.errors.e404]
+  subtitle = "Page you are trying to access either does not exist, was moved or removed. Go to"
+  subtitle_link = "main page"
+  error_type = "Not found"
+
+
+[vueI18n.messages.en.notifications]
+  email_success = "Successfully subscribed"
+  email_fail_invalid_email = "Invalid E-Mail"
+  email_fail_already_subscribed = "Already subscribed"
+  product = "Product"
+  buy_error = "An arror occured while buying, try again, check if your data is correct"
+  buy_success = "Purchase was completed successfully"
+  [vueI18n.messages.en.notifications.actions]
+    added = "put in cart"
+    saved = "saved"
+    unsaved = "removed from saved"
+  
+
+
+
+
+
+
+
+
+
+
+#
+# RUSSIAN
+#
+
+
+# Main
+[vueI18n.messages.ru.main]
+slider_catalog = "Перейти в Каталог"
+last_reviews = "Последние отзывы"
+last_posts = "Последние Посты"
+
+# Product
+[vueI18n.messages.ru.product]
+rub = "р"
+quick_purchase = "Быстрый заказ"
+price = "Цена"
+add = "Добавить в корзину"
+sale = "Скидка"
+color = "Цвет"
+subscribe = "Подписатся на инстаграм"
+  [vueI18n.messages.ru.product.modal]
+  thanks = "Спасибо"
+  phone_number = "Номер телефона"
+  name = "Ваше имя"
+  send = "Отправить"
+  agreement = "Нажимая «Отправить», вы даете согласие на обработку персональных данных"
+  accepted = "Ваша заявка принята. В Ближайшее время с вами свяжется наш менеджер"
+  [vueI18n.messages.ru.product.specs]
+  title = "Характеристики"
+  subtitle = "Общие характеристики"
+    [vueI18n.messages.ru.product.specs.which]
+    weight = "Вес"
+    height = "Высота"
+    type = "Тип"
+    material = "Материал"
+
+# TopHeader
+[vueI18n.messages.ru.top_header]
+slogan = "Блог и магазин по вязанию"
+
+# Footer
+[vueI18n.messages.ru.footer]
+navigation = "Навигация"
+personal_panel = "Личный кабинет"
+email = "Ваш E-Mail"
+notice = "Мы проводим специальные акции для наших клиентов. оформите подписку и мы будем держать вас в курсе"
+privacy_policy = "Политика конфиденциальности"
+subscribe = "Подписатся"
+login = "Войти"
+cart = "Корзина"
+saved = "Сохраненные товары"
+
+# Blog
+[vueI18n.messages.ru.blog]
+author = "Автор"
+read = "Читать"
+about = "Об Авторе"
+suggested = "Предложенные посты"
+
+# Contacts
+[vueI18n.messages.ru.contacts]
+breadcrumbs = "Главная / Контакты"
+send = "Отправить"
+title = "Контакты"
+contact_info = "Контактная информация"
+leave_a_message = "Оставте нам сообщение"
+  [vueI18n.messages.ru.contacts.form]
+  agreement = "Нажимая «Отправить», вы даете согласие на обработку персональных данных"
+  name = "Ваше имя"
+  email = "E-Mail"
+  phone = "Номер телефона"
+  company = "Компания / Автор"
+  message = "Сообщение"
+
+[vueI18n.messages.ru.shop]
+breadcrumbs = "Главная / Магазин"
+clear_filter = "Отчистить фильтр"
+
+[vueI18n.messages.ru.cart]
+breadcrumbs = "Главная / Корзина"
+title = "Корзина"
+  [vueI18n.messages.ru.cart.delivery]
+  title = "Доставка"
+  carrier = "Курьер"
+  takeout = "Самовывоз"
+  notice = "Стоимость доставки по Москве составляет 300 руб. Если сумма заказа превышает 3 000 руб., то доставка бесплатная. Включая районы: Митино, Новокосино, Бутово, Коммунарка, г.Зеленоград, Люберцы."
+  notice_bottom = "Стоимость доставки заказов за пределами МКАД: при сумме заказа до 3 000 руб - 300 руб + за каждый километр (до 20 км от МКАД - 50 руб/км, от 20 км от МКАД - 60 руб/км); при сумме заказа от 3 000 руб - за каждый километр (до 20 км от МКАД - 50 руб/км, от 20 км от МКАД - 60 руб/км)."
+
+  [vueI18n.messages.ru.cart.receiver_info]
+  title = "Данные получателя"
+  promo = "Промо код"
+  email = "E-Mail"
+  full_name = "ФИО"
+  phone = "Номер телефона"
+  comment = "Комментарий"
+  notice = "Важно! Просим учесть, что скидка при оформлении заказа в Корзине не проставляется. После принятия заказа в работу, менеджер интернет-магазина пересчитает его с учётом скидки и свяжется с Вами."
+
+  [vueI18n.messages.ru.cart.address]
+  title = "Адрес доставки"
+  address =  "Напишите ваш адрес"
+
+  [vueI18n.messages.ru.cart.total]
+  total = "Итого"
+  items = "шт"
+  rub = "рублей"
+  perform = "Оформить покупку"
+  
+[vueI18n.messages.ru.saved]
+breadcrumbs = "Главная / Сохраненные"
+title = "Сохраненные товары"
+
+# Account
+[vueI18n.messages.ru.account]
+email = "Ваш E-Mail"
+pass = "Ваш пароль"
+quick_access = "Быстрый доступ с"
+  [vueI18n.messages.ru.account.register]
+  repeat = "Повторите пароль"
+  title = "Регистрация"
+  register = "Зарегистрироватся"
+  agreement = "Если вы создаёте учётную запись, вы автоматически соглашаетесь с Политикой конфиденциальности"
+  [vueI18n.messages.ru.account.login]
+  title = "Вход"
+  login = "Войти"
+
+# Misc
+[vueI18n.messages.ru.misc]
+measurement_cm = "cм"
+measurement_g = "г"
+see_more = "Смотреть еще"
+
+[vueI18n.messages.ru.errors]
+  [vueI18n.messages.ru.errors.e404]
+  subtitle = "Страница на которую вы пытаетесь попасть, не существует или была удалена. Перейдите "
+  subtitle_link = "на главную"
+  error_type = "Not found"
+
+[vueI18n.messages.ru.notifications]
+  email_success = "Успешно подписаны"
+  email_fail_invalid_email = "Неправильный E-Mail"
+  email_fail_already_subscribed = "Уже подписаны"
+  product = "Товар"
+  buy_error = "Произошла ошибка при покупке, попробуйте снова, проверьте правильность данных"
+  buy_success = "Покупка прошла успешно"
+  [vueI18n.messages.ru.notifications.actions]
+    added = "добавлен"
+    saved = "сохранен"
+    unsaved = "убран из любимых"
+  

@@ -1,8 +1,83 @@
-<template>
-  <div>
-    <nuxt />
-  </div>
+<template lang="pug">
+ div
+   nuxt
+   Notification(@hide="hideNotif" :visible="notifVisible") {{ notifText }}
+   ProductModal(@close="hideModal" :product="productModalProduct" :visible="productModalVisible")
 </template>
+
+<script lang="ts">
+import Notification from '../components/Notification.vue'
+import ProductModal from '../components/ProductModal.vue'
+import * as Storage from '../assets/storage'
+import { Component, Vue } from 'nuxt-property-decorator'
+
+
+@Component({
+  components: {
+    Notification,
+    ProductModal
+  }
+})
+export default class DefaultLayout extends Vue {
+  mounted() {
+    let self = this;
+    (this as any).$eventBus.$on('cartadd', (e: any) => {
+      (this as any).$eventBus.$emit('notify', `${(self as any).$t('notifications.product')} "${e.title}" ${(self as any).$t('notifications.actions.added')}`)
+      if (Storage.get('cart') === null) Storage.set('cart', [])
+      const o = Storage.get('cart')
+      const hasProduct = o.filter((g: any) => g.slug === e.slug)[0]
+      if (hasProduct) {
+        hasProduct.count += 1;
+        (this as any).$eventBus.$emit(
+          'notify',
+          `${(self as any).$t('notifications.product')} "${e.title}" ${(self as any).$t('notifications.actions.added')} (${hasProduct.count})`
+        )
+        Storage.set('cart', o)
+      } else {
+        Storage.push('cart', e)
+      }
+    });
+    (this as any).$eventBus.$on('saved', (e: any) => {
+      (this as any).$eventBus.$emit('notify', `${(self as any).$t('notifications.product')} "${e.title}" ${(self as any).$t('notifications.actions.saved')}`)
+      if (Storage.get('saved') == null) Storage.set('saved', [])
+      const hasProduct = Storage.get('saved').find((g: any) => g.slug === e.slug)
+      if (hasProduct) {
+        (this as any).$eventBus.$emit('notify', `${(self as any).$t('notifications.product')} "${e.title}" ${(self as any).$t('notifications.actions.removed')}`)
+        Storage.set(
+          'saved',
+          Storage.get('saved').filter((g: any) => g.slug !== hasProduct.slug)
+        )
+      } else {
+        Storage.push('saved', e)
+      }
+    });
+    (this as any).$eventBus.$on('notify', (e: any) => {
+      this.notifVisible = true
+      this.notifText = e
+      this.$forceUpdate()
+    });
+    (this as any).$eventBus.$on('quickbuy', (e: any) => {
+      this.productModalVisible = true
+      this.productModalProduct = e
+      this.$forceUpdate()
+    });
+  }
+
+  notifText: string = ''
+  notifVisible: Boolean = false
+  productModalVisible: Boolean = false
+  productModalProduct: any = { colors: [] }
+
+  hideModal() {
+    this.productModalVisible = false
+  }
+
+  hideNotif() {
+    this.notifVisible = false
+  }
+}
+
+</script>
 
 <style>
 html {
