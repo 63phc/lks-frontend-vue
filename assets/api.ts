@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Category, Product, Slide, MenuEntry, Author, Post } from './models';
+import { Category, Product, Slide, MenuEntry, Author, Post, Review } from './models';
 import * as Storage from './storage'
 
 const API_URL = "http://dev.backend.littleknitsstory.com/api/v1";
@@ -28,6 +28,43 @@ export async function getSliderImages() : Promise<Array<Slide>>
     subtitle: e.sub_title
   }))
 }
+
+export async function contact(data: any) {
+  if (data.message === "") data.message = null;
+  if (data.email === "") data.email = null;
+  const result = await _simpleFetch(`/contacts/`, 'POST', JSON.stringify({
+    name: data.name,
+    message: data.message,
+    phone_number: data.phone_number,
+    email: data.email,
+    company: data.companys
+  }), {'Content-Type': 'application/json'})
+  let errors = []
+  if (result.email)
+    if (typeof(result.email) !== "string") {
+      if (result.email.length > 0)
+        errors.push("EMAIL_REQUIRED")
+    }
+  if (result.message)
+    if (typeof(result.message) !== "string") {
+      if (result.message.length > 0)
+        errors.push("MESSAGE_REQUIRED")
+    }
+  return errors;
+}
+
+export async function getReviews() : Promise<Array<Review>> { 
+  const result = await _simpleFetch("/reviews");
+
+  return result.map((e: any) => Object({
+    title: e.title,
+    author: e.author,
+    comment: e.comment,
+    rating: e.rating,
+    image_preview: e.image_preview,
+  }))
+}
+
 
 export async function getMenuEntries() : Promise<Array<MenuEntry>> { 
   const result = await _simpleFetch("/menu");

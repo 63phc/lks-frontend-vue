@@ -41,6 +41,12 @@ export default class BlogSlider extends Vue {
 
   currentPost: number = 0
 
+  mounted() {
+    setInterval(() => {
+      this.nextSlide()
+    }, 20000)
+  }
+
   prevSlide(): void {
     this.currentPost -= 1
     if (this.currentPost < 0) this.currentPost = this.posts.length - 1
@@ -71,7 +77,8 @@ Vue.component('BlogSlider', BlogSlider)
 .slider {
   height: 40vh;
   .text {
-    overflow: auto;
+    overflow: hidden;
+    min-height: 40px;
   }
   position: relative;
   .slide {
@@ -99,7 +106,13 @@ Vue.component('BlogSlider', BlogSlider)
       .author {
         margin: 20px 0;
       }
+      position: relative;
       .controls {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin-bottom: -30px;
         .indicator {
           @media screen and(max-width: 400px) {
             display: none;

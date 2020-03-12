@@ -5,13 +5,13 @@
         img(src="/images/shopping-bag.svg")
       .control.lks-mod-pointer(@click="saveProduct")
         img(src="/images/heart.svg")
-    nuxt-link(:to="localePath(`/product/${good.slug}`)" style="text-decoration: underline")
+    nuxt-link(:to="localePath(`/product/${good.slug}`)" style="text-decoration: underline").thumbnail-container
       .thumbnail(:style='`background-image: url(${good.image_preview});`')
     .good-info
       p.good-caption {{ good.title }}
       .color.lks-flex.lks-flex-jcsb
         div.lks-flex
-          span {{ $t('product.color') }}
+          span {{ $t('product.color') }} &nbsp;
           .lks-color-circle
             .lks-color-circle-color(:style="`background: ${good.colors[0]};`")
         p.good-price.lks-flex.lks-flex-aic {{ parseInt(good.price) }} 
@@ -59,12 +59,17 @@ Vue.component('GoodCard', GoodCard)
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  height: 400px;
+  max-height: 400px;
+  min-height: 400px;
   .controls {
     position: absolute;
     transition: 0.4s right;
+    z-index: 40;
     right: -100%;
     .control {
       margin: 10px;
+      margin-right: 20px; 
       border-radius: 100px;
       width: 35px;
       height: 35px;
@@ -83,6 +88,7 @@ Vue.component('GoodCard', GoodCard)
     display: flex;
     transition: 0.5s bottom;
     padding: 10px;
+    line-height: 10px;
     .quick-purchase-btn {
       width: 100%;
     }
@@ -90,7 +96,26 @@ Vue.component('GoodCard', GoodCard)
     position: absolute;
     bottom: -100%;
   }
+  .thumbnail {
+    height: 300px;
+    display: block;
+    border-radius: 7px;
+    margin: -5px;
+    overflow: hidden;
+    transition: 0.5s all;
+  }
   &:hover {
+    .thumbnail {
+      transform: scaleY(0.8) translateY(-37px);
+      background-size: 160% 160%;
+      @media screen and (max-width: 670px) {
+        background-size: 125% 200%;
+      }
+      z-index: -4;
+    }
+    .good-info {
+      bottom: 55px;
+    }
     .controls {
       right: 0;
     }
@@ -99,7 +124,10 @@ Vue.component('GoodCard', GoodCard)
     }
   }
   .good-info {
+    position: relative;
     padding: 10px;
+    bottom: 0;
+    transition: .5s bottom;
   }
   .good-price {
     font-weight: bold;
@@ -107,15 +135,24 @@ Vue.component('GoodCard', GoodCard)
     color: #545353;
   }
   .thumbnail {
-    background-size: cover;
-    min-height: 300px;
+    background-position: center;
+    background-size: 120% 100%;
+    @media screen and (max-width: 670px) {
+      background-size: 100% 150%;
+    }
+    background-repeat: no-repeat;
+    max-height: 300px;
+    min-height: 250px;
     flex: 1;
     border-radius: 10px;
   }
   .good-caption {
+    
     color: #000;
     font-size: 18px;
-    line-height: 2;
+    line-height: 1;
+    margin-bottom: 10px;
+    margin-top: 10px;
     font-weight: normal;
   }
   .color {

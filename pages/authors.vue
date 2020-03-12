@@ -1,17 +1,19 @@
 <template lang="pug">
   div
     TopHeader
-    NavBar
+    NavBar(:links="links")
     .lks-container
       LastPosts
     Instagram.inst
-    Footer
+    Footer(:links="links")
 </template>
 
 <script lang="ts">
 import TopHeader from '../components/TopHeader.vue'
 import NavBar from '../components/NavBar.vue'
 import Footer from '../components/Footer.vue'
+import * as API from '../assets/api'
+import * as models from '../assets/models'
 import Instagram from '../components/Instagram.vue'
 import LastPosts from '../components/LastPosts.vue'
 import { Component, Vue } from 'nuxt-property-decorator'
@@ -25,7 +27,14 @@ import { Component, Vue } from 'nuxt-property-decorator'
     Footer
   }
 })
-export default class Authors extends Vue {}
+export default class Authors extends Vue {
+  links: Array<models.MenuEntry> = []
+  async asyncData() {
+    return {
+      links: await API.getMenuEntries(),
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

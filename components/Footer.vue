@@ -43,15 +43,13 @@
 
 <script lang="ts">
 import * as API from '../assets/api'
-import { Component, Vue } from 'nuxt-property-decorator'
+import * as models from '../assets/models'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 @Component
 export default class Footer extends Vue {
   email: string = ''
-  links: Array<any> = []
-
-  async mounted() {
-    this.links = await API.getMenuEntries()
-  }
+  @Prop()
+  links: Array<models.MenuEntry> = []
 
   async subscribe() {
     const response = await API.subscribe(this.email)
@@ -76,6 +74,9 @@ Vue.component("Footer", Footer)
 @import '../assets/lks-fw/lks-fw.scss';
 
 footer {
+  a {
+    color: #666 !important;
+  }
   border-top: 1px solid #e5e5e5;
   hr {
     border: 0.5px solid #e5e5e5;
@@ -110,7 +111,7 @@ footer {
     border-radius: 50px;
     display: flex;
     justify-content: space-between;
-    width: 50%;
+    width: 70%;
     @media screen and (max-width: 800px) {
       width: 100%;
     }
@@ -142,7 +143,8 @@ footer {
   .subtitle {
     align-self: center;
     color: $color-shaded;
-    width: 30%;
+    width: 80%;
+    padding-bottom: 10px;
     text-align: center;
 
     @media screen and (max-width: 800px) {

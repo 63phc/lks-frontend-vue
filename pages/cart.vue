@@ -1,7 +1,7 @@
 <template lang="pug">
   form(action="javascript:void(0)")
     TopHeader
-    NavBar
+    NavBar(:links="links")
     .lks-container
       .lks-breadcrumb
         .lks-breadcrumb-path {{ $t('cart.breadcrumbs') }}
@@ -9,42 +9,46 @@
     .items
       div(v-for="product in products")
         CartItem(:product="product" @remove='productRemoved')
-    .lks-container
-      section.delivery
-        h2.lks-text-normal.lks-heading {{ $t('cart.delivery.title') }} 
-        .type-option.lks-flex.lks-flex-jcsb
-          label(for="delivery").lks-mod-pointer
-            Radio(:selected="deliveryType == 'carrier'")
-            | &nbsp;&nbsp; {{ $t('cart.delivery.carrier') }}
-          input(type="radio" name="delivery" id="delivery" value="carrier" v-model="deliveryType" hidden)
-          label(for="takeout").lks-mod-pointer
-            Radio(:selected="deliveryType == 'takeout'")
-            | &nbsp;&nbsp; {{ $t('cart.delivery.takeout') }} 
-          input(type="radio" name="delivery" id="takeout" value="takeout" v-model="deliveryType" hidden)
-        p.lks-small {{ $t('cart.delivery.notice') }}
+
+    div(v-if="!isEmpty")
+      .lks-container
+        section.delivery
+          h2.lks-text-normal.lks-heading {{ $t('cart.delivery.title') }} 
+          .type-option.lks-flex.lks-flex-jcsb
+            label(for="delivery").lks-mod-pointer
+              Radio(:selected="deliveryType == 'carrier'")
+              | &nbsp;&nbsp; {{ $t('cart.delivery.carrier') }}
+            input(type="radio" name="delivery" id="delivery" value="carrier" v-model="deliveryType" hidden)
+            label(for="takeout").lks-mod-pointer
+              Radio(:selected="deliveryType == 'takeout'")
+              | &nbsp;&nbsp; {{ $t('cart.delivery.takeout') }} 
+            input(type="radio" name="delivery" id="takeout" value="takeout" v-model="deliveryType" hidden)
+          p.lks-small {{ $t('cart.delivery.notice') }}
+          br
+          p.lks-small {{ $t('cart.delivery.notice_bottom') }}
+        section.buyer-info.lks-flex.lks-flex-col
+          h2.lks-text-normal.lks-heading {{ $t('cart.receiver_info.title') }}
+          .lks-flex.lks-flex-split
+            input.lks-inp(:placeholder="$t('cart.receiver_info.promo')" v-model="promocode")
+            input.lks-inp(:placeholder="$t('cart.receiver_info.email')" v-model="email" required type="email")
+          .lks-flex.lks-flex-split
+            input.lks-inp(:placeholder="$t('cart.receiver_info.full_name')" v-model="fullName" required)
+            input.lks-inp(:placeholder="$t('cart.receiver_info.phone')" v-model="phone" required)
+          input.lks-inp(:placeholder="$t('cart.receiver_info.comment')" v-model="comment")
+          p.lks-small {{ $t('cart.receiver_info.notice') }}
+        section.address-to.lks-flex.lks-flex-col
+          h2.lks-text-normal.lks-heading {{ $t('cart.address.title') }}
+          input.lks-inp.lks-inp-bottom(:placeholder="$t('cart.address.address')" v-model="address" required)
+        section.total.lks-flex.lks-flex-jcfe.lks-flex-aic
+          p.lks-text-normal.lks-heading {{ $t('cart.total.total') }} {{ productsTotal }} {{ $t('cart.total.items') }}: {{ priceTotal }} {{ $t('cart.total.rub') }}
+          label
+            input(type="submit" hidden)
+            Button(@click.native="order").lks-btn-main {{ $t('cart.total.perform') }}
         br
-        p.lks-small {{ $t('cart.delivery.notice_bottom') }}
-      section.buyer-info.lks-flex.lks-flex-col
-        h2.lks-text-normal.lks-heading {{ $t('cart.receiver_info.title') }}
-        .lks-flex.lks-flex-split
-          input.lks-inp(:placeholder="$t('cart.receiver_info.promo')" v-model="promocode")
-          input.lks-inp(:placeholder="$t('cart.receiver_info.email')" v-model="email" required type="email")
-        .lks-flex.lks-flex-split
-          input.lks-inp(:placeholder="$t('cart.receiver_info.full_name')" v-model="fullName" required)
-          input.lks-inp(:placeholder="$t('cart.receiver_info.phone')" v-model="phone" required)
-        input.lks-inp(:placeholder="$t('cart.receiver_info.comment')" v-model="comment")
-        p.lks-small {{ $t('cart.receiver_info.notice') }}
-      section.address-to.lks-flex.lks-flex-col
-        h2.lks-text-normal.lks-heading {{ $t('cart.address.title') }}
-        input.lks-inp.lks-inp-bottom(:placeholder="$t('cart.address.address')" v-model="address" required)
-      section.total.lks-flex.lks-flex-jcfe.lks-flex-aic
-        p.lks-text-normal.lks-heading {{ $t('cart.total.total') }} {{ productsTotal }} {{ $t('cart.total.items') }}: {{ priceTotal }} {{ $t('cart.total.rub') }}
-        label
-          input(type="submit" hidden)
-          Button(@click.native="order").lks-btn-main {{ $t('cart.total.perform') }}
-      br
-      br
-    Footer
+        br
+    div(v-if="isEmpty").cart-empty
+      h1 {{ $t('cart.empty') }}
+    Footer(:links="links")
 </template>
 
 <script lang="ts">
@@ -68,6 +72,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
   }
 })
 export default class Cart extends Vue {
+  links: Array<models.MenuEntry> = []
   products: Array<any> = []
   promocode: string = ''
   email: string = ''
@@ -83,6 +88,13 @@ export default class Cart extends Vue {
       Storage.set('cart', this.products)
     })
   }
+
+  async asyncData() {
+    return {
+      links: await API.getMenuEntries(),
+    }
+  }
+ 
   
   productRemoved(e: models.Product) {
     this.products = this.products.filter(g => g.slug !== e.slug)
@@ -94,6 +106,10 @@ export default class Cart extends Vue {
 
   get priceTotal() {
     return this.products.map((e: any) => parseInt(e.price)*e.count).reduce((a, b) => a + b, 0);
+  }
+
+  get isEmpty() {
+    return this.products.length === 0;
   }
 
   async order() {
@@ -149,6 +165,19 @@ section {
   }
   p {
     margin-right: 20px;
+  }
+}
+.cart-empty {
+  display: flex;
+  justify-content: center;
+  font-size: 3vw;
+  @media screen and(max-width: 800px) {
+    font-size: 18px;
+  }
+  h1 {
+    line-height: 3;
+    font-weight: 100;
+    color: #444;
   }
 }
 </style>

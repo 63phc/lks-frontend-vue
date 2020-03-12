@@ -12,7 +12,7 @@
             div
               h1 {{ slide.title }}
               p {{ slide.subtitle }}
-              nuxt-link(:to="localePath('/shop')")
+              nuxt-link(:to="localePath('/shop')").btn-shop
                 ButtonIcon(icon='/images/shopping-cart.svg') {{ $t('main.slider_catalog')}}
 </template>
 
@@ -89,8 +89,13 @@ Vue.component('Slider', Slider)
 }
 .buttons {
   display: flex;
+  margin-left: 40px;
   margin-bottom: 10px;
   align-self: flex-end;
+}
+.btn-shop {
+  display: flex;
+  justify-content: flex-end;
 }
 .side {
   width: 50vw;
@@ -108,13 +113,18 @@ Vue.component('Slider', Slider)
   color: white;
   & > div {
     height: 66.66666%;
-    padding-top: 20%;
+    width:90%;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
     padding-left: 20%;
     h1 {
       font-family: 'Pacifico', serif;
     }
     p {
-      margin: 20px 0px;
+      margin: 40px 0px;
+      line-height: clamp(100%, 2vw, 200%);
+      font-size: 20px;
     }
   }
 }

@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     TopHeader
-    NavBar
+    NavBar(:links="links")
     .lks-container(v-if="post !== null")
       .lks-container
         h1.lks-heading.lks-mod-text-center {{ post.title }}
@@ -16,7 +16,7 @@
         .post(v-for="suggestedPost in suggestedPosts")
           PostCard(:post="suggestedPost")
 
-    Footer
+    Footer(:links="links")
 </template>
 
 <script lang="ts">
@@ -39,12 +39,18 @@ import PostCard from '../../components/PostCard.vue'
 export default class BlogSlug extends Vue {
   post!: models.Post
   suggestedPosts: Array<models.Post> = []
+  links: Array<models.MenuEntry> = []
 
   async asyncData({ params }: any) {
     return {
+      links: await API.getMenuEntries(),
       suggestedPosts: await API.getPosts(4, 0),
       post: await API.getPost(params.slug)
     }
+  }
+
+  async mounted() {
+    this.$forceUpdate()
   }
 
   validate({ params }: any) {

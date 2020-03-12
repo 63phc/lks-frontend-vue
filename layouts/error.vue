@@ -5,10 +5,10 @@
     .lks-container
       h1.err {{error.statusCode}}
       p.error-subtitle(v-if="error.statusCode === 404")
-        | {{ $t('error.e404.error_type' )}}
+        | {{ $t('errors.e404.error_type' )}}
       p.error-text(v-if="error.statusCode === 404")
-        | {{ $t('error.e404.subtitle' )}}
-        nuxt-link(:to="localePath('/')") {{ $t('error.e404.subtitle_link' )}}
+        | {{ $t('errors.e404.subtitle' )}}
+        nuxt-link(:to="localePath('/')") {{ $t('errors.e404.subtitle_link' )}}
     Footer
 </template>
 

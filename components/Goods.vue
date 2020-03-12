@@ -32,11 +32,16 @@ section {
   .ct {
     justify-content: center;
     display: flex;
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1400px) {
       display: block;
       & > * {
         display: inline-block;
-        width: 45%;
+        width: calc(33% - 20px);
+      }
+    }
+    @media screen and (max-width: 1000px) {
+      & > * {
+        width: calc(50% - 20px);
       }
     }
     @media screen and (max-width: 670px) {

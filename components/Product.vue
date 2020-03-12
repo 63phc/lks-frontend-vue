@@ -11,7 +11,7 @@
     .product-info
       .lks-flex.lks-flex-aic.lks-flex-jcsb.product-name
         div
-          strong.lks-product-name {{ product.name }}
+          strong.lks-product-name {{ product.title }}
           strong.sale.lks-sale -{{ Math.round(parseInt(product.sale)/(parseInt(product.price)+parseInt(product.sale))*100) }}%
         a(href="https://www.instagram.com/katyaanaprienko/")
           ButtonIcon.lks-btn-icon-main(icon='/images/instagram-purple.svg') {{ $t('product.subscribe')}}
