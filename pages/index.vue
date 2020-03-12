@@ -1,16 +1,18 @@
 <template lang="pug">
   div
     TopHeader
-    NavBar
+    NavBar(:links="links")
     Slider(:slides='slides')
     .lks-container
       div(v-for="author in authors")
         LastPosts(:author="author" :posts="posts")
           h2 {{ $t('main.last_posts') }}
+        h2(style="line-height:3") {{ $t('main.seller_products')}}
         Goods(:goods="products")
+        Reviews(:reviews="reviews")
     //-  Reviews
     Instagram.inst
-    Footer
+    Footer(:links="links")
 </template>
 
 <script lang="ts">
@@ -41,11 +43,13 @@ import * as models from '../assets/models'
   }
 })
 export default class Index extends Vue {
+  links: Array<models.MenuEntry> = []
   notifVisible: Boolean = false
   slides: Array<models.Slide> =  []
   authors: Array<models.Author> = []
   posts: Array<models.Post> = []
   products: Array<models.Product> = []
+  reviews: Array<models.Review> = []
 
   mounted() {
     this.authors = this.authors.sort(e => Math.random() - 0.5).slice(0, 2)
@@ -53,10 +57,12 @@ export default class Index extends Vue {
 
   async asyncData() {
     return {
+      links: await API.getMenuEntries(),
       slides: await API.getSliderImages(),
       authors: await API.getAuthors(),
       posts: await API.getPosts(-1, -1),
-      products: await API.getProducts(-1, -1)
+      products: await API.getProducts(-1, -1),
+      reviews: (await API.getReviews()).slice(-2)
     }
   }
 }
@@ -66,5 +72,8 @@ export default class Index extends Vue {
 @import '../assets/lks-fw/lks-fw.scss';
 .inst {
   margin: 40px 0;
+}
+h2 {
+  text-transform: uppercase;
 }
 </style>

@@ -21,9 +21,12 @@ export default class TopHeader extends Vue {
   get currentLang() {
     return Storage.get('lang');
   }
+  isCurrent(url) {
+    return $nuxt.$route.path === url;
+  }
   changeLocale(e) {
     Storage.set('lang', e.target.value);
-    location.href = this.switchLocalePath(e.target.value)
+    this.$nuxt.$router.replace({ path: this.switchLocalePath(e.target.value) })
   }
 }
 

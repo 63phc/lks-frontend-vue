@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     TopHeader
-    NavBar
+    NavBar(:links="links")
     .lks-container
       .featured
         BlogSlider(:posts="posts")
@@ -11,8 +11,8 @@
             :post="post"
           )
 
-        p(@click="seeMore").lks-see-more {{ $t('misc.see_more') }}
-    Footer
+        p(@click="seeMore" v-if="arePostsPaged").lks-see-more {{ $t('misc.see_more') }}
+    Footer(:links="links")
 </template>
 
 <script lang="ts">
@@ -26,6 +26,8 @@ import NavBar from '../../components/NavBar.vue'
 import Footer from '../../components/Footer.vue'
 
 
+const PAGE_SIZE = 6;
+
 @Component({
   components: {
     BlogSlider,
@@ -36,18 +38,33 @@ import Footer from '../../components/Footer.vue'
   }
 })
 export default class BlogIndex extends Vue {
+  links: Array<models.MenuEntry> = []
   posts: Array<models.Post> = []
   offset: number = 0
+  arePostsPaged = false
 
   async mounted() {
-    this.posts = await API.getPosts(10, this.offset)
-    this.offset = 10
+    this.offset = PAGE_SIZE
     this.$forceUpdate()
+    this.checkPostsPaging()
+  }
+
+  async asyncData() {
+    return {
+      links: await API.getMenuEntries(),
+      posts: await API.getPosts(PAGE_SIZE, 0),
+    }
+  }
+
+  async checkPostsPaging() {
+    var posts = await API.getPosts(-1, this.offset)
+    this.arePostsPaged = posts.length > 0;
   }
 
   async seeMore() {
-    this.posts = await API.getPosts(10 + this.offset, 0)
-    this.offset += 10
+    this.posts = await API.getPosts(PAGE_SIZE + this.offset, 0)
+    this.offset += PAGE_SIZE
+    this.checkPostsPaging()
   }
 }
 </script>

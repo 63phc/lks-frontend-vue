@@ -75,13 +75,13 @@ Vue.component('AuthorCard', AuthorCard)
     &::-webkit-scrollbar {
       display: none;
     }
-    @media screen and (max-width: 800px) {
-      left: 70px;
-    }
+  }
+  @media screen and (max-width: 1000px) {
+    min-height: 350px;
   }
   .author-img {
     position: absolute;
-    right: -20%;
+    right: -30px;
     top: 10%;
     z-index: -1;
     width: 15vw;

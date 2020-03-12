@@ -1,7 +1,7 @@
 <template lang="pug">
   div.shop
     TopHeader
-    NavBar
+    NavBar(:links="links")
     .lks-container
       .lks-breadcrumb
         .lks-breadcrumb-path {{ $t('shop.breadcrumbs') }}
@@ -14,8 +14,8 @@
         main
           div(v-for="product in products").product
             GoodCard(:good="product")
-          p(@click="loadMore").lks-see-more {{ $t('misc.see_more') }}
-    Footer
+          p(@click="loadMore" v-if="areEntriesPaged").lks-see-more {{ $t('misc.see_more') }}
+    Footer(:links="links")
 </template>
 
 <script lang="ts">
@@ -29,6 +29,9 @@ import CategorizedMenu from '../components/CategorizedMenu.vue'
 import * as models from '../assets/models'
 import * as API from '../assets/api'
 
+
+const PAGE_SIZE = 6
+
 @Component({
   components: {
     Button,
@@ -40,10 +43,12 @@ import * as API from '../assets/api'
   }
 })
 export default class ShopPage extends Vue {
+  links: Array<models.MenuEntry> = []
   productsRaw: Array<models.Product> = []
   categorySelected: string = ''
   offset: number = 0
   categories: Array<models.Category> = []
+  areEntriesPaged = false
 
   get products(): Array<models.Product> {
     if (this.categorySelected === '') {
@@ -62,19 +67,28 @@ export default class ShopPage extends Vue {
 
   async asyncData() {
     return {
-      productsRaw: await API.getProducts(10, 0),
+      links: await API.getMenuEntries(),
+      productsRaw: await API.getProducts(PAGE_SIZE, 0),
       categories: await API.getCategories()
     }
   }
+  
 
   mounted(): void {
-    this.offset = 10
+    this.offset = PAGE_SIZE
     this.$forceUpdate()
+    this.checkEntriesPaging()
   }
 
   async loadMore() {
-    this.productsRaw = await API.getProducts(10 + this.offset, 0)
-    this.offset += 10
+    this.productsRaw = await API.getProducts(PAGE_SIZE + this.offset, 0)
+    this.offset += PAGE_SIZE
+    this.checkEntriesPaging()
+  }
+
+  async checkEntriesPaging() {
+    var entries = await API.getProducts(-1, this.offset)
+    this.areEntriesPaged = entries.length > 0;
   }
 
   setCategory(e: string): void {
@@ -92,13 +106,13 @@ export default class ShopPage extends Vue {
 @import '../assets/lks-fw/lks-fw.scss';
 .shop {
   .shop-ui {
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 793px) {
       flex-direction: column;
-      .product {
-        width: 100%;
-        margin: 0;
-        margin-top: 20px;
-      }
+      // .product {
+      //   width: 100%;
+      //   margin: 0;
+      //   margin-top: 20px;
+      // }
     }
   }
   aside {
@@ -114,6 +128,13 @@ export default class ShopPage extends Vue {
     .product {
       box-sizing: border-box;
       width: calc(33% - 20px);
+      @media screen and (max-width: 1286px) {
+        width: calc(50% - 20px)
+      }
+      @media screen and (max-width: 595px) {
+        width: calc(100%);
+        margin-left: 0;
+      }
       margin: 10px;
       min-width: 200px;
       display: inline-block;

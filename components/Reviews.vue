@@ -2,20 +2,24 @@
   div.reviews
     h2 {{ $t('main.last_reviews')}}
     .r
-      ReviewCard
-      ReviewCard
+      div(v-for="review in reviews")
+        ReviewCard(:review="review")
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import ReviewCard from './ReviewCard.vue'
+import * as models from '../assets/models'
 
 @Component({
   components: {
     ReviewCard
   }
 })
-export default class Reviews extends Vue {}
+export default class Reviews extends Vue {
+  @Prop()
+  reviews: Array<models.Review> = []
+}
 
 Vue.component('Reviews', Reviews)
 </script>

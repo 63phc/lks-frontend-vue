@@ -1,32 +1,36 @@
 <template lang="pug">
-  div.layout-account
-    TopHeader
-    .lks-container.lks-flex.lks-flex-col.account-form
-      form
-        nuxt
-      .quick
-        p {{ $t('account.quick_access') }}
-        .buttons-social.lks-flex
-          .lks-btn-social
-            img.lks-btn-social-icon(src='/images/logo-facebook.svg', alt='f')
-          .lks-btn-social
-            img.lks-btn-social-icon(src='/images/logo-instagram.svg', alt='i')
-          .lks-btn-social
-            img.lks-btn-social-icon(src='/images/logo-vk.svg', alt='vk')
-          .lks-btn-social
-            img.lks-btn-social-icon(src='/images/logo-pinterest.svg', alt='[')
-    Footer
+  DefaultLayout
+    div.layout-account
+      TopHeader
+      .lks-container.lks-flex.lks-flex-col.account-form
+        form
+          nuxt
+        .quick
+          p {{ $t('account.quick_access') }}
+          .buttons-social.lks-flex
+            .lks-btn-social
+              img.lks-btn-social-icon(src='/images/logo-facebook.svg', alt='f')
+            .lks-btn-social
+              img.lks-btn-social-icon(src='/images/logo-instagram.svg', alt='i')
+            .lks-btn-social
+              img.lks-btn-social-icon(src='/images/logo-vk.svg', alt='vk')
+            .lks-btn-social
+              img.lks-btn-social-icon(src='/images/logo-pinterest.svg', alt='[')
+      Footer
 </template>
 
 <script lang="ts">
 import TopHeader from '../components/TopHeader.vue'
 import Footer from '../components/Footer.vue'
 import LastPosts from '../components/LastPosts.vue'
+import DefaultLayout from '../components/DefaultLayoutComponent.vue'
 import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({
+  layout: 'default',
   components: {
-    TopHeader
+    TopHeader,
+    DefaultLayout
   }
 })
 export default class AccountLayout extends Vue {}

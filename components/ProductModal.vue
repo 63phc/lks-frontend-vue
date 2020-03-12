@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.pmodal-shadow.lks-flex.lks-flex-jcc.lks-flex-aic(v-show="visible")
+  div(v-show="visible")
     Modal(:visible="visible" :title="$t('product.quick_purchase')" v-if="!hasBought" @close="$emit('close')")
       .pmodal-body
         .lks-flex.lks-flex-split.pmodal-product-data

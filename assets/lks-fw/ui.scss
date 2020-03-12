@@ -4,6 +4,7 @@
   // Buttons
   &btn {
     display: inline-block;
+    white-space: nowrap;
     background: white;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     padding: 13px 30px;
@@ -59,8 +60,12 @@
     display: inline-flex;
     justify-content: space-between;
     align-items: center;
+
     &-text {
       padding: 10px 30px;
+      @media screen and (max-width: 1427px) {
+        padding: 5px 15px;
+      }
     }
     &-icon {
       box-sizing: border-box;
@@ -70,7 +75,7 @@
       justify-content: center;
       border-radius: 300px;
       height: 40px;
-      width: 40px;
+      width: 40px !important;
     }
   }
 

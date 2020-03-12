@@ -55,7 +55,7 @@ section {
   .ct {
     min-height: 429px;
     display: flex;
-    @media screen and (max-width: 800px) {
+    @media screen and (max-width: 1000px) {
       flex-direction: column;
     }
     @media screen and (max-width: 600px) {
@@ -70,8 +70,9 @@ section {
     line-height: 4;
   }
   .author {
-    flex: 1;
+    flex: 1.3;
     margin: 10px;
+    min-width:250px;
   }
   .posts {
     flex: 4;

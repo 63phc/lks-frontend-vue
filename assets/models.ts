@@ -58,8 +58,17 @@ interface Category {
   slug: string
 }
 
+interface Review {
+  title: string,
+  author: string,
+  comment: string,
+  rating: number,
+  image_preview: string
+}
+
 export {
   Slide,
+  Review,
   MenuEntry,
   Author,
   Post,

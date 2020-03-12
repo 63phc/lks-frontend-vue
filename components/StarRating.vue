@@ -20,7 +20,7 @@ import { Component, Vue, Prop } from 'nuxt-property-decorator'
 @Component
 export default class StarRating extends Vue {
   @Prop()
-  amount: number = 1
+  amount!: number
 }
 
 Vue.component('StarRating', StarRating)
@@ -30,6 +30,7 @@ Vue.component('StarRating', StarRating)
 .stars-rating {
   position: relative;
   overflow: hidden;
+  display: inline-block;
 }
 .stars-fill {
   position: absolute;

@@ -1,22 +1,25 @@
 <template lang="pug">
   div.layout-account
     TopHeader
-    NavBar
+    NavBar(:links="links")
     .lks-container
       .breadcrumb
         small {{ $t('contacts.breadcrumbs') }}
         h1.heading {{ $t('contacts.title') }}
-      form.contact-form
+      .error(v-if="errors.length > 0")
+        div(v-for="error in errors") {{ error }}
+      form(action="javascript:void(0)" @submit="submit").contact-form
         .fields
           p.heading {{ $t('contacts.leave_a_message') }}
           .split
-            input(type="text" :placeholder="$t('contacts.form.name')")
-            input(type="text" :placeholder="$t('contacts.form.phone')")
+            input(type="text" :placeholder="$t('contacts.form.name')" v-model="name")
+            input(type="text" :placeholder="$t('contacts.form.phone')" v-model="phone")
           .split
-            input(type="text" :placeholder="$t('contacts.form.email')")
-            input(type="text" :placeholder="$t('contacts.form.company')")
-          textarea(:placeholder="$t('contacts.form.message')")
-          Button.submit.lks-btn-main {{ $t('contacts.send') }}
+            input(type="text" :placeholder="$t('contacts.form.email')" v-model="email" required)
+            input(type="text" :placeholder="$t('contacts.form.company')" v-model="company")
+          textarea(:placeholder="$t('contacts.form.message')" v-model="message" required)
+          button
+            Button.submit.lks-btn-main {{ $t('contacts.send') }}
           small.shaded {{ $t('contacts.form.agreement') }}
         .info
           p.heading {{ $t('contacts.contact_info') }}
@@ -32,7 +35,7 @@
               | mail@gmail.com
 
     Instagram
-    Footer
+    Footer(:links="links")
 </template>
 
 <script lang="ts">
@@ -41,6 +44,8 @@ import Footer from '../components/Footer.vue'
 import LastPosts from '../components/LastPosts.vue'
 import Button from '../components/Button.vue'
 import Instagram from '../components/Instagram.vue'
+import * as API from '../assets/api'
+import * as models from '../assets/models'
 import NavBar from '../components/NavBar.vue'
 import { Component, Vue } from 'nuxt-property-decorator'
 
@@ -54,12 +59,60 @@ import { Component, Vue } from 'nuxt-property-decorator'
     NavBar,
   }
 })
-export default class Contacts extends Vue {}
+export default class Contacts extends Vue {
+  name: string = ""
+  phone: string = ""
+  email: string = ""
+  company: string = ""
+  message: string = ""
+
+  links: Array<models.MenuEntry> = []
+  errors: Array<any> = []
+  async mounted() {
+    this.$forceUpdate()
+  }
+  async submit() {
+    let res = await API.contact({
+      name: this.name,
+      phone_number: this.phone,
+      email: this.email,
+      company: this.company,
+      message: this.message
+    })
+    this.errors = []
+    res.forEach((e: string) => {
+      if (e == "EMAIL_REQUIRED") {
+        this.errors.push((this as any).$t('contacts.email_required'))
+      }
+      else if (e == "MESSAGE_REQUIRED") {
+        this.errors.push((this as any).$t('contacts.message_required'))
+      }
+    })
+
+    if (this.errors.length === 0) {
+      (this as any).$eventBus.$emit('notify', 'Успешно')
+    }
+  }
+  async asyncData() {
+    return {
+      links: await API.getMenuEntries(),
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
 @import '../assets/lks-fw/lks-fw.scss';
+button {
+  border: none;
+  background: none;
+}
 .lks-container {
+  .error {
+    border: 1px solid crimson; 
+    border-radius: 5px;
+    padding: 10px;
+  }
   .contact-form {
     @media screen and (max-width: 900px) {
       flex-direction: column;

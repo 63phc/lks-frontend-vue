@@ -40,8 +40,16 @@ Vue.component("PostCard", PostCard)
   flex-direction: column;
   height: 100%;
   transition: 0.5s box-shadow;
+  position: relative;
+  max-height: 400px;
   .read-more {
     visibility: hidden;
+    position: absolute;
+    bottom: 10px;
+    background: white;
+    padding-top: 10px;
+    left: 0;
+    right: 0;
     opacity: 0;
     transition: 0.3s opacity;
   }
@@ -56,11 +64,13 @@ Vue.component("PostCard", PostCard)
   .post-info {
     padding: 10px;
     max-height: 300px;
+    overflow: hidden !important;
     overflow: auto;
   }
   .thumbnail {
     background-size: cover;
     background-position: center;
+    margin: -10px;
     min-height: 200px;
     flex: 1;
   }
@@ -78,6 +88,7 @@ Vue.component("PostCard", PostCard)
     margin-bottom: 16px;
   }
   .post-text {
+    max-height: 200px;
     font-size: 18px;
     margin-bottom: 24px;
     text-align: center;

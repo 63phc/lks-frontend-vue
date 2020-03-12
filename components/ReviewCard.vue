@@ -1,29 +1,33 @@
 <template lang="pug">
   Card.review-card.lks-card-floating
     img(src="/images/circles.svg").circles
-    div(style="background-image: url(https://upload.wikimedia.org/wikipedia/commons/6/61/Trappista_cheese_original.jpg);").good-img
+    div(:style="`background-image: url(${review.image_preview});`").good-img
     h2 
-      | Медведь цветной
-    StarRating.stars
-    p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo,
+      | {{ review.title }}
+    StarRating(:amount="review.rating").stars
+    p {{ review.comment }}
     br
-    small {{ $t('product.author') }}
+    small {{ $t('blog.author') }}
     br
-    strong Мария Мария
+    strong {{ review.author }}
 
 
 </template>
 
 <script lang="ts">
 import StarRating from './StarRating.vue'
-import { Component, Vue } from 'nuxt-property-decorator'
+import * as models from '../assets/models'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 
 @Component({
   components: {
     StarRating
   }
 })
-export default class ReviewCard extends Vue {}
+export default class ReviewCard extends Vue {
+  @Prop({ required: true })
+  review!: models.Review
+}
 
 Vue.component("ReviewCard", ReviewCard)
 </script>
@@ -32,6 +36,7 @@ Vue.component("ReviewCard", ReviewCard)
 @import '../assets/lks-fw/lks-fw.scss';
 
 .review-card {
+  height: 300px;
   padding: 20px;
   background: $color-main;
   color: #fff;
@@ -41,7 +46,12 @@ Vue.component("ReviewCard", ReviewCard)
   p {
     width: 60%;
     font-size: 20px;
+    max-height: 150px;
+    overflow: auto;
     text-align: justify;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
   .stars {
     line-height: 2;

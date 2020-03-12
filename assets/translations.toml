@@ -27,6 +27,7 @@ fallbackLocale = "en"
 slider_catalog = "Open Catalog"
 last_reviews = "Last Reviews"
 last_posts = "Last Posts"
+seller_products = "Seller Products"
 
 # Product
 [vueI18n.messages.en.product]
@@ -37,6 +38,8 @@ rub = "rub"
 add = "Add to cart"
 price = "Price"
 subscribe = "Subscribe to instagram"
+popular = "POPULAR"
+last_posts = "LAST POSTS"
   [vueI18n.messages.en.product.modal]
   thanks = "Thanks"
   phone_number = "Phone Number"
@@ -84,6 +87,8 @@ title = "Contacts"
 send = "Send"
 contact_info = "Contact Info"
 leave_a_message = "Leave us a Message"
+email_required = "Email required"
+message_required = "Message required"
   [vueI18n.messages.en.contacts.form]
   name = "Your Name"
   email = "E-Mail"
@@ -99,6 +104,7 @@ clear_filter = "Clear Filter"
 [vueI18n.messages.en.cart]
 breadcrumbs = "Main / Cart"
 title = "Cart"
+empty = "Cart is empty"
   [vueI18n.messages.en.cart.delivery]
   title = "Delivery"
   carrier = "Carrier"
@@ -150,7 +156,7 @@ see_more = "See More"
 
 [vueI18n.messages.en.errors]
   [vueI18n.messages.en.errors.e404]
-  subtitle = "Page you are trying to access either does not exist, was moved or removed. Go to"
+  subtitle = "Page you are trying to access either does not exist, was moved or removed. Go to "
   subtitle_link = "main page"
   error_type = "Not found"
 
@@ -187,6 +193,7 @@ see_more = "See More"
 slider_catalog = "Перейти в Каталог"
 last_reviews = "Последние отзывы"
 last_posts = "Последние Посты"
+seller_products = "Товары Автора"
 
 # Product
 [vueI18n.messages.ru.product]
@@ -197,6 +204,8 @@ add = "Добавить в корзину"
 sale = "Скидка"
 color = "Цвет"
 subscribe = "Подписатся на инстаграм"
+popular = "ПОПУЛЯРНОЕ"
+last_posts = "ПОСЛЕДНИЕ ПОСТЫ"
   [vueI18n.messages.ru.product.modal]
   thanks = "Спасибо"
   phone_number = "Номер телефона"
@@ -243,6 +252,8 @@ send = "Отправить"
 title = "Контакты"
 contact_info = "Контактная информация"
 leave_a_message = "Оставте нам сообщение"
+email_required = "Email обязателен"
+message_required = "Сообщение обязательно"
   [vueI18n.messages.ru.contacts.form]
   agreement = "Нажимая «Отправить», вы даете согласие на обработку персональных данных"
   name = "Ваше имя"
@@ -258,6 +269,7 @@ clear_filter = "Отчистить фильтр"
 [vueI18n.messages.ru.cart]
 breadcrumbs = "Главная / Корзина"
 title = "Корзина"
+empty = "Корзина пуста"
   [vueI18n.messages.ru.cart.delivery]
   title = "Доставка"
   carrier = "Курьер"
