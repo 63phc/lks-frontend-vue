@@ -36,6 +36,9 @@ Vue.component("CategorizedMenu", CateogorizedMenu)
     color: #545353;
     .category {
       background: #fff;
+      &:hover {
+        color: $color-main;
+      }
       .subcategories {
         display: none;
         color: #545353;

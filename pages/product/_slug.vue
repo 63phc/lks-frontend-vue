@@ -3,6 +3,13 @@
     TopHeader
     NavBar(:links="links")
     .lks-container
+      .lks-breadcrumb
+        .lks-breadcrumb-path
+          nuxt-link(:to="localePath('/')")
+            | {{ $t('breadcrumbs.index') }} / 
+          nuxt-link(:to="localePath('/shop')")
+            | {{ $t('breadcrumbs.shop') }} / 
+          | {{ $t('breadcrumbs.product' )}}
       Product(:product="product")
       .specs
         .lks-big-text {{ $t('product.specs.title') }}

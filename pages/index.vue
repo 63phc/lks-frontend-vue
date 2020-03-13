@@ -61,7 +61,7 @@ export default class Index extends Vue {
       slides: await API.getSliderImages(),
       authors: await API.getAuthors(),
       posts: await API.getPosts(-1, -1),
-      products: await API.getProducts(-1, -1),
+      products: (await API.getProducts(-1, -1)).slice(-4),
       reviews: (await API.getReviews()).slice(-2)
     }
   }

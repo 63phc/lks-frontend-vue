@@ -19,9 +19,11 @@
               nuxt-link(:to="localePath('/cart')") {{ $t('footer.cart') }}
             li 
               nuxt-link(:to="localePath('/saved')") {{ $t('footer.saved') }}
+      br
       .subscribe-input
         input(v-model='email', type='text', :placeholder='$t("footer.email")')
         button(@click="subscribe") {{ $t('footer.subscribe') }}
+      br
       p.subtitle
         | {{ $t('footer.notice') }}
       //- .buttons-social.lks-flex
@@ -33,6 +35,7 @@
           img.lks-btn-social-icon(src='/images/logo-vk.svg', alt='vk')
         .lks-btn-social
           img.lks-btn-social-icon(src='/images/logo-pinterest.svg', alt='[')
+    br
     hr
     .lks-container
       .copyright.lks-flex

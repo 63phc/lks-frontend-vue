@@ -72,8 +72,11 @@ export async function getMenuEntries() : Promise<Array<MenuEntry>> {
   return result.results.map((e: any) => Object({
     name: e.name,
     url: e.url,
-    is_active: e.is_active
-  }))
+    is_active: e.is_active,
+    order: e.ordering
+  })).sort((a: any, b: any) => {
+    return Math.sign(a.order - b.order)
+  })
 }
 
 export async function getAuthors() : Promise<Array<Author>>

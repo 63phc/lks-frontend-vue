@@ -3,6 +3,11 @@
     TopHeader
     NavBar(:links="links")
     .lks-container
+      .lks-breadcrumb
+        .lks-breadcrumb-path
+          nuxt-link(:to="localePath('/')")
+            | {{ $t('breadcrumbs.index') }} / 
+          | {{ $t('breadcrumbs.authors' )}}
       LastPosts
     Instagram.inst
     Footer(:links="links")

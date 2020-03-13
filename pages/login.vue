@@ -1,5 +1,10 @@
 <template lang="pug">
-  div
+  div  
+    .lks-breadcrumb
+      .lks-breadcrumb-path
+        nuxt-link(:to="localePath('/')")
+          | {{ $t('breadcrumbs.index') }} / 
+        | {{ $t('breadcrumbs.login' )}}
     .options
       nuxt-link(:to="localePath('/login')").option.selected {{ $t('account.login.title') }}
       nuxt-link(:to="localePath('/register')").option {{ $t('account.register.title') }}

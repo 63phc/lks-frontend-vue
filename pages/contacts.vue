@@ -3,9 +3,11 @@
     TopHeader
     NavBar(:links="links")
     .lks-container
-      .breadcrumb
-        small {{ $t('contacts.breadcrumbs') }}
-        h1.heading {{ $t('contacts.title') }}
+      .lks-breadcrumb
+        .lks-breadcrumb-path
+          nuxt-link(:to="localePath('/')")
+            | {{ $t('breadcrumbs.index') }} / 
+          | {{ $t('breadcrumbs.contacts' )}}
       .error(v-if="errors.length > 0")
         div(v-for="error in errors") {{ error }}
       form(action="javascript:void(0)" @submit="submit").contact-form
