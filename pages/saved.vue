@@ -44,6 +44,7 @@ export default class SavedPage extends Vue {
 
   mounted() {
     this.products = Storage.get('saved')
+    this.$forceUpdate()
   }
 
   get isEmpty() {

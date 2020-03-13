@@ -53,6 +53,7 @@ export default class Index extends Vue {
 
   mounted() {
     this.authors = this.authors.sort(e => Math.random() - 0.5).slice(0, 2)
+    this.$forceUpdate()
   }
 
   async asyncData() {

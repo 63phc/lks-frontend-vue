@@ -86,6 +86,7 @@ export default class Cart extends Vue {
 
   mounted() {
     this.products = Storage.get('cart')
+    this.$forceUpdate()
     window.addEventListener('beforeunload', e => {
       Storage.set('cart', this.products)
     })
