@@ -3,17 +3,20 @@
     .controls
       .control.lks-mod-pointer(@click="addToCart")
         img(src="/images/shopping-bag.svg")
+        .dot(:class="hasProduct ? 'lit' : ''")
       .control.lks-mod-pointer(@click="saveProduct")
         img(src="/images/heart.svg")
+        .dot(:class="hasSaved ? 'lit' : ''")
     nuxt-link(:to="localePath(`/product/${good.slug}`)" style="text-decoration: underline").thumbnail-container
       .thumbnail(:style='`background-image: url(${good.image_preview});`')
     .good-info
       p.good-caption {{ good.title }}
       .color.lks-flex.lks-flex-jcsb
         div.lks-flex
-          span {{ $t('product.color') }} &nbsp;
-          .lks-color-circle
-            .lks-color-circle-color(:style="`background: ${good.colors[0]};`")
+          div.lks-flex(v-if="good.colors[0]")
+            span {{ $t('product.color') }} &nbsp;
+            .lks-color-circle
+              .lks-color-circle-color(:style="`background: ${good.colors[0]};`")
         p.good-price.lks-flex.lks-flex-aic {{ parseInt(good.price) }} 
           img(src="/images/ruble.svg" style="filter: brightness(0.5)")
     .quick-purchase(@click="quickBuy")
@@ -23,6 +26,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import * as models from '../assets/models'
+import * as Storage from '../assets/storage'
 import Card from './Card.vue'
 import ButtonIcon from './ButtonIcon.vue'
 
@@ -36,16 +40,31 @@ export default class GoodCard extends Vue {
   @Prop({ required: true })
   good!: models.Product
 
+  // Dummy variable to force vue to recalculate property
+  rdummy: boolean = false
+
   addToCart() {
     (this as any).$eventBus.$emit('cartadd', this.good)
+    this.rdummy = !this.rdummy;
   }
 
   saveProduct() {
     (this as any).$eventBus.$emit('saved', this.good)
+    this.rdummy = !this.rdummy;
   }
 
   quickBuy() {
     (this as any).$eventBus.$emit('quickbuy', this.good)
+  }
+
+  get hasSaved() {
+    if (this.rdummy) void(0);
+    return Storage.get('saved') ? Storage.get('saved').findIndex((e: models.Product) => e.id == this.good.id) > -1 : false;
+  }
+
+  get hasProduct() {
+    if (this.rdummy) void(0);
+    return Storage.get('cart') ? Storage.get('cart').findIndex((e: models.Product) => e.id == this.good.id) > -1 : false;
   }
 }
 
@@ -54,6 +73,19 @@ Vue.component('GoodCard', GoodCard)
 
 <style lang="scss" scoped>
 @import '../assets/lks-fw/lks-fw.scss';
+.dot {
+  width: 5px;
+  height: 5px;
+  background: white;
+  border-radius: 10px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  &.lit {
+    background: crimson;
+  }
+}
+
 .good-card {
   display: flex;
   flex-direction: column;
@@ -75,10 +107,12 @@ Vue.component('GoodCard', GoodCard)
       height: 35px;
       display: flex;
       align-items: center;
+      position: relative;
       justify-content: center;
       background: $color-main;
       img {
         filter: brightness(10);
+        width: 50%;
       }
     }
   }

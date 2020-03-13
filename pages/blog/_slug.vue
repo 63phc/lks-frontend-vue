@@ -3,6 +3,13 @@
     TopHeader
     NavBar(:links="links")
     .lks-container(v-if="post !== null")
+      .lks-breadcrumb
+        .lks-breadcrumb-path
+          nuxt-link(:to="localePath('/')")
+            | {{ $t('breadcrumbs.index') }} / 
+          nuxt-link(:to="localePath('/blog')") 
+            | {{ $t('breadcrumbs.blog') }} / 
+          | {{ $t('breadcrumbs.article' )}}
       .lks-container
         h1.lks-heading.lks-mod-text-center {{ post.title }}
         small.lks-date

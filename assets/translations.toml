@@ -28,6 +28,7 @@ slider_catalog = "Open Catalog"
 last_reviews = "Last Reviews"
 last_posts = "Last Posts"
 seller_products = "Seller Products"
+btn = "Go to main"
 
 # Product
 [vueI18n.messages.en.product]
@@ -134,6 +135,7 @@ empty = "Cart is empty"
 [vueI18n.messages.en.saved]
 breadcrumbs = "Main / Saved"
 title = "Saved Products"
+empty = "Nothing here"
 
 [vueI18n.messages.en.account]
 email = "Your E-Mail"
@@ -172,7 +174,20 @@ see_more = "See More"
     added = "put in cart"
     saved = "saved"
     unsaved = "removed from saved"
-  
+    
+[vueI18n.messages.en.breadcrumbs]
+blog = "Blog"
+article = "Article"
+index = "Main"
+shop = "Shop"
+cart = "Cart"
+contacts = "Contacts"
+login = "Login"
+register = "Register"
+saved = "Saved"
+product = "Product"
+authors = "Authors"
+
 
 
 
@@ -194,6 +209,7 @@ slider_catalog = "Перейти в Каталог"
 last_reviews = "Последние отзывы"
 last_posts = "Последние Посты"
 seller_products = "Товары Автора"
+btn = "Вернутся на главную"
 
 # Product
 [vueI18n.messages.ru.product]
@@ -299,6 +315,7 @@ empty = "Корзина пуста"
 [vueI18n.messages.ru.saved]
 breadcrumbs = "Главная / Сохраненные"
 title = "Сохраненные товары"
+empty = "Ничего нет"
 
 # Account
 [vueI18n.messages.ru.account]
@@ -338,3 +355,15 @@ see_more = "Смотреть еще"
     saved = "сохранен"
     unsaved = "убран из любимых"
   
+[vueI18n.messages.ru.breadcrumbs]
+blog = "Блог"
+article = "Статья"
+index = "Главная"
+shop = "Магазин"
+cart = "Корзина"
+contacts = "Контакты"
+login = "Вход"
+register = "Регистрация"
+saved = "Сохранненые"
+product = "Товар"
+authors = "Авторы"

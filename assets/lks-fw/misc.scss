@@ -31,6 +31,9 @@
   }
 
   &breadcrumb {
+    a {
+      color: #aaa;
+    }
     color: #545353;
     &-heading {
       line-height: 2;

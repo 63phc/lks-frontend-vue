@@ -3,6 +3,12 @@
     TopHeader
     NavBar(:links="links")
     .lks-container
+      .lks-breadcrumb
+        .lks-breadcrumb-path
+          nuxt-link(:to="localePath('/')")
+            | {{ $t('breadcrumbs.index') }} / 
+          | {{ $t('breadcrumbs.blog' )}}
+      br
       .featured
         BlogSlider(:posts="posts")
       .posts

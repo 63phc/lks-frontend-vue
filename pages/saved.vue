@@ -4,11 +4,15 @@
     NavBar(:links="links")
     .lks-container
       .lks-breadcrumb
-        small.lks-breadcrumb-path {{ $t('saved.breadcrumbs') }}
-        h2.lks-heading.lks-font-normal {{ $t('saved.title') }}
+        .lks-breadcrumb-path
+          nuxt-link(:to="localePath('/')")
+            | {{ $t('breadcrumbs.index') }} / 
+          | {{ $t('breadcrumbs.saved' )}}
       .products
         .product(v-for="product in products").product
           GoodCard(:good="product" @click.native="update")
+      div(v-if="isEmpty").cart-empty
+        h1 {{ $t('saved.empty') }}
     Footer(:links="links")
 </template>
 
@@ -42,6 +46,10 @@ export default class SavedPage extends Vue {
     this.products = Storage.get('saved')
   }
 
+  get isEmpty() {
+    return this.products.length === 0;
+  }
+
   async asyncData() {
     return {
       links: await API.getMenuEntries(),
@@ -67,6 +75,19 @@ export default class SavedPage extends Vue {
       margin: 0;
       margin-top: 20px;
     }
+  }
+}
+.cart-empty {
+  display: flex;
+  justify-content: center;
+  font-size: 3vw;
+  @media screen and(max-width: 800px) {
+    font-size: 18px;
+  }
+  h1 {
+    line-height: 3;
+    font-weight: 100;
+    color: #444;
   }
 }
 </style>

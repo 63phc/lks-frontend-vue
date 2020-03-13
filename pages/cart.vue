@@ -1,11 +1,13 @@
 <template lang="pug">
-  form(action="javascript:void(0)")
+  form(action="javascript:void(0)" @submit="order")
     TopHeader
     NavBar(:links="links")
     .lks-container
       .lks-breadcrumb
-        .lks-breadcrumb-path {{ $t('cart.breadcrumbs') }}
-        h2.lks-breadcrumb-heading {{ $t('cart.title') }}
+        .lks-breadcrumb-path
+          nuxt-link(:to="localePath('/')")
+            | {{ $t('breadcrumbs.index') }} / 
+          | {{ $t('breadcrumbs.cart' )}}
     .items
       div(v-for="product in products")
         CartItem(:product="product" @remove='productRemoved')
@@ -43,7 +45,7 @@
           p.lks-text-normal.lks-heading {{ $t('cart.total.total') }} {{ productsTotal }} {{ $t('cart.total.items') }}: {{ priceTotal }} {{ $t('cart.total.rub') }}
           label
             input(type="submit" hidden)
-            Button(@click.native="order").lks-btn-main {{ $t('cart.total.perform') }}
+            Button.lks-btn-main {{ $t('cart.total.perform') }}
         br
         br
     div(v-if="isEmpty").cart-empty
@@ -98,6 +100,7 @@ export default class Cart extends Vue {
   
   productRemoved(e: models.Product) {
     this.products = this.products.filter(g => g.slug !== e.slug)
+    Storage.set('cart', this.products)
   }
 
   get productsTotal() {

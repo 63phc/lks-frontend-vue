@@ -2,19 +2,25 @@
   nav
     ul.social
       li
-        img(src='/images/logo-vk.svg', alt='')
+        a(href="https://vk.com/littleknitsstory")
+          img(src='/images/logo-vk.svg', alt='')
       li
-        img(src='/images/logo-facebook.svg', alt='')
+        a(href="https://www.facebook.com/littleknitsstory/")
+          img(src='/images/logo-facebook.svg', alt='')
       li
-        img(src='/images/logo-instagram.svg', alt='')
+        a(href="https://www.instagram.com/littleknitsstory/")
+          img(src='/images/logo-instagram.svg', alt='')
       li
-        img(src='/images/logo-pinterest.svg', alt='')
+        a(href="https://www.pinterest.ru/littleknitsstory/")
+          img(src='/images/logo-pinterest.svg', alt='')
       li.control-adapt
         nuxt-link(:to="localePath('/cart')")
           img(src='/images/shopping-bag.svg', alt='')
+          .dot(:class="hasProducts ? 'lit' : ''")
       li.control-adapt
         nuxt-link(:to="localePath('/saved')")
           img(src='/images/heart.svg', alt='')
+          .dot(:class="hasSaved ? 'lit' : ''")
     ul.links
       li(v-for='link in links', :key='link.url')
         nuxt-link(:to='localePath(link.url)' v-if="!isExternal(link.url)" :class="isCurrent(localePath(link.url)) ? 'nav-current' : ''")
@@ -27,20 +33,35 @@
       li
         nuxt-link(:to="localePath('/cart')")
           img(src='/images/shopping-bag.svg', alt='')
+          .dot(:class="hasProducts ? 'lit' : ''")
       li
         nuxt-link(:to="localePath('/saved')")
           img(src='/images/heart.svg', alt='')
+          .dot(:class="hasSaved ? 'lit' : ''")
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import * as API from '../assets/api'
 import * as models from '../assets/models'
+import * as Storage from '../assets/storage'
 
 @Component
 export default class NavBar extends Vue {
   @Prop()
   links: Array<models.MenuEntry> = []
+  hasProducts: boolean = false
+  hasSaved: boolean = false
+
+  mounted() {
+    this.hasProducts = Storage.get('cart') ? Storage.get('cart').length > 0 : false;
+    this.hasSaved = Storage.get('saved') ? Storage.get('saved').length > 0 : false;
+    setInterval(() => {
+      this.hasProducts = Storage.get('cart') ? Storage.get('cart').length > 0 : false;
+      this.hasSaved = Storage.get('saved') ? Storage.get('saved').length > 0 : false;
+    }, 1000)
+    // Poll for cart changes
+  }
 
   isCurrent(url: string) {
     return this.$nuxt.$route.path === url;
@@ -86,9 +107,29 @@ nav {
   }
 }
 
+.dot {
+  width: 5px;
+  height: 5px;
+  background: gray;
+  border-radius: 10px;
+  position: relative;
+  top: -25px;
+  left: 20px;
+  &.lit {
+    background: crimson;
+  }
+}
+
 .controls {
   order: 1;
   align-items: center;
+  display: inline-flex;
+  flex: 0;
+  
+  justify-content: flex-start;
+  & > * {
+    padding: 0 30px;
+  }
 }
 
 .social {

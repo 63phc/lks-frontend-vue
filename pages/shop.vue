@@ -4,7 +4,10 @@
     NavBar(:links="links")
     .lks-container
       .lks-breadcrumb
-        .lks-breadcrumb-path {{ $t('shop.breadcrumbs') }}
+        .lks-breadcrumb-path
+          nuxt-link(:to="localePath('/')")
+            | {{ $t('breadcrumbs.index') }} / 
+          | {{ $t('breadcrumbs.shop' )}}
       .lks-flex.shop-ui
         aside
           CategorizedMenu(:categories="categories" @select="setCategory")

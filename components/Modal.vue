@@ -55,7 +55,7 @@ Vue.component("Modal", Modal)
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.2);
-  z-index: 4;
+  z-index: 42069;
 }
 .modal-title {
   padding: 10px;

@@ -1,7 +1,7 @@
 <template lang="pug">
   div(v-show="visible")
     Modal(:visible="visible" :title="$t('product.quick_purchase')" v-if="!hasBought" @close="$emit('close')")
-      .pmodal-body
+      form(action="javascript:void(0)" @submit="quickOrder").pmodal-body
         .lks-flex.lks-flex-split.pmodal-product-data
           .pmodal-picture(:style="`background-image: url(${product.image_preview})`")
           .pmodal-info
@@ -19,14 +19,19 @@
             .pmodal-sale {{ $t('product.sale') }} -{{ product.sale }} {{$t('product.rub') }}
             br
         .lks-flex.lks-flex-split.pmodal-fields
-          input(:placeholder="$t('product.modal.name')" v-model="name").lks-inp
-          input(type="tel" :placeholder="$t('product.modal.phone_number')" v-model="phone").lks-inp
+          input(:placeholder="$t('product.modal.name')" v-model="name" required).lks-inp
+          input(type="tel" :placeholder="$t('product.modal.phone_number')" v-model="phone" required).lks-inp
         .lks-flex.lks-flex-jcc
-          Button.lks-btn-main(@click.native="quickOrder") {{ $t('product.modal.send') }}
+          label
+            input(type="submit" hidden)
+            Button.lks-btn-main {{ $t('product.modal.send') }}
         br
         .lks-small.lks-mod-text-center {{ $t('product.modal.agreement') }}
     Modal(:visible="visible" :title="$t('product.modal.thanks')" v-if="hasBought" @close="hasBought = false; $emit('close')")
-      p.lks-paragraph {{ $t('product.modal.accepted') }}
+      p(style="line-height: 3;").lks-paragraph {{ $t('product.modal.accepted') }}
+      div.lks-flex.lks-flex-jcc
+        nuxt-link(to="/" @click.native="hasBought = false; $emit('close')")
+          Button.lks-btn-main {{ $t('main.btn') }}
 </template>
 
 <script lang="ts">
