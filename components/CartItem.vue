@@ -1,20 +1,23 @@
 <template lang="pug">
   .item.lks-flex.lks-flex-jcsb(v-if="product")
-    .picture(:style="`background-image: url(${product.image_preview})`")
+    nuxt-link(:to="localePath(`/product/${product.slug}`)").picture(:style="`background-image: url(${product.image_preview})`")
     .description.lks-flex.lks-flex-jscb.lks-flex-col
-      .title {{ product.title }}
+      nuxt-link(:to="localePath(`/product/${product.slug}`)").title {{ product.title }}
       //- .article Артикул:  product.around 
-      .color.lks-flex.lks-flex-jcsb
+      .color.lks-flex
         span {{ $t('product.color') }} &nbsp;
         .lks-color-circle
           .lks-color-circle-color(:style="`background-color: ${product.colors[0]};`")
     .control.lks-flex
-      .add.lks-mod-pointer(@click="add") +
+      .add.lks-mod-pointer(@click="subtract") -
       .counter {{ product.count }}
-      .sub.lks-mod-pointer(@click="subtract") -
+      .sub.lks-mod-pointer(@click="add") +
     .price.lks-flex.lks-flex-jcsb.lks-flex-aic
       span {{ $t('product.price') }}:
-      .lks-price-now {{ product.price }}
+      .lks-price-now {{ parseInt(product.price) }}
+        small
+          | &nbsp;
+          sup {{ product.price.split('.')[1], '00' }}
       img(src="/images/ruble.svg")
       .remove(@click="$emit('remove', product)") x
 </template>
@@ -63,6 +66,7 @@ Vue.component('CartItem', CartItem)
   box-shadow: 5px 0 20px rgba(0, 0, 0, 0.1);
   .picture {
     height: 120px;
+    flex-shrink: 0.15;
     width: 120px;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -70,6 +74,8 @@ Vue.component('CartItem', CartItem)
   }
   .description {
     justify-content: space-around;
+    width: 30%;
+    margin-left: 20px;
     font-size: 14px;
     color: $color-text;
     .title {
@@ -78,6 +84,7 @@ Vue.component('CartItem', CartItem)
     }
   }
   .control {
+    width: 200px;
     align-items: center;
     text-align: center;
     min-width: 150px;
@@ -102,6 +109,7 @@ Vue.component('CartItem', CartItem)
     }
   }
   .price {
+    width: 20%;
     span {
       color: #000;
       margin-right: 10px;

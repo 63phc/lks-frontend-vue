@@ -81,7 +81,7 @@ Vue.component('AuthorCard', AuthorCard)
   }
   .author-img {
     position: absolute;
-    right: -30px;
+    right: -60px;
     top: 10%;
     z-index: -1;
     width: 15vw;

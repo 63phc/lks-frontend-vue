@@ -2,16 +2,16 @@
   nav
     ul.social
       li
-        a(href="https://vk.com/littleknitsstory")
+        a(href="https://vk.com/littleknitsstory" target="_blank")
           img(src='/images/logo-vk.svg', alt='')
       li
-        a(href="https://www.facebook.com/littleknitsstory/")
+        a(href="https://www.facebook.com/littleknitsstory/" target="_blank")
           img(src='/images/logo-facebook.svg', alt='')
       li
-        a(href="https://www.instagram.com/littleknitsstory/")
+        a(href="https://www.instagram.com/littleknitsstory/" target="_blank")
           img(src='/images/logo-instagram.svg', alt='')
       li
-        a(href="https://www.pinterest.ru/littleknitsstory/")
+        a(href="https://www.pinterest.ru/littleknitsstory/" target="_blank")
           img(src='/images/logo-pinterest.svg', alt='')
       li.control-adapt
         nuxt-link(:to="localePath('/cart')")

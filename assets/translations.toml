@@ -267,7 +267,7 @@ breadcrumbs = "Главная / Контакты"
 send = "Отправить"
 title = "Контакты"
 contact_info = "Контактная информация"
-leave_a_message = "Оставте нам сообщение"
+leave_a_message = "Оставьте нам сообщение"
 email_required = "Email обязателен"
 message_required = "Сообщение обязательно"
   [vueI18n.messages.ru.contacts.form]

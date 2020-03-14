@@ -19,7 +19,11 @@ import { Component, Vue } from 'nuxt-property-decorator'
   }
 })
 export default class DefaultLayoutComponent extends Vue {
-  mounted() {
+  mounted() {2
+    if (Storage.get('lang') !== (this as any).$i18n.locale) {
+      Storage.set('lang', (this as any).$i18n.locale)
+      location.href = (this as any).localePath(location.href)
+    }
     let self = this;
     (this as any).$eventBus.$on('cartadd', (e: any) => {
       (this as any).$eventBus.$emit('notify', `${(self as any).$t('notifications.product')} "${e.title}" ${(self as any).$t('notifications.actions.added')}`)
@@ -27,7 +31,7 @@ export default class DefaultLayoutComponent extends Vue {
       const o = Storage.get('cart')
       const hasProduct = o.filter((g: any) => g.slug === e.slug)[0]
       if (hasProduct) {
-        hasProduct.count += 1;
+        hasProduct.count += e.count;
         (this as any).$eventBus.$emit(
           'notify',
           `${(self as any).$t('notifications.product')} "${e.title}" ${(self as any).$t('notifications.actions.added')} (${hasProduct.count})`

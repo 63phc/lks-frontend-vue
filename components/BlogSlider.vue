@@ -75,7 +75,10 @@ Vue.component('BlogSlider', BlogSlider)
 }
 
 .slider {
-  height: 40vh;
+  height: 50vh;
+  @media screen and (max-height: 900px) {
+    height: 60vh;
+  }
   .text {
     overflow: hidden;
     min-height: 40px;
@@ -83,7 +86,10 @@ Vue.component('BlogSlider', BlogSlider)
   position: relative;
   .slide {
     position: absolute;
-    height: 40vh;
+    @media screen and (max-height: 900px) {
+      height: 60vh;
+    }
+    height: 50vh;
     right: 0;
     left: 0;
     .image {
@@ -92,10 +98,12 @@ Vue.component('BlogSlider', BlogSlider)
       @media screen and(max-width: 550px) {
         display: none;
       }
+      background-position: center;
     }
     .content {
       flex: 2;
       margin: 40px;
+
       .title {
         width: 50%;
         min-width: 200px;
