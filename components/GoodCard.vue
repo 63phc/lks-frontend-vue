@@ -131,24 +131,23 @@ Vue.component('GoodCard', GoodCard)
     bottom: -100%;
   }
   .thumbnail {
-    height: 300px;
     display: block;
-    border-radius: 7px;
-    margin: -5px;
+    top: 10px;
+    bottom: 100px;
+    left: 10px;
+    right: 10px;
     overflow: hidden;
+    position: absolute;
+    margin: 10px 5px;
     transition: 0.5s all;
   }
   &:hover {
     .thumbnail {
-      transform: scaleY(0.8) translateY(-37px);
-      background-size: 160% 160%;
-      @media screen and (max-width: 670px) {
-        background-size: 125% 200%;
-      }
+      bottom: 130px;
       z-index: -4;
     }
     .good-info {
-      bottom: 55px;
+      bottom: 60px;
     }
     .controls {
       right: 0;
@@ -158,9 +157,12 @@ Vue.component('GoodCard', GoodCard)
     }
   }
   .good-info {
-    position: relative;
+    position: absolute;
+    margin-bottom: 5px;
+    left: 0;
+    right: 0;
     padding: 10px;
-    bottom: 0;
+    bottom: 10px;
     transition: .5s bottom;
   }
   .good-price {
@@ -170,15 +172,16 @@ Vue.component('GoodCard', GoodCard)
   }
   .thumbnail {
     background-position: center;
-    background-size: 120% 100%;
-    @media screen and (max-width: 670px) {
-      background-size: 100% 150%;
-    }
+    background-size: cover;
     background-repeat: no-repeat;
-    max-height: 300px;
-    min-height: 250px;
     flex: 1;
-    border-radius: 10px;
+  }
+  .thumbnail-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
   .good-caption {
     

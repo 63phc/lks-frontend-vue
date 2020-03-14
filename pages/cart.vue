@@ -8,6 +8,7 @@
           nuxt-link(:to="localePath('/')")
             | {{ $t('breadcrumbs.index') }} / 
           | {{ $t('breadcrumbs.cart' )}}
+    br
     .items
       div(v-for="product in products")
         CartItem(:product="product" @remove='productRemoved')

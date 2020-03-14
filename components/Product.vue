@@ -27,12 +27,12 @@
             .lks-price-now {{ parseInt(product.price) }}
             strike.lks-price-old {{ parseInt(product.price) + parseInt(product.sale)}}
           .product-color
-            .lks-color-circle
+            .lks-color-circle(v-if="product.colors[0]")
               .lks-color-circle-color(:style="`background: ${product.colors[0]}`")
           .product-size.lks-flex.lks-aic
             img(src="/images/height.svg")
             .lks-product-size {{ product.properties.height }} см
-          Button(@click.native="$eventBus.$emit('saved', product)").lks-btn-main.favorite.lks-flex.lks-flex-aic.lks-flex-jcc
+          Button(@click.native="saveProduct" :class="isSaved ? 'activated' : ''").lks-btn-main.favorite.lks-flex.lks-flex-aic.lks-flex-jcc
             img(src="/images/heart.svg")
       .controls.lks-mod-text-center.lks-flex
         ButtonIcon.lks-btn-icon-main(icon="/images/bolt-pink.svg" @click.native="$eventBus.$emit('quickbuy', product)") {{ $t('product.quick_purchase')}}
@@ -45,6 +45,7 @@ import Card from '../components/Card.vue'
 import ButtonIcon from '../components/ButtonIcon.vue'
 import Button from '../components/Button.vue'
 import * as models from '../assets/models'
+import * as Storage from '../assets/storage' 
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 
 @Component({
@@ -57,17 +58,30 @@ import { Component, Vue, Prop } from 'nuxt-property-decorator'
 export default class Product extends Vue {
   @Prop()
   product!: models.Product
-
+  dummy: boolean = false
   count: number = 1
 
   add() {
     this.count += 1
+    this.product.count = this.count
+  }
+  
+  saveProduct() {
+    (this as any).$eventBus.$emit('saved', this.product)
+    this.$forceUpdate()
+    this.dummy = !this.dummy;
   }
 
   subtract() {
     if (this.count > 1) {
       this.count -= 1
     }
+    this.product.count = this.count
+  }
+
+  get isSaved() {
+    if (this.dummy) void(0);
+    return Storage.get('saved').findIndex((e: any) => e.slug == this.product.slug) > -1;
   }
 
   get fullUrl() {
@@ -174,8 +188,14 @@ Vue.component('Product', Product)
       width: 50px;
       height: 50px;
       padding: 0;
+      &.activated {
+        background: white;
+        img {
+          filter: brightness(0.5) sepia(1) saturate(10000%) opacity(0.4);
+        }
+      }
       img {
-        filter: brightness(100);
+        filter: brightness(400);
       }
     }
   }

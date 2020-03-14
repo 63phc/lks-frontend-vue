@@ -50,10 +50,10 @@ section {
     z-index: -2;
     position: absolute;
     bottom: -40px;
-    left: -30px;
+    left: -20px;
   }
   .ct {
-    min-height: 429px;
+    min-height: 500px;
     display: flex;
     @media screen and (max-width: 1000px) {
       flex-direction: column;
