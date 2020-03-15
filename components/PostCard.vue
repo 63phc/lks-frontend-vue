@@ -2,7 +2,7 @@
   Card.post-card
     nuxt-link(:to="localePath('/blog/'+post.slug)").card-ov
       div
-      .thumbnail(:style='`background-image: url(${post.image_preview});`')
+      .thumbnail(:style='`background-image: url("${post.image_preview}");`')
       .post-info
         p.post-date
           small {{ post.created_at }}

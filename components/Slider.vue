@@ -1,7 +1,7 @@
 <template lang="pug">
   .slider
     transition-group(name='slides')
-      .slide(v-for='(slide, index) in slides', v-show='currentSlide == index', :key='index', :style='`background-image: url(${slide.image_src})`')
+      .slide(v-for='(slide, index) in slides', :key='index', :style='`background-image: url(${slide.image_src}); display: ${currentSlide == index ? "flex" : "none"};`')
         .buttons
           .btn-nav(@click='prevSlide')
             img(src='/images/left-arrow.svg', alt='<')

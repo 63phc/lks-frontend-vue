@@ -8,7 +8,7 @@
         img(src="/images/heart.svg")
         .dot(:class="hasSaved ? 'lit' : ''")
     nuxt-link(:to="localePath(`/product/${good.slug}`)" style="text-decoration: underline").thumbnail-container
-      .thumbnail(:style='`background-image: url(${good.image_preview});`')
+      .thumbnail(:style='`background-image: url("${good.image_preview}");`')
     .good-info
       p.good-caption {{ good.title }}
       .color.lks-flex.lks-flex-jcsb
