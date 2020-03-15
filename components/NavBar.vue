@@ -83,25 +83,27 @@ ul {
 
 nav {
   padding: 20px 15%;
-
+  flex: 2;
   backdrop-filter: blur(50px);
   background: rgba(255, 255, 255, 0.8);
   display: flex;
   position: sticky;
   align-items: center;
+  justify-content: center;
   position: -webkit-sticky;
   top: 0; /* required */
   z-index: 50;
   margin-bottom: 10px;
-  justify-content: space-between;
 }
 
 .links {
   order: 1;
   color: #545353;
   text-transform: uppercase;
-  flex: 2;
   justify-content: space-between;
+  li {
+    margin: 0 1vw;
+  }
   a {
     color: #545353 !important;
   }
@@ -124,16 +126,22 @@ nav {
   order: 1;
   align-items: center;
   display: inline-flex;
-  flex: 0;
-  
-  justify-content: flex-start;
+  flex: 1;
+  justify-content: flex-end;
   & > * {
-    padding: 0 30px;
+    padding: 0 1vw;
   }
 }
 
 .social {
   order: 0;
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+  & > * {
+    padding: 0 1vw;
+  }
+
 }
 .nav-current {
   border-bottom: 2px solid $color-main;

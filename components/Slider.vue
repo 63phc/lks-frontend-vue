@@ -64,9 +64,11 @@ Vue.component('Slider', Slider)
   @media screen and (max-height: 550px) {
     height: 90vh;
   }
+  max-height: 700px;
 }
 
 .slide {
+  max-height: 700px;
   overflow: hidden;
   position: absolute;
   left: 0;
@@ -102,6 +104,7 @@ Vue.component('Slider', Slider)
 .btn-shop {
   display: flex;
   justify-content: flex-end;
+  margin-right: 30px;
 }
 .side {
   width: 50vw;
@@ -126,11 +129,12 @@ Vue.component('Slider', Slider)
     padding-left: 20%;
     h1 {
       font-family: 'Pacifico', serif;
+      font-size: clamp(20px, 1.5vw, 40px);
     }
     p {
       margin: 40px 0px;
       line-height: clamp(100%, 2vw, 200%);
-      font-size: 20px;
+      font-size: clamp(18px, 1.5vw, 32px);
     }
   }
 }
