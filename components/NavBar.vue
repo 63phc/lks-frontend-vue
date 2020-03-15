@@ -160,6 +160,7 @@ nav > ul {
 }
 @media screen and (max-width: 847px) {
   nav {
+    font-size: 13px;
     flex-direction: column;
     & > ul {
       width: 90%;

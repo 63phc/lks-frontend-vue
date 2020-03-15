@@ -1,6 +1,6 @@
 <template lang="pug">
   div(v-show="visible")
-    Modal(:visible="visible" :title="$t('product.quick_purchase')" v-if="!hasBought" @close="$emit('close')")
+    Modal(:visible="visible" :title="$t('product.quick_purchase')" v-if="!hasBought" @close="$emit('close')").pmodal-modal
       form(action="javascript:void(0)" @submit="quickOrder").pmodal-body
         .lks-flex.lks-flex-split.pmodal-product-data
           .pmodal-picture(:style="`background-image: url(${product.image_preview})`")
@@ -27,7 +27,7 @@
             Button.lks-btn-main {{ $t('product.modal.send') }}
         br
         .lks-small.lks-mod-text-center {{ $t('product.modal.agreement') }}
-    Modal(:visible="visible" :title="$t('product.modal.thanks')" v-if="hasBought" @close="hasBought = false; $emit('close')")
+    Modal(:visible="visible" :title="$t('product.modal.thanks')" v-if="hasBought" @close="hasBought = false; $emit('close')").pmodal-modal
       p(style="line-height: 3;").lks-paragraph {{ $t('product.modal.accepted') }}
       div.lks-flex.lks-flex-jcc
         nuxt-link(to="/" @click.native="hasBought = false; $emit('close')")
@@ -85,6 +85,7 @@ Vue.component('ProductModal', Vue)
   width: 500px;
   @media screen and (max-width: 800px) {
     height: 100%;
+    width: 100vw !important;
     align-self: stretch;
     .pmodal-product-data {
       flex-direction: column;

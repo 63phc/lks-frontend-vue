@@ -76,8 +76,8 @@ Vue.component('BlogSlider', BlogSlider)
 
 .slider {
   height: 50vh;
-  @media screen and (max-height: 900px) {
-    height: 60vh;
+  @media screen and (max-height: 700px) {
+    height: 100vh;
   }
   .text {
     overflow: hidden;
@@ -86,8 +86,8 @@ Vue.component('BlogSlider', BlogSlider)
   position: relative;
   .slide {
     position: absolute;
-    @media screen and (max-height: 900px) {
-      height: 60vh;
+    @media screen and (max-height: 700px) {
+      height: 100vh;
     }
     height: 50vh;
     right: 0;

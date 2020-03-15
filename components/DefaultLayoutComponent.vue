@@ -3,10 +3,12 @@
    slot
    Notification(@hide="hideNotif" :visible="notifVisible") {{ notifText }}
    ProductModal(@close="hideModal" :product="productModalProduct" :visible="productModalVisible")
+   BottomProductsControls
 </template>
 
 <script lang="ts">
 import Notification from '../components/Notification.vue'
+import BottomProductsControls from '../components/BottomProductsControls.vue'
 import ProductModal from '../components/ProductModal.vue'
 import * as Storage from '../assets/storage'
 import { Component, Vue } from 'nuxt-property-decorator'
@@ -15,7 +17,8 @@ import { Component, Vue } from 'nuxt-property-decorator'
 @Component({
   components: {
     Notification,
-    ProductModal
+    ProductModal,
+    BottomProductsControls
   }
 })
 export default class DefaultLayoutComponent extends Vue {

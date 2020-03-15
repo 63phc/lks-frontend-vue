@@ -52,6 +52,14 @@ Vue.component('ProductPopular', ProductPopular)
   display: flex;
   position: relative;
   margin-bottom: 100px;
+  @media screen and(max-width: 420px) {
+    .price-tag {
+      font-size: 25px;
+    }
+    .title {
+      font-size: 1.2em;
+    }
+  }
   .left {
     flex: 1;
   }

@@ -39,11 +39,11 @@ export default class SavedPage extends Vue {
   products: Array<models.Product> = []
 
   update() : void {
-    this.products = Storage.get('saved')
+    this.products = Storage.get('saved') ? Storage.get('saved') : [];
   }
 
   mounted() {
-    this.products = Storage.get('saved')
+    this.products = Storage.get('saved') ? Storage.get('saved') : [];
     this.$forceUpdate()
   }
 

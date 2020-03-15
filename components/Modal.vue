@@ -36,7 +36,7 @@ Vue.component("Modal", Modal)
   transform: translate(-50%, -50%);
   @media screen and (max-width: 800px) {
     height: 100%;
-    widows: 100%;
+    width: 100%;
     .pmodal-product-data {
       flex-direction: column;
     }
