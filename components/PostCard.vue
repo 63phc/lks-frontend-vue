@@ -1,15 +1,17 @@
 <template lang="pug">
   Card.post-card
-    .thumbnail(:style='`background-image: url(${post.image_preview});`')
-    .post-info
-      p.post-date
-        small {{ post.created_at }}
-      p.post-caption
-        strong {{ post.title }}
-      p.post-text {{ post.content.replace(/<\/?[^>]+(>|$)/g, "").split(" ").slice(0, 25).join(" ") }}...
-      .lks-flex.lks-flex-jcc.read-more
-        nuxt-link(:to="localePath('/blog/'+post.slug)")
-          Button.lks-btn-main.lks-mod-text-center {{ $t('blog.read') }}
+    nuxt-link(:to="localePath('/blog/'+post.slug)").card-ov
+      div
+      .thumbnail(:style='`background-image: url("${post.image_preview}");`')
+      .post-info
+        p.post-date
+          small {{ post.created_at }}
+        p.post-caption
+          strong {{ post.title }}
+        p.post-text {{ post.content.replace(/<\/?[^>]+(>|$)/g, "").split(" ").slice(0, 25).join(" ") }}...
+        .lks-flex.lks-flex-jcc.read-more
+          nuxt-link(:to="localePath('/blog/'+post.slug)")
+            Button.lks-btn-main.lks-mod-text-center {{ $t('blog.read') }}
 </template>
 
 <script lang="ts">
@@ -41,7 +43,12 @@ Vue.component("PostCard", PostCard)
   height: 100%;
   transition: 0.5s box-shadow;
   position: relative;
-  max-height: 400px;
+  .card-ov {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+  }
   .read-more {
     visibility: hidden;
     position: absolute;

@@ -80,6 +80,7 @@ section {
     & > * {
       margin: 10px;
       flex: 2;
+      height: 100%;
     }
   }
 }

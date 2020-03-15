@@ -88,6 +88,7 @@ footer {
     list-style-type: none;
     display: flex;
     padding: 0;
+    margin-bottom: 10px;
     li {
       margin-right: 10px;
     }

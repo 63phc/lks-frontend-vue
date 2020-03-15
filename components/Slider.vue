@@ -1,7 +1,7 @@
 <template lang="pug">
   .slider
     transition-group(name='slides')
-      .slide(v-for='(slide, index) in slides', v-show='currentSlide == index', :key='index', :style='`background-image: url(${slide.image_src})`')
+      .slide(v-for='(slide, index) in slides', :key='index', :style='`background-image: url(${slide.image_src}); display: ${currentSlide == index ? "flex" : "none"};`')
         .buttons
           .btn-nav(@click='prevSlide')
             img(src='/images/left-arrow.svg', alt='<')
@@ -61,14 +61,22 @@ Vue.component('Slider', Slider)
 
 .slider {
   height: 60vh;
+  @media screen and (max-height: 550px) {
+    height: 90vh;
+  }
+  max-height: 700px;
 }
 
 .slide {
+  max-height: 700px;
   overflow: hidden;
   position: absolute;
   left: 0;
   right: 0;
   height: 60vh;
+  @media screen and (max-height: 550px) {
+    height: 90vh;
+  }
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -96,6 +104,7 @@ Vue.component('Slider', Slider)
 .btn-shop {
   display: flex;
   justify-content: flex-end;
+  margin-right: 30px;
 }
 .side {
   width: 50vw;
@@ -120,11 +129,12 @@ Vue.component('Slider', Slider)
     padding-left: 20%;
     h1 {
       font-family: 'Pacifico', serif;
+      font-size: clamp(20px, 1.5vw, 40px);
     }
     p {
       margin: 40px 0px;
       line-height: clamp(100%, 2vw, 200%);
-      font-size: 20px;
+      font-size: clamp(18px, 1.5vw, 32px);
     }
   }
 }

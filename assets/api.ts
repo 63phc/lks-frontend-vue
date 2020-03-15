@@ -132,7 +132,7 @@ export async function getProducts(limit: number = 0, offset: number = 0) : Promi
     title: e.title,
     slug: e.slug,
     description: e.description,
-    price: e.price,
+    price: isNaN(parseInt(e.price)) ? '0.00' : e.price,
     sale: e.sale,
     colors: e.colors.map((g: any) => g.color),
     categories: e.categories,

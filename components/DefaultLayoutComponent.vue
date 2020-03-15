@@ -3,10 +3,12 @@
    slot
    Notification(@hide="hideNotif" :visible="notifVisible") {{ notifText }}
    ProductModal(@close="hideModal" :product="productModalProduct" :visible="productModalVisible")
+   BottomProductsControls.ctl
 </template>
 
 <script lang="ts">
 import Notification from '../components/Notification.vue'
+import BottomProductsControls from '../components/BottomProductsControls.vue'
 import ProductModal from '../components/ProductModal.vue'
 import * as Storage from '../assets/storage'
 import { Component, Vue } from 'nuxt-property-decorator'
@@ -15,11 +17,12 @@ import { Component, Vue } from 'nuxt-property-decorator'
 @Component({
   components: {
     Notification,
-    ProductModal
+    ProductModal,
+    BottomProductsControls
   }
 })
 export default class DefaultLayoutComponent extends Vue {
-  mounted() {2
+  mounted() {
     if (Storage.get('lang') !== (this as any).$i18n.locale) {
       Storage.set('lang', (this as any).$i18n.locale)
       location.href = (this as any).localePath(location.href)
@@ -83,7 +86,7 @@ export default class DefaultLayoutComponent extends Vue {
 
 </script>
 
-<style>
+<style lang="scss" scoped>
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -130,5 +133,12 @@ html {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+
+.ctl {
+  display: none;  
+  @media screen and (max-width: 847px) {
+    display: block;
+  }
 }
 </style>

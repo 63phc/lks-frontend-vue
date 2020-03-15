@@ -81,6 +81,7 @@ export default class Product extends Vue {
 
   get isSaved() {
     if (this.dummy) void(0);
+    if (!Storage.get('saved')) return;
     return Storage.get('saved').findIndex((e: any) => e.slug == this.product.slug) > -1;
   }
 
@@ -109,9 +110,15 @@ Vue.component('Product', Product)
   }
   @media screen and (max-width: 682px) {
     .price,
-    .controls,
     .product-name {
       & > * {
+        margin-bottom: 15px;
+      }
+      flex-direction: column;
+    }
+    .controls { 
+      & > * {
+        margin-right: 0 !important;
         margin-bottom: 15px;
       }
       flex-direction: column;

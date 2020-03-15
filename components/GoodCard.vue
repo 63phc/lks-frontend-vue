@@ -8,17 +8,19 @@
         img(src="/images/heart.svg")
         .dot(:class="hasSaved ? 'lit' : ''")
     nuxt-link(:to="localePath(`/product/${good.slug}`)" style="text-decoration: underline").thumbnail-container
-      .thumbnail(:style='`background-image: url(${good.image_preview});`')
+      .thumbnail(:style='`background-image: url("${good.image_preview}");`')
     .good-info
       p.good-caption {{ good.title }}
       .color.lks-flex.lks-flex-jcsb
+        p.good-price.lks-flex.lks-flex-aic {{ good.price.split(".")[0] }} 
+          sup(style="transform: translateY(-10px); opacity: 0.4;")
+            small {{ good.price.split(".")[1] }}
+          img(src="/images/ruble.svg" style="filter: brightness(0.5)")
         div.lks-flex
           div.lks-flex(v-if="good.colors[0]")
             span {{ $t('product.color') }} &nbsp;
             .lks-color-circle
               .lks-color-circle-color(:style="`background: ${good.colors[0]};`")
-        p.good-price.lks-flex.lks-flex-aic {{ parseInt(good.price) }} 
-          img(src="/images/ruble.svg" style="filter: brightness(0.5)")
     .quick-purchase(@click="quickBuy")
       ButtonIcon.lks-btn-icon-bordered.quick-purchase-btn(icon="/images/lightning.svg") {{ $t('product.quick_purchase') }}
 </template>
@@ -172,7 +174,7 @@ Vue.component('GoodCard', GoodCard)
   }
   .thumbnail {
     background-position: center;
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     flex: 1;
   }

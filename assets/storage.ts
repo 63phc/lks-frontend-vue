@@ -1,9 +1,11 @@
 export function set(key: string, value: any) {
-  window.localStorage[key] = JSON.stringify(value);
+  if (process.client)
+    window.localStorage[key] = JSON.stringify(value);
 }
 
 export function get(key: string) {
-  return JSON.parse(window.localStorage[key] ? window.localStorage[key] : 'null')
+  if (process.client)
+    return JSON.parse(window.localStorage[key] ? window.localStorage[key] : 'null')
 }
 
 export function push(arr_key: string, value: any) {

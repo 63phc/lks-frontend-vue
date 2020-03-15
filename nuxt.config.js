@@ -2,11 +2,9 @@ const fs = require('fs')
 const toml = require('toml')
 const pkg = require('./package')
 const tomlLangConfig = fs.readFileSync('./assets/translations.toml')
-console.log(tomlLangConfig)
 const lang = toml.parse(tomlLangConfig)
 
 module.exports = {
-  mode: 'spa',
 
   /*
   ** Headers of the page

@@ -24,4 +24,9 @@ Vue.component('ButtonIcon', ButtonIcon)
 
 <style lang="scss" scoped>
 @import '../assets/lks-fw/lks-fw.scss';
+@media screen and (max-width: 345px) {
+  .lks-btn-icon {
+    font-size: 14px !important;
+  }
+}
 </style>
