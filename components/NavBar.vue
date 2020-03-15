@@ -172,6 +172,7 @@ nav > ul {
     }
     & > .social {
       order: 0;
+      display: none;
       & > * {
         padding-right: 10px;
       }
@@ -185,10 +186,8 @@ nav > ul {
       }
     }
     & > .links {
+      padding-top: 0;
       order: 2;
-      & > * {
-        font-size: 80%;
-      }
     }
   }
 }

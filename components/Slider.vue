@@ -61,6 +61,9 @@ Vue.component('Slider', Slider)
 
 .slider {
   height: 60vh;
+  @media screen and (max-height: 550px) {
+    height: 90vh;
+  }
 }
 
 .slide {
@@ -69,6 +72,9 @@ Vue.component('Slider', Slider)
   left: 0;
   right: 0;
   height: 60vh;
+  @media screen and (max-height: 550px) {
+    height: 90vh;
+  }
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
