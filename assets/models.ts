@@ -50,7 +50,8 @@ interface Product {
   image_alt: string,
   properties: any,
   count: number,
-  id: number
+  id: number,
+  code: string
 }
 
 interface Category {

@@ -138,6 +138,7 @@ export async function getProducts(limit: number = 0, offset: number = 0) : Promi
     categories: e.categories,
     author: e.author,
     image_preview: e.image_preview,
+    code: e.code,
     image_alt: e.image_alt,
     properties: {
       weight: e.weight,

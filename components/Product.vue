@@ -86,7 +86,8 @@ export default class Product extends Vue {
   }
 
   get fullUrl() {
-    return window.location
+    if (process.client)
+      return window.location
   }
 }
 

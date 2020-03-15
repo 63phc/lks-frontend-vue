@@ -3,8 +3,8 @@
     nuxt-link(:to="localePath(`/product/${product.slug}`)").picture(:style="`background-image: url(${product.image_preview})`")
     .description.lks-flex.lks-flex-jscb.lks-flex-col
       nuxt-link(:to="localePath(`/product/${product.slug}`)").title {{ product.title }}
-      //- .article Артикул:  product.around 
-      .color.lks-flex
+      .article {{ $t('product.code') }}: {{ product.code }}
+      .color.lks-flex(v-if="product.colors[0]")
         span {{ $t('product.color') }} &nbsp;
         .lks-color-circle
           .lks-color-circle-color(:style="`background-color: ${product.colors[0]};`")

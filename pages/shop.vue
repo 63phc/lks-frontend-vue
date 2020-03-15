@@ -13,7 +13,7 @@
           CategorizedMenu(:categories="categories" @select="setCategory")
           // PriceRange.gap
           // ColorCard.gap
-          Button.lks-btn-bordered.lks-mod-fill.lks-mod-text-center.gap(@click.native="clearFilter") {{ $t('shop.clear_filter') }}
+          Button.lks-btn-bordered.lks-mod-fill.lks-mod-text-center.gap.filter-clear(@click.native="clearFilter") {{ $t('shop.clear_filter') }}
         main
           div(v-for="product in products").product
             GoodCard(:good="product")
@@ -143,5 +143,9 @@ export default class ShopPage extends Vue {
       display: inline-block;
     }
   }
+}
+.filter-clear {
+  width: 100%;
+  box-sizing: border-box;
 }
 </style>
