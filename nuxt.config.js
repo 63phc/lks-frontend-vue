@@ -5,7 +5,7 @@ const tomlLangConfig = fs.readFileSync('./assets/translations.toml')
 const lang = toml.parse(tomlLangConfig)
 
 module.exports = {
-
+  runInNewContext: false,
   /*
   ** Headers of the page
   */

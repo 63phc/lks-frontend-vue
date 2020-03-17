@@ -1,57 +1,58 @@
 <template lang="pug">
-  form(action="javascript:void(0)" @submit="order")
-    TopHeader
-    NavBar(:links="links")
-    .lks-container
-      .lks-breadcrumb
-        .lks-breadcrumb-path
-          nuxt-link(:to="localePath('/')")
-            | {{ $t('breadcrumbs.index') }} / 
-          | {{ $t('breadcrumbs.cart' )}}
-    br
-    .items
-      div(v-for="product in products")
-        CartItem(:product="product" @remove='productRemoved')
-
-    div(v-if="!isEmpty")
+  client-only
+    form(action="javascript:void(0)" @submit="order")
+      TopHeader
+      NavBar(:links="links")
       .lks-container
-        section.delivery
-          h2.lks-text-normal.lks-heading {{ $t('cart.delivery.title') }} 
-          .type-option.lks-flex.lks-flex-jcsb
-            label(for="delivery").lks-mod-pointer
-              Radio(:selected="deliveryType == 'carrier'")
-              | &nbsp;&nbsp; {{ $t('cart.delivery.carrier') }}
-            input(type="radio" name="delivery" id="delivery" value="carrier" v-model="deliveryType" hidden)
-            label(for="takeout").lks-mod-pointer
-              Radio(:selected="deliveryType == 'takeout'")
-              | &nbsp;&nbsp; {{ $t('cart.delivery.takeout') }} 
-            input(type="radio" name="delivery" id="takeout" value="takeout" v-model="deliveryType" hidden)
-          p.lks-small {{ $t('cart.delivery.notice') }}
+        .lks-breadcrumb
+          .lks-breadcrumb-path
+            nuxt-link(:to="localePath('/')")
+              | {{ $t('breadcrumbs.index') }} / 
+            | {{ $t('breadcrumbs.cart' )}}
+      br
+      .items
+        div(v-for="product in products")
+          CartItem(:product="product" @remove='productRemoved')
+
+      div(v-if="!isEmpty")
+        .lks-container
+          section.delivery
+            h2.lks-text-normal.lks-heading {{ $t('cart.delivery.title') }} 
+            .type-option.lks-flex.lks-flex-jcsb
+              label(for="delivery").lks-mod-pointer
+                Radio(:selected="deliveryType == 'carrier'")
+                | &nbsp;&nbsp; {{ $t('cart.delivery.carrier') }}
+              input(type="radio" name="delivery" id="delivery" value="carrier" v-model="deliveryType" hidden)
+              label(for="takeout").lks-mod-pointer
+                Radio(:selected="deliveryType == 'takeout'")
+                | &nbsp;&nbsp; {{ $t('cart.delivery.takeout') }} 
+              input(type="radio" name="delivery" id="takeout" value="takeout" v-model="deliveryType" hidden)
+            p.lks-small {{ $t('cart.delivery.notice') }}
+            br
+            p.lks-small {{ $t('cart.delivery.notice_bottom') }}
+          section.buyer-info.lks-flex.lks-flex-col
+            h2.lks-text-normal.lks-heading {{ $t('cart.receiver_info.title') }}
+            .lks-flex.lks-flex-split
+              input.lks-inp(:placeholder="$t('cart.receiver_info.promo')" v-model="promocode")
+              input.lks-inp(:placeholder="$t('cart.receiver_info.email')" v-model="email" required type="email")
+            .lks-flex.lks-flex-split
+              input.lks-inp(:placeholder="$t('cart.receiver_info.full_name')" v-model="fullName" required)
+              input.lks-inp(:placeholder="$t('cart.receiver_info.phone')" v-model="phone" required)
+            input.lks-inp(:placeholder="$t('cart.receiver_info.comment')" v-model="comment")
+            p.lks-small {{ $t('cart.receiver_info.notice') }}
+          section.address-to.lks-flex.lks-flex-col
+            h2.lks-text-normal.lks-heading {{ $t('cart.address.title') }}
+            input.lks-inp.lks-inp-bottom(:placeholder="$t('cart.address.address')" v-model="address" required)
+          section.total.lks-flex.lks-flex-jcfe.lks-flex-aic
+            p.lks-text-normal.lks-heading {{ $t('cart.total.total') }} {{ productsTotal }} {{ $t('cart.total.items') }}: {{ priceTotal }} {{ $t('cart.total.rub') }}
+            label
+              input(type="submit" hidden)
+              Button.lks-btn-main {{ $t('cart.total.perform') }}
           br
-          p.lks-small {{ $t('cart.delivery.notice_bottom') }}
-        section.buyer-info.lks-flex.lks-flex-col
-          h2.lks-text-normal.lks-heading {{ $t('cart.receiver_info.title') }}
-          .lks-flex.lks-flex-split
-            input.lks-inp(:placeholder="$t('cart.receiver_info.promo')" v-model="promocode")
-            input.lks-inp(:placeholder="$t('cart.receiver_info.email')" v-model="email" required type="email")
-          .lks-flex.lks-flex-split
-            input.lks-inp(:placeholder="$t('cart.receiver_info.full_name')" v-model="fullName" required)
-            input.lks-inp(:placeholder="$t('cart.receiver_info.phone')" v-model="phone" required)
-          input.lks-inp(:placeholder="$t('cart.receiver_info.comment')" v-model="comment")
-          p.lks-small {{ $t('cart.receiver_info.notice') }}
-        section.address-to.lks-flex.lks-flex-col
-          h2.lks-text-normal.lks-heading {{ $t('cart.address.title') }}
-          input.lks-inp.lks-inp-bottom(:placeholder="$t('cart.address.address')" v-model="address" required)
-        section.total.lks-flex.lks-flex-jcfe.lks-flex-aic
-          p.lks-text-normal.lks-heading {{ $t('cart.total.total') }} {{ productsTotal }} {{ $t('cart.total.items') }}: {{ priceTotal }} {{ $t('cart.total.rub') }}
-          label
-            input(type="submit" hidden)
-            Button.lks-btn-main {{ $t('cart.total.perform') }}
-        br
-        br
-    div(v-if="isEmpty").cart-empty
-      h1 {{ $t('cart.empty') }}
-    Footer(:links="links")
+          br
+      div(v-if="isEmpty").cart-empty
+        h1 {{ $t('cart.empty') }}
+      Footer(:links="links")
 </template>
 
 <script lang="ts">
@@ -86,11 +87,16 @@ export default class Cart extends Vue {
   comment: string = ''
 
   mounted() {
-    this.products = Storage.get('cart') ? Storage.get('cart') : [];
     this.$forceUpdate()
-    window.addEventListener('beforeunload', e => {
-      Storage.set('cart', this.products)
-    })
+    if (process.client)
+      setTimeout(() => {
+        this.$forceUpdate();
+      }, 1000)
+    this.products = Storage.get('cart') ? Storage.get('cart') : [];
+    if (process.client)
+      window.addEventListener('beforeunload', e => {
+        Storage.set('cart', this.products)
+      })
   }
 
   async asyncData() {
