@@ -1,17 +1,17 @@
 <template lang="pug">
-  Card.post-card
-    nuxt-link(:to="localePath('/blog/'+post.slug)").card-ov
-      div
-      .thumbnail(:style='`background-image: url("${post.image_preview}");`')
-      .post-info
-        p.post-date
-          small {{ post.created_at }}
-        p.post-caption
-          strong {{ post.title }}
-        p.post-text {{ post.content.replace(/<\/?[^>]+(>|$)/g, "").split(" ").slice(0, 25).join(" ") }}...
-        .lks-flex.lks-flex-jcc.read-more
-          nuxt-link(:to="localePath('/blog/'+post.slug)")
-            Button.lks-btn-main.lks-mod-text-center {{ $t('blog.read') }}
+  client-only
+    Card.post-card
+      nuxt-link(:to="localePath('/blog/'+post.slug)").card-ov
+        .thumbnail(:style='`background-image: url("${post.image_preview}");`')
+        .post-info
+          p.post-date
+            small {{ post.created_at }}
+          p.post-caption
+            strong {{ post.title }}
+          p.post-text {{ post.content.replace(/<\/?[^>]+(>|$)/g, "").split(" ").slice(0, 25).join(" ") }}...
+          .lks-flex.lks-flex-jcc.read-more
+            nuxt-link(:to="localePath('/blog/'+post.slug)")
+              Button.lks-btn-main.lks-mod-text-center {{ $t('blog.read') }}
 </template>
 
 <script lang="ts">
