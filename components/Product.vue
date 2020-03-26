@@ -1,6 +1,7 @@
 <template lang="pug">
   Card.product.lks-flex.lks-flex-jcsb
     .product-share
+      p.share-label {{ $t('product.share') }}
       a(:href="`https://www.facebook.com/sharer/sharer.php?u=${fullUrl}`").lks-btn-social
         img.lks-btn-social-icon(src="/images/logo-facebook.svg")
       a(:href="`https://www.instagram.com/?url=${fullUrl}`").lks-btn-social
@@ -12,7 +13,7 @@
       .lks-flex.lks-flex-aic.lks-flex-jcsb.product-name
         div
           strong.lks-product-name {{ product.title }}
-          strong.sale.lks-sale -{{ Math.round(parseInt(product.sale)/(parseInt(product.price)+parseInt(product.sale))*100) }}%
+          strong(v-if="parseInt(product.sale) !== 0").sale.lks-sale -{{ Math.round(parseInt(product.sale)/(parseInt(product.price)+parseInt(product.sale))*100) }}%
         a(href="https://www.instagram.com/katyaanaprienko/")
           ButtonIcon.lks-btn-icon-main(icon='/images/instagram-purple.svg') {{ $t('product.subscribe')}}
       p.lks-product-text.product-text(v-html="product.description")
@@ -25,7 +26,7 @@
           .price-label.lks-flex.lks-flex-jcsb
             img(src="/images/ruble.svg")
             .lks-price-now {{ parseInt(product.price) }}
-            strike.lks-price-old {{ parseInt(product.price) + parseInt(product.sale)}}
+            strike(v-if="parseInt(product.sale) !== 0").lks-price-old {{ parseInt(product.price) + parseInt(product.sale)}}
           .product-color
             .lks-color-circle(v-if="product.colors[0]")
               .lks-color-circle-color(:style="`background: ${product.colors[0]}`")
@@ -211,6 +212,17 @@ Vue.component('Product', Product)
     & > * {
       margin-right: 10px;
     }
+  }
+}
+.share-label {
+  transform: translate(-20px, -50%) rotate(90deg);
+  height: 100px;
+  width: 0px;
+  color: gray;
+  @media screen and (max-width: 1060px) {
+    width: 100px;
+    height: 10px;
+    transform: translate(0, 20px);
   }
 }
 </style>

@@ -128,7 +128,7 @@ Vue.component('GoodCard', GoodCard)
     .quick-purchase-btn {
       width: 100%;
     }
-    background: linear-gradient(to top, #fff, transparent);
+//    background: linear-gradient(to top, #fff, transparent);
     position: absolute;
     bottom: -100%;
   }

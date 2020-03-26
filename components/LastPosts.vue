@@ -1,15 +1,16 @@
 <template lang="pug">
-  section
-    slot
-    .patch-top
-      img(src="/images/patch.svg")
-    .patch-bottom
-      img(src="/images/patch.svg")
-    .ct
-      AuthorCard.author(:author="author")
-      .posts
-        div(v-for="post in posts.slice(0, 2)")
-          PostCard(:post="post")
+  client-only
+    section
+      slot
+      .patch-top
+        img(src="/images/patch.svg")
+      .patch-bottom
+        img(src="/images/patch.svg")
+      .ct
+        AuthorCard.author(:author="author")
+        .posts
+          div(v-for="post in posts.slice(0, 2)")
+            PostCard(:post="post")
 
         
 </template>

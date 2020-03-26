@@ -28,7 +28,7 @@
         br
         .lks-small.lks-mod-text-center {{ $t('product.modal.agreement') }}
     Modal(:visible="visible" :title="$t('product.modal.thanks')" v-if="hasBought" @close="hasBought = false; $emit('close')").pmodal-modal
-      p(style="line-height: 3;").lks-paragraph {{ $t('product.modal.accepted') }}
+      p(style="line-height: 1.5;").lks-paragraph.after-modal-title {{ $t('product.modal.accepted') }}
       div.lks-flex.lks-flex-jcc
         nuxt-link(to="/" @click.native="hasBought = false; $emit('close')")
           Button.lks-btn-main {{ $t('main.btn') }}
@@ -79,6 +79,10 @@ Vue.component('ProductModal', Vue)
   border-radius: 20px;
   display: inline-block;
   background: $color-main;
+}
+.after-modal-title {
+  padding: 15px;
+  text-align: center !important;
 }
 .pmodal-modal {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
