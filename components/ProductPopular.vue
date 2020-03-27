@@ -43,7 +43,7 @@ Vue.component('ProductPopular', ProductPopular)
 @import '../assets/lks-fw/lks-fw.scss';
 .title {
   line-height: 2;
-  font-size: 1.5em;
+  font-size: clamp(16px, 1vw, 30px);
   font-weight: normal;
   color: #333;
 }

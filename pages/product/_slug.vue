@@ -10,6 +10,8 @@
           nuxt-link(:to="localePath('/shop')")
             | {{ $t('breadcrumbs.shop') }} / 
           | {{ $t('breadcrumbs.product' )}}
+      br
+      br
       Product(:product="product")
 
       h1.lks-big-text.title-popular {{ $t('product.popular') }}
@@ -97,6 +99,10 @@ export default class ProductSlug extends Vue {
 .popular {
   @media screen and (max-width: 1607px) {
     flex-direction: column;
+    margin: 0 15vw;
+  }
+  @media screen and (max-width: 700px) {
+    margin: 0 0;
   }
   display: flex;
   * { 
