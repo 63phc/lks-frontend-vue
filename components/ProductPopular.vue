@@ -1,14 +1,16 @@
 <template lang="pug">
-  Card.popular-card.lks-card-floating
-    .left
-      h3.title
-        | {{ good.title }}
-      .price-tag 
-        |{{ parseInt(good.price) }}
-        img(src="/images/ruble.svg")
-    .right
-      .thumbnail(:style="`background-image: url(${good.image_preview})`")
-    .lks-btn.lks-btn-main.lks-flex.lks-flex-aic.lks-flex-jcc.btn-cart(@click="addToCart")
+  div(style="position:relative")
+    nuxt-link(:to="localePath('/product/'+good.slug)")
+      Card.popular-card.lks-card-floating
+        .left
+          h3.title
+            | {{ good.title }}
+          .price-tag
+            |{{ parseInt(good.price) }}
+            img(src="/images/ruble.svg")
+        .right
+          .thumbnail(:style="`background-image: url(${good.image_preview})`")
+    .lks-btn.lks-btn-main.lks-flex.lks-flex-aic.lks-flex-jcc.btn-cart.btn-add-cart-popular(@click="addToCart")
       | +
 
 </template>
@@ -71,7 +73,7 @@ Vue.component('ProductPopular', ProductPopular)
   background-size: cover;
 
 }
-.btn-cart {
+.btn-add-cart-popular {
   position: absolute;
   left: 50%;
   top: 100%;

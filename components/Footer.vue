@@ -15,9 +15,9 @@
           ul
             li
               nuxt-link(:to="localePath('/login')") {{ $t('footer.login') }}
-            li 
+            li
               nuxt-link(:to="localePath('/cart')") {{ $t('footer.cart') }}
-            li 
+            li
               nuxt-link(:to="localePath('/saved')") {{ $t('footer.saved') }}
       br
       .subscribe-input
@@ -36,8 +36,7 @@
         .lks-btn-social
           img.lks-btn-social-icon(src='/images/logo-pinterest.svg', alt='[')
     br
-    hr
-    .lks-container
+    .lks-container.copyright-container
       .copyright.lks-flex
         p Little Knits Story 2017 | All Rights Reserved
         img(src='/images/cactus-logo.svg', alt='Cactus Vision')
@@ -64,7 +63,7 @@ export default class Footer extends Vue {
       (this as any).$eventBus.$emit('notify', (this as any).$t('notifications.email_fail_already_subscribed'))
     }
   }
-  
+
   isExternal(url: String) {
     return url.search(/http(s?):\/\//) > -1
   }
@@ -172,6 +171,10 @@ footer {
         margin: 10px 0;
       }
     }
+  }
+  .copyright-container
+  {
+    border-top: 1px solid #e5e5e5;
   }
 }
 </style>

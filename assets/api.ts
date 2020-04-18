@@ -17,12 +17,12 @@ async function _simpleFetch(subdir: string, method: string = "GET", body: any = 
   return result;
 }
 
-export async function getSliderImages() : Promise<Array<Slide>> 
+export async function getSliderImages() : Promise<Array<Slide>>
 {
   const result = await _simpleFetch("/sliders");
-    
+
   return result.map((e: any) => Object({
-    image_src: e.image_preview !== null ? e.image_preview : PLACEHOLDER_IMG_URL+(~~(Math.random()*500)), 
+    image_src: e.image_preview !== null ? e.image_preview : PLACEHOLDER_IMG_URL+(~~(Math.random()*500)),
     image_alt: e.image_alt,
     title: e.title,
     subtitle: e.sub_title
@@ -53,7 +53,7 @@ export async function contact(data: any) {
   return errors;
 }
 
-export async function getReviews() : Promise<Array<Review>> { 
+export async function getReviews() : Promise<Array<Review>> {
   const result = await _simpleFetch("/reviews");
 
   return result.map((e: any) => Object({
@@ -66,7 +66,7 @@ export async function getReviews() : Promise<Array<Review>> {
 }
 
 
-export async function getMenuEntries() : Promise<Array<MenuEntry>> { 
+export async function getMenuEntries() : Promise<Array<MenuEntry>> {
   const result = await _simpleFetch("/menu");
 
   return result.results.map((e: any) => Object({
@@ -179,7 +179,7 @@ export async function getProduct(slug: string) : Promise<Product>
 export async function subscribe(email: string)
 {
   const result = await _simpleFetch(`/subscribe/`, 'POST', JSON.stringify({email: email}), {'Content-Type': 'application/json'})
-  if (typeof(result.email) === "string") 
+  if (typeof(result.email) === "string")
   {
     return {success: true}
   }
@@ -187,9 +187,9 @@ export async function subscribe(email: string)
   {
     return {success: false, error: "EMAIL_INVALID"}
   }
-  else if (result.email.length > 0) 
+  else if (result.email.length > 0)
   {
-    return {success: false, error: "EMAIL_TAKEN"}  
+    return {success: false, error: "EMAIL_TAKEN"}
   }
   return {success: false, error: "UNHANDLED_ERROR"}
 }
@@ -205,7 +205,7 @@ export async function getCategories() : Promise<Array<Category>> {
 export async function quickOrder(product : Product, name: string, phone: string) {
   const res = await _simpleFetch(
     `/quick_orders/`,
-    'POST', 
+    'POST',
     JSON.stringify({
       products: [{product: product.id, amount: product.count}],
       phone: phone,
@@ -220,9 +220,17 @@ export async function quickOrder(product : Product, name: string, phone: string)
 }
 
 export async function order(products : Array<Product>, name: string, phone: string, email: string, comment: string, address: string) {
+  if (name.length < 1 ||
+      phone.length < 1 ||
+      email.length < 1 ||
+      address.length < 1)
+  {
+    const res = {error: true, pk: null}
+    return res;
+  }
   const res = await _simpleFetch(
     `/orders/`,
-    'POST', 
+    'POST',
     JSON.stringify({
       products: products.map((e: any) => Object({product: e.id, amount: e.count})),
       phone: phone,
@@ -232,6 +240,7 @@ export async function order(products : Array<Product>, name: string, phone: stri
     }),
     {'Content-Type': 'application/json'}
   )
+
   res.error = res.pk == null;
   return res;
 }

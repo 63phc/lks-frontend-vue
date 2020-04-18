@@ -6,12 +6,10 @@
       .lks-breadcrumb
         .lks-breadcrumb-path
           nuxt-link(:to="localePath('/')")
-            | {{ $t('breadcrumbs.index') }} / 
+            | {{ $t('breadcrumbs.index') }} /
           nuxt-link(:to="localePath('/shop')")
-            | {{ $t('breadcrumbs.shop') }} / 
+            | {{ $t('breadcrumbs.shop') }} /
           | {{ $t('breadcrumbs.product' )}}
-      br
-      br
       Product(:product="product")
 
       h1.lks-big-text.title-popular {{ $t('product.popular') }}
@@ -105,12 +103,19 @@ export default class ProductSlug extends Vue {
     margin: 0 0;
   }
   display: flex;
-  * { 
+  & > * {
     flex: 1;
     margin: 10px;
+    margin-bottom: -40px;
   }
 }
+.lks-breadcrumb
+{
+  margin-bottom: 20px;
+}
 .title-popular {
+  color: #545353;
+  font-size: 18px;
   margin: 20px;
   margin-bottom: 0;
 }
@@ -132,6 +137,8 @@ export default class ProductSlug extends Vue {
   margin-bottom: 50px;
   h1 {
     padding: 10px;
+    color: #545353;
+    font-size: 18px;
     line-height: 2;
   }
 }

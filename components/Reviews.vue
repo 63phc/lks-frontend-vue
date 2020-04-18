@@ -1,5 +1,5 @@
-<template lang="pug">  
-  div.reviews
+<template lang="pug">
+  div.reviews(v-if="reviews.length > 0")
     h2 {{ $t('main.last_reviews')}}
     .r
       div(v-for="review in reviews")
@@ -29,6 +29,8 @@ Vue.component('Reviews', Reviews)
   & > h2 {
     margin: 10px;
     line-height: 3;
+    color: #545353;
+    font-size: 18px;
   }
   .r {
     display: flex;
