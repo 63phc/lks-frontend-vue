@@ -1,5 +1,5 @@
 <template lang="pug">
-  .slider
+  .slider(v-show="slides.length > 0")
     transition-group(name='slides')
       .slide(v-for='(slide, index) in slides', :key='index', :style='`background-image: url(${slide.image_src}); display: ${currentSlide == index ? "flex" : "none"};`')
         .buttons
@@ -31,7 +31,7 @@ export default class Slider extends Vue {
   slides!: Array<models.Slide>
 
   currentSlide: number = 0
-  
+
   prevSlide() {
     this.currentSlide -= 1
     if (this.currentSlide < 0) this.currentSlide = this.slides.length - 1

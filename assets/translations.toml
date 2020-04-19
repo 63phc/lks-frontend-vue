@@ -25,9 +25,9 @@ fallbackLocale = "en"
 # Main
 [vueI18n.messages.en.main]
 slider_catalog = "Open Catalog"
-last_reviews = "Last Reviews"
-last_posts = "Last Posts"
-seller_products = "Seller Products"
+last_reviews = "LAST REVIEWS"
+last_posts = "LAST POSTS"
+seller_products = "SELLER PRODUCTS"
 btn = "Go to main"
 
 # Product
@@ -133,7 +133,7 @@ empty = "Cart is empty"
   items = "items"
   rub = "rubles"
   perform = "Perform Purchase"
-  
+
 [vueI18n.messages.en.saved]
 breadcrumbs = "Main / Saved"
 title = "Saved Products"
@@ -176,7 +176,7 @@ see_more = "See More"
     added = "put in cart"
     saved = "saved"
     unsaved = "removed from saved"
-    
+
 [vueI18n.messages.en.breadcrumbs]
 blog = "Blog"
 article = "Article"
@@ -208,9 +208,9 @@ authors = "Authors"
 # Main
 [vueI18n.messages.ru.main]
 slider_catalog = "Перейти в Каталог"
-last_reviews = "Последние отзывы"
-last_posts = "Последние Посты"
-seller_products = "Товары Автора"
+last_reviews = "ПОСЛЕДНИЕ ОТЗЫВЫ"
+last_posts = "ПОСЛЕДНИЕ ПОСТЫ"
+seller_products = "ТОВАРЫ АВТОРА"
 btn = "Вернутся на главную"
 
 # Product
@@ -315,7 +315,7 @@ empty = "Корзина пуста"
   items = "шт"
   rub = "рублей"
   perform = "Оформить покупку"
-  
+
 [vueI18n.messages.ru.saved]
 breadcrumbs = "Главная / Сохраненные"
 title = "Сохраненные товары"
@@ -358,7 +358,7 @@ see_more = "Смотреть еще"
     added = "добавлен"
     saved = "сохранен"
     unsaved = "убран из любимых"
-  
+
 [vueI18n.messages.ru.breadcrumbs]
 blog = "Блог"
 article = "Статья"

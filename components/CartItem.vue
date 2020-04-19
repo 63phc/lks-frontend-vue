@@ -19,7 +19,7 @@
           | &nbsp;
           sup {{ product.price.split('.')[1], '00' }}
       img(src="/images/ruble.svg")
-      .remove(@click="$emit('remove', product)") x
+      .remove(@click="$emit('remove', product)") &times;
 </template>
 
 <script lang="ts">
@@ -48,6 +48,7 @@ Vue.component('CartItem', CartItem)
 <style lang="scss" scoped>
 @import '../assets/lks-fw/lks-fw.scss';
 .item {
+  position: relative;
   margin-bottom: 15px;
   @media screen and (max-width: 936px) {
     .color {
@@ -117,6 +118,12 @@ Vue.component('CartItem', CartItem)
     & > * {
       color: $color-text;
     }
+  }
+  .remove {
+    position: absolute;
+    font-size: 40px;
+    top: 10px;
+    right: 10%;
   }
 }
 </style>

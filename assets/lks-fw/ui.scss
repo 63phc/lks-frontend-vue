@@ -3,6 +3,7 @@
 .#{$namespace} {
   // Buttons
   &btn {
+    border: none;
     display: inline-block;
     white-space: nowrap;
     background: white;
@@ -15,7 +16,7 @@
       Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: #656d6d;
     transition: background 0.4s;
-  
+
     &:hover {
       background: #eee;
       cursor: pointer;
@@ -102,13 +103,13 @@
   // Card
   &card {
     padding: 10px;
-  } 
+  }
 
-  &card-floating {  
+  &card-floating {
     box-shadow: 10px 20px 30px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-  } 
- 
+  }
+
   &radio {
     border: 1px solid #ccc;
     padding: 2px;
@@ -127,4 +128,4 @@
       }
     }
   }
-} 
+}

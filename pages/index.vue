@@ -7,7 +7,7 @@
       div(v-for="author in authors")
         LastPosts(:author="author" :posts="posts")
           h2 {{ $t('main.last_posts') }}
-        h2(style="line-height:3") {{ $t('main.seller_products')}}
+        h2(style="line-height:3; color: #545353; font-size: 18px;" ) {{ $t('main.seller_products')}}
         Goods(:goods="products")
         Reviews(:reviews="reviews")
     //-  Reviews

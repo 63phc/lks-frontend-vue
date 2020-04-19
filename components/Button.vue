@@ -1,5 +1,5 @@
 <template lang="pug">
-  .lks-btn
+  button.lks-btn
     slot
 </template>
 
