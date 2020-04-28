@@ -1,0 +1,179 @@
+.footer__component {
+    border-top: 1px solid #e5e5e5;
+    .footer__component__top__bar {
+        padding: 24px 0;
+        margin: 0 auto;
+        width: 100%;
+        max-width: 1100px;
+        @include lg {
+            max-width: 700px;
+        }
+    }
+    .footer__panel {
+        margin-bottom: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        &__navigation__title {
+            margin-bottom: 16px;
+        }
+        &__navigation__list {
+            display: flex;
+        }
+        &__navigation__item {
+            padding-right: 40px;
+        }
+        &__controls__list {
+            display: flex;
+        }
+        &__controls__title {
+            margin-bottom: 16px;
+        }
+        &__controls__item {
+            padding-right: 40px;
+            flex-shrink: 0;
+            &:last-child {
+                padding-right: 0px;
+            }
+        }
+        @include lg {
+            justify-content: center;
+            &__navigation__wrap {
+                padding: 0 50px;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+            &__controls__wrap {
+                padding: 0 50px;
+                text-align: center;
+            }
+        }
+        @include md {
+            padding: 0 10px;
+            flex-wrap: wrap;
+            text-align: center;
+            justify-content: center;
+            &__navigation__list {
+                flex-wrap: wrap;
+                justify-content: center;
+                margin: 0 20px;
+            }
+            &__controls__wrap {
+                padding: 0px;
+                flex-wrap: wrap;
+                margin: 0;
+            }
+            &__controls__item {
+                padding-right: 10px;
+                font-size: $fontSize1;
+            }
+            &__navigation__wrap {
+                margin-bottom: 20px;
+            }
+            &__navigation__item {
+                margin-bottom: 10px;
+                padding: 0 20px;
+                font-size: $fontSize1;
+            }
+        }
+    }
+    .footer__form {
+        padding: 0 10px 16px;
+        margin: 0 auto;
+        position: relative;
+        width: 100%;
+        max-width: 950px;
+    }
+    .footer__input {
+        padding: 0 200px 0 10px;
+        width: 100%;
+        height: 30px;
+        max-width: 950px;
+        border-radius: 20px;
+        outline: none;
+        border: none;
+        background: #f0f0f0;
+    }
+    .footer__button {
+        padding: 6px 50px;
+        position: absolute;
+        right: 0;
+        border-radius: 20px;
+        outline: none;
+        border: none;
+        background: #e0c0c3;
+        color: $white;
+        font-size: $fontSize2;
+        @include md {
+            padding: 6px 20px;
+            right: 10px;
+        }
+    }
+    .footer__informations__txt__wrap {
+        padding: 0 10px;
+        margin: 0 auto;
+        margin-bottom: 24px;
+        width: 100%;
+        max-width: 622px;
+        text-align: center;
+        color: $neutral;
+    }
+    .footer__social__list {
+        display: flex;
+        justify-content: center;
+        &__item {
+            margin-right: 32px;
+            height: 50px;
+            width: 50px;
+        }
+    }
+    .footer__social__item__link {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        background: black;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        &:hover {
+            background: #e0c0c3;
+        }
+    }
+    .footer__social__list__item:last-child {
+        margin-right: 0;
+    }
+    .footer__component__bottom__bar {
+        margin: 0 auto;
+        padding: 20px 400px 32px;
+        display: flex;
+        flex-wrap: wrap;
+        border-top: 1px solid #e5e5e5;
+        align-items: center;
+        justify-content: space-between;
+        color: $neutral;
+        @include lg {
+            padding: 20px 50px 32px;
+            width: 100%;
+        }
+        @include md {
+            flex-direction: column;
+            padding: 20px 20px 32px;
+            justify-content: center;
+            text-align: center;
+        }
+    }
+    .privacy__policy__link {
+        color: $neutral;
+    }
+    .copyright__wrap {
+        @include md {
+            margin-bottom: 5px;
+        }
+    }
+    .footer__logo {
+        @include md {
+            margin-bottom: 5px;
+        }
+    }
+}

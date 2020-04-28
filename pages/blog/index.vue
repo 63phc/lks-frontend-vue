@@ -6,7 +6,7 @@
       .lks-breadcrumb
         .lks-breadcrumb-path
           nuxt-link(:to="localePath('/')")
-            | {{ $t('breadcrumbs.index') }} / 
+            | {{ $t('breadcrumbs.index') }} /
           | {{ $t('breadcrumbs.blog' )}}
       br
       .featured

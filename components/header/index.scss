@@ -1,0 +1,182 @@
+.header__component {
+    position: relative;
+    margin-bottom: 32px;
+    &__fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        padding-bottom: 20px;
+        box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1);
+        .header__title__wrap {
+            display: none;
+        }
+    }
+    @include lg {
+        padding: 40px 20px 0;
+    }
+    .header {
+        position: relative;
+        &__wrap {
+            margin: 0 auto;
+            padding: 40px 0 0;
+            width: 100%;
+            max-width: $widthContainer1;
+            text-align: center;
+            font-size: $fontSize1;
+        }
+        &__label {
+            margin-bottom: 16px;
+        }
+        &__title {
+            font-size: 36px;
+            text-transform: uppercase;
+            color: #8a8e99;
+            @include md {
+                font-size: $fontSize5;
+            }
+            &__wrap {
+                margin-bottom: 60px;
+                @include md {
+                    margin-bottom: 20px;
+                }
+            }
+        }
+    }
+    .header__socials {
+        width: 20%;
+        &__list {
+            display: flex;
+            align-items: center;
+            margin: 0 -20px;
+            @include lg {
+                margin-bottom: 20px;
+            }
+            &__item {
+                padding: 0 20px;
+                @include lg {
+                    padding: 0 20px;
+                }
+            }
+        }
+        @include md {
+            margin-bottom: 20px;
+            &__list {
+                @include md {
+                    justify-content: center;
+                    margin: 0 20px;
+                }
+            }
+            &__item {
+                @include md {
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+    .navigation__header {
+        padding: 0 20px;
+        .navigation__list {
+            margin: 0 -20px;
+            display: flex;
+            @include lg {
+                margin-bottom: 20px;
+            }
+            @include md {
+                margin-bottom: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+                font-size: $fontSizesm;
+                &__item {
+                    line-height: $lineHeight1;
+                    padding: 0 10px;
+                }
+            }
+            &__item {
+                padding: 0 20px;
+                text-transform: uppercase;
+                &:last-child {
+                    margin-right: 0;
+                }
+                &__link:hover {
+                    color: #e0c0c3;
+                }
+                @include lg {
+                    padding: 0 20px;
+                    &__link {
+                        font-size: $fontSize2;
+                    }
+                }
+                @include xs {
+                    &__item {
+                        padding: 0 20px;
+                    }
+                }
+            }
+        }
+    }
+    .header__controls {
+        width: 20%;
+        &__list {
+            display: flex;
+            align-items: center;
+            margin: 0 -20px;
+            justify-content: flex-end;
+            @include md {
+                justify-content: center;
+                padding: 0 25px;
+                margin: 0;
+            }
+            @include lg {
+                margin: 0;
+            }
+        }
+        .header__controls__list__item {
+            padding: 0 20px;
+            @include lg {
+                padding: 0 20px;
+            }
+            @include xs {
+                padding: 0 20px;
+            }
+        }
+        .header__controls__list__item:last-child {
+            margin-right: 0;
+        }
+    }
+    .header__bottom__bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        @include md {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        @include lg {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+    .header__button__lang {
+        position: absolute;
+        right: 20px;
+        top: 0;
+        width: 50px;
+        height: 50px;
+        @include md {
+            height: 25px;
+            width: 25px;
+        }
+        .header__button {
+            width: 100%;
+            height: 100%;
+            background: #e0c0c3;
+            color: $white;
+            font-size: $fontSize3;
+        }
+    }
+}
