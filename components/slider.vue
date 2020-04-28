@@ -1,108 +1,157 @@
 <template lang="pug">
-  .slider
-    .slider__wrap(ref="sliderWrap")
-      ul.slider__line(ref="sliderLine")
-        li.slider__line__item(v-for="item of news")
-          SliderBlock.slide(:slideData="item")
+  .slider(v-show="slides.length > 0")
+    transition-group(name='slides')
+      .slide(v-for='(slide, index) in slides', :key='index', :style='`background-image: url(${slide.image_src}); display: ${currentSlide == index ? "flex" : "none"};`')
+        .buttons
+          .btn-nav(@click='prevSlide')
+            img(src='/images/left-arrow.svg', alt='<')
+          .btn-nav(@click='nextSlide')
+            img(src='/images/right-arrow.svg', alt='>')
+        .side
+          .circle
+            div
+              h1 {{ slide.title }}
+              p {{ slide.subtitle }}
+              nuxt-link(:to="localePath('/shop')").btn-shop
+                ButtonIcon(icon='/images/shopping-cart.svg') {{ $t('main.slider_catalog')}}
 </template>
 
-<script lang="JavaScript">
-import SliderBlock from '~/components/pages/blog/sliderBlock.vue'
+<script lang="ts">
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import ButtonIcon from './ButtonIcon.vue'
+import * as models from '../assets/models'
 
-export default {
+@Component({
   components: {
-   SliderBlock
-  },
-  data () {
-    return {
-      offset: 0,
-      news: []
-    }
-  },
-  // такуюже offset = x
-  mounted() {
-    this.createSlider()
-    window.addEventListener('resize', this.resize)
-    this.getData()
-  },
-  destroyed() {
-    window.removeEventListener('resize', this.resize)
-  },
-  methods: {
-    getData() {
-      fetch('http://dev.backend.littleknitsstory.com/api/posts/',{
-        method: 'GET'
-      }).then((response) => {
-              /* eslint-disable */
-        return response.json()
-      }).then((json) => {
-        this.news=json
-        this.createSlider()
-      })
-    },
-    // вынести в блоg
-    //создать data
-    createSlider () {
-      const { prev, next, sliderLine, sliderWrap } = this.$refs
-      const lineWidth = sliderWrap.offsetWidth + 40;
-      const slidesCount = this.news.length - 1;
-      let { offset } = this
+    ButtonIcon
+  }
+})
+export default class Slider extends Vue {
+  @Prop({ required: true })
+  slides!: Array<models.Slide>
 
-      function prevHandler() {
-        if (offset < 0) {
-          offset = offset + lineWidth;
-          sliderLine.style.left = offset +'px';
-        }
-      }
+  currentSlide: number = 0
 
-      function nextHandler() {
-        console.log(lineWidth)
-        if (offset <= -(slidesCount*lineWidth)) {
-            return;
-        }
-        offset = offset - lineWidth;
-        sliderLine.style.left = offset + 'px';
-      }
+  prevSlide() {
+    this.currentSlide -= 1
+    if (this.currentSlide < 0) this.currentSlide = this.slides.length - 1
+  }
 
-      prev.onclick = prevHandler
-      next.onclick = nextHandler
-    },
-    resize(){
-      /* eslint-disable */
-       this.createSlider();
-    }
+  nextSlide() {
+    this.currentSlide += 1
+    if (this.currentSlide >= this.slides.length) this.currentSlide = 0
   }
 }
+
+Vue.component('Slider', Slider)
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/lks-fw/lks-fw.scss';
+@import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
+
+.slides-enter-active,
+.slides-leave-active {
+  transition: opacity 0.5s;
+}
+
+.slides-enter, .slides-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
 .slider {
-  position: relative;
-  margin: 0 auto;
-  margin-bottom: 40px;
-  width: 100%;
-  max-width: $widthContainer1;
-  &__wrap {
-    overflow: hidden;
+  height: 60vh;
+  @media screen and (max-height: 550px) {
+    height: 90vh;
   }
-  &__line {
+  max-height: 700px;
+}
+
+.slide {
+  max-height: 700px;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 60vh;
+  @media screen and (max-height: 550px) {
+    height: 90vh;
+  }
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-nav {
+  padding: 20px;
+  background: #3e4148;
+  color: white;
+  font-weight: bold;
+  line-height: 0.5;
+  font-size: 20px;
+  margin-left: 10px;
+  border-radius: 100%;
+  cursor: pointer;
+}
+.buttons {
+  display: flex;
+  margin-left: 40px;
+  margin-bottom: 10px;
+  align-self: flex-end;
+}
+.btn-shop {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 30px;
+}
+.side {
+  width: 50vw;
+  display: flex;
+}
+.circle {
+  align-self: center;
+  background: $color-main;
+  height: 150%;
+  display: flex;
+  align-items: center;
+  width: 200vw;
+  position: relative;
+  border-radius: 100% 0 0 100%;
+  color: white;
+  & > div {
+    height: 66.66666%;
+    width:90%;
+    justify-content: center;
     display: flex;
-    position: relative;
-    transition: all ease 1s;
-    left: 0;
-    &__item {
-      margin-right: 40px;
-      width: 100%;
-      flex-shrink: 0;
-      &:last-child {
-        margin-right: 0;
-      }
+    flex-direction: column;
+    padding-left: 20%;
+    h1 {
+      font-family: 'Pacifico', serif;
+      font-size: clamp(20px, 1.5vw, 40px);
     }
-    &::after {
-      content: '';
-      display: block;
-      clear: both;
+    p {
+      margin: 40px 0px;
+      line-height: clamp(100%, 2vw, 200%);
+      font-size: clamp(18px, 1.5vw, 32px);
     }
+  }
+}
+.rect {
+  background: $color-main;
+  width: 100%;
+}
+
+@media screen and (max-width: 637px) {
+  .buttons {
+    display: none;
+  }
+  .side {
+    width: 100vw;
+  }
+  .circle {
+    width: 100vw;
   }
 }
 </style>
