@@ -1,96 +1,97 @@
 <template lang="pug">
-  .container__blog
-    vHeader
-    breadCrumbs
-    .blog__container
-      slideBlock(v-if="firstNews" :slideData="firstNews" )
-      ul.blog__list
-        listCard.blog__list__card(v-for="item of news" :key="item.id" :cardData="item")
-      .button__watch__more__wrap
-        button.button__more Cмотреть ещё
-    vFooter
+  div
+    TopHeader
+    NavBar(:links="links")
+    .lks-container
+      .lks-breadcrumb
+        .lks-breadcrumb-path
+          nuxt-link(:to="localePath('/')")
+            | {{ $t('breadcrumbs.index') }} /
+          | {{ $t('breadcrumbs.blog' )}}
+      br
+      .featured
+        BlogSlider(:posts="posts")
+      .posts
+        div(v-for="post in posts").post
+          PostCard(
+            :post="post"
+          )
+
+        p(@click="seeMore" v-if="arePostsPaged").lks-see-more {{ $t('misc.see_more') }}
+    Footer(:links="links")
 </template>
 
-<script>
-import slideBlock from '../../components/pages/blog/sliderBlock.vue'
-import vHeader from '~/components/header/index.vue'
-import listCard from '~/components/pages/blog/listCard.vue'
-import breadCrumbs from '~/components/pages/blog/breadCrumbs.vue'
-import vFooter from '~/components/footer/index.vue'
-import vSlider from '~/components/slider.vue'
+<script lang="ts">
+import * as API from '../../assets/api'
+import { Component, Vue } from 'nuxt-property-decorator'
+import * as models from '../../assets/models'
+import BlogSlider from '../../components/BlogSlider.vue'
+import PostCard from '../../components/PostCard.vue'
+import TopHeader from '../../components/TopHeader.vue'
+import NavBar from '../../components/NavBar.vue'
+import Footer from '../../components/Footer.vue'
 
-export default {
+
+const PAGE_SIZE = 6;
+
+@Component({
   components: {
-    vHeader,
-    listCard,
-    breadCrumbs,
-    vFooter,
-    vSlider,
-    slideBlock
-  },
+    BlogSlider,
+    PostCard,
+    TopHeader,
+    NavBar,
+    Footer
+  }
+})
+export default class BlogIndex extends Vue {
+  links: Array<models.MenuEntry> = []
+  posts: Array<models.Post> = []
+  offset: number = 0
+  arePostsPaged = false
 
-  data() {
+  async mounted() {
+    this.offset = PAGE_SIZE
+    this.$forceUpdate()
+    this.checkPostsPaging()
+  }
+
+  async asyncData() {
     return {
-      news: [],
-      firstNews: {}
+      links: await API.getMenuEntries(),
+      posts: await API.getPosts(PAGE_SIZE, 0),
     }
-  },
-  mounted() {
-    this.getData()
-  },
-  methods: {
-    getData() {
-      fetch('http://dev.backend.littleknitsstory.com/api/posts/', {
-        method: 'GET'
-      })
-        .then(response => {
-          return response.json()
-        })
-        .then(json => {
-          this.firstNews = json[0]
-          this.news = json.filter(el => {
-            return json[0].id !== el.id
-          })
-        })
-    }
+  }
+
+  async checkPostsPaging() {
+    var posts = await API.getPosts(-1, this.offset)
+    this.arePostsPaged = posts.length > 0;
+  }
+
+  async seeMore() {
+    this.posts = await API.getPosts(PAGE_SIZE + this.offset, 0)
+    this.offset += PAGE_SIZE
+    this.checkPostsPaging()
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.container__blog {
-  .blog__container {
-    width: 100%;
-    max-width: $widthContainer1;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-  .blog__list {
-    margin: 0 -15px 82px;
-    display: flex;
-    flex-wrap: wrap;
-    @include md {
-      margin: 0;
+@import '../../assets/lks-fw/lks-fw.scss';
+.posts {
+  margin-top: 30px;
+  .post {
+    display: inline-block;
+    margin: 10px;
+    width: 32%;
+    width: calc(33% - 20px);
+    min-width: 200px;
+    @media screen and (max-width: 825px) {
+      width: calc(50% - 20px);
     }
-  }
-  .blog__list__card {
-    width: 33.3%;
-    border-radius: 10px;
-    padding: 0 15px;
-    @include md {
-      padding: 0;
+    @media screen and (max-width: 550px) {
       width: 100%;
-    }
-  }
-  .button__watch__more__wrap {
-    margin-bottom: 32px;
-    text-align: center;
-    .button__more {
-      color: $dark;
-      font-size: $fontSize3;
-      border: none;
-      outline: none;
-      background: transparent;
+      margin: 0;
+      margin-top: 20px;
     }
   }
 }

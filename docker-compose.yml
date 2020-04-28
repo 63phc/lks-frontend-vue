@@ -1,0 +1,8 @@
+version: '3'
+services:
+  frontend:
+    container_name: phc_lks_front_dev
+    image: 63phc/lks:dev
+    command: npm run start
+    ports:
+      - '63000:3000'
