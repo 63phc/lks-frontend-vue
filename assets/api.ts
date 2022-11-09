@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Category, Product, Slide, MenuEntry, Author, Post, Review } from './models';
 import * as Storage from './storage'
 
-const API_URL = "http://dev.backend.littleknitsstory.com/api/v1";
+const API_URL = "http://dev.backend.littleknitsstory.com:26363/api/v1/";
 const PLACEHOLDER_IMG_URL = "http://via.placeholder.com/600x200/";
 
 async function _simpleFetch(subdir: string, method: string = "GET", body: any = null, headers: any = {}) : Promise<any>

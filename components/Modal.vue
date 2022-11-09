@@ -15,10 +15,10 @@ import { Prop, Component, Vue } from 'nuxt-property-decorator'
 
 @Component
 export default class Modal extends Vue {
-  @Prop()
-  visible: Boolean = true
-  @Prop()
-  title: String = ''
+  @Prop({ required: true })
+  visible!: Boolean
+  @Prop({ required: true })
+  title!: String
 }
 
 Vue.component("Modal", Modal)

@@ -48,8 +48,8 @@ import * as Storage from '../assets/storage'
 
 @Component
 export default class NavBar extends Vue {
-  @Prop()
-  links: Array<models.MenuEntry> = []
+  @Prop({ required: true })
+  links!: Array<models.MenuEntry>
   hasProducts: boolean = false
   hasSaved: boolean = false
 

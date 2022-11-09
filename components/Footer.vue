@@ -50,8 +50,8 @@ import { Component, Vue, Prop } from 'nuxt-property-decorator'
 @Component
 export default class Footer extends Vue {
   email: string = ''
-  @Prop()
-  links: Array<models.MenuEntry> = []
+  @Prop({ required: true })
+  links!: Array<models.MenuEntry>
 
   async subscribe() {
     const response = await API.subscribe(this.email)
